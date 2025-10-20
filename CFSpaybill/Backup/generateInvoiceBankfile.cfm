@@ -1,0 +1,32 @@
+<cfquery name="getCFSprofilelist" datasource="#dts#">
+SELECT profilename FROM paybillprofile GROUP BY profilename ORDER BY profilename
+</cfquery>
+
+<cfquery name="acBank_qry" datasource="manpower_p">
+SELECT * FROM address a WHERE org_type in ('BANK')
+</cfquery>
+
+<h1>Generate Invoice and Bankfile</h1>
+<link href="/stylesheet/stylesheet.css" rel="stylesheet" type="text/css">
+<cfoutput>
+
+    <table class="form">
+    	<tr>
+        	<td>
+        		<label>Choose CFS Profile</label>
+            </td>
+            <td>
+                <select name="cfsprofile" id="cfsprofile" onChange="window.frames['newframe'].location ='/CFSpaybill/generateInvoiceBankfileData.cfm?profilename='+this.value;">
+                    <cfloop query="getCFSprofilelist">
+                        <option value="#getCFSprofilelist.profilename#">#getCFSprofilelist.profilename#</option>
+                    </cfloop>                 
+                </select>
+            </td>
+        </tr>
+        </table>
+        
+        <iframe src="/CFSpaybill/generateInvoiceBankfileData.cfm?profilename=#getCFSprofilelist.profilename[1]#" name="newframe" id="newframe" width="100%" height="900" frameborder="0" scrolling ="no"></iframe>
+        
+        
+    
+</cfoutput>
