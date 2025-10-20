@@ -1,0 +1,1 @@
+﻿ALTER TABLE `payroll_main`.`hmusers` ADD COLUMN `custno` VARCHAR(200) DEFAULT '' AFTER `approvaltype`;

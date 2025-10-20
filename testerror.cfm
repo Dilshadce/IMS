@@ -1,0 +1,1 @@
+<cfoutput>#cgi.server_name##cgi.script_name#?#cgi.query_string#</cfoutput>

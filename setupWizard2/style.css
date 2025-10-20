@@ -1,0 +1,66 @@
+@import url("reset.css");
+
+body{
+	background-color:#ebebeb;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color:#333
+}
+
+p{
+    padding: 10px;
+}
+
+#wrapper{
+    width: 100%;
+    min-width: 780px;
+    max-width: px;
+    margin: 0 auto;
+}
+
+#contentliquid{
+    float: left;
+    width: 100%;
+}
+
+#content{
+    margin-left: 282px;
+	margin-top: 50px;
+}
+
+.content_header{
+	background-color: #4faf7a;	
+	height:50px;
+	font:28px Arial,sans-serif;
+	color: ffffff;
+	text-align:center;
+}
+
+form{
+	margin-top: 40px;	
+}
+.company_address{	
+	font: italic 12px Arial,sans-serif;	
+}
+
+table{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+td{
+	padding: 5px;	/*Problem in Google Chrome  */
+	color:#595959;
+	font:15px Arial,sans-serif;
+}
+
+#leftcolumn{
+    float: left;
+    width: 282px;
+    margin-left: -100%;
+}
+
+a{
+	text-decoration:none;	
+}
+

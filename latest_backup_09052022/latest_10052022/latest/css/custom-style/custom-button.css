@@ -1,0 +1,45 @@
+/*button styling*/
+.submitbtn, .submitbtn2 {
+    outline: none;
+    border: none;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    background-color: #FF8800;
+    font-size: 16px;
+    font-weight: 300px;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    -webkit-box-shadow: 0 4px #f2870d;
+            box-shadow: 0 4px #f2870d;
+}
+
+.submitbtn:hover,
+.submitbtn2:hover {
+    -webkit-box-shadow: 0 2px #f2870d;
+            box-shadow: 0 2px #f2870d;
+    top: 3px;
+}
+
+.submitbtn:active,
+.submitbtn2:active {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    top: 5px;
+}
+
+.submitbtn:disabled:hover,
+.submitbtn2:disabled:hover {
+    cursor: not-allowed;
+}
+
+.submitbtn:disabled,
+.submitbtn2:disabled {
+    background-color: #A9A9A9;
+    -webkit-box-shadow: 0 3px #989898;
+            box-shadow: 0 3px #989898;
+}
+/*button styling*/

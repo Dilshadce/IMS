@@ -1,0 +1,564 @@
+body {
+	margin: 0;
+	/*padding: 10px;*/
+	border: 0;						/* This removes the border around the viewport in old versions of IE */
+	width: 100%;
+	background: #fff;
+	min-width: 600px;    			/* Minimum width of layout - remove line if not required */ /* The min-width property does not work in old versions of Internet Explorer */
+	font-size: 12px !important;		/* Overwrite bootstrap font size */ /* Set default all to 12 pixels*/
+	overflow-x:hidden !important;
+	/*new*/
+	padding:0;
+	color: #454E59;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 1.42857;
+	font-weight: 400;	
+}
+
+#body_section{	
+	padding:20px 30px;
+}
+
+#hidden_div{
+	display:none;	
+}
+
+#loading_indicator{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -50px 0px 0px -50px;
+	opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+/*** Header Section ***/
+#top_section{	
+	height: 210px;	
+}
+	
+#header {
+	clear: both;
+	float: left;
+	width: 100%;
+	/*border-bottom: 1px solid #000;*/
+	/*margin-bottom:10px;*/
+	/*new*/
+	border-bottom: thick solid #f0606d;
+	border-bottom-width: 10px;
+	margin:0;
+}
+
+#header h3 {
+	padding: 0px 20px 5px 5px;
+	margin: 0;
+}
+
+.address_section{
+	padding-top: 42px;	
+}
+
+#showLabel1,
+#showLabel2,
+#showLabel3,
+#showLabel4 {
+	visibility: hidden;
+}
+
+.custName{
+	background-color:red;
+	font-size:20px;
+	margin-left:20px;		
+}
+
+#editBillingAddress,
+#editDeliveryAddress{	
+	width: 20px !important;
+	height: 20px !important;
+	padding: 0;
+}
+
+.formTabSection{
+	padding-top: 15px;
+	padding-right: 15px;	
+}
+
+.formTabSection label{
+
+	text-align:left !important;
+}
+/*** Body Section ***/
+
+/* Generic Styling, for Desktops/Laptops */
+.itemTable { 
+	width: 100%; 
+	border-collapse: collapse; 
+	table-layout: fixed;
+}
+
+/* Zebra striping */
+tr.edit_tr:nth-of-type(even) { 
+	background: #efefef; 
+}
+
+th.itemTableTH { 
+	/*background: #454E59; 
+	color: #F0F2F4; */
+	font-weight: bold;
+	text-align: center !important; 
+	padding:10px !important; 
+	/*New*/
+	background-color:#BDBEC0 !important;
+	color:#59595B !important;
+	margin-top:10px !important;
+	border:solid thin #CCCCCC;
+}
+
+td { 
+	/*padding: 6px; */
+	text-align: left; 
+}
+
+td, th{
+	border: 1px solid #ccc; 	
+}
+
+.td_one{
+	text-align: center;	
+	width: 10%;	
+}
+.td_ten{
+	text-align: center;	
+}
+.td_seven{
+	text-align: center;	
+	width: 5%;	
+}
+
+.th_one{
+	width: 10%;	
+}
+
+.th_two{
+	width: 15%; 	  
+}
+
+.th_three{
+	width: 25%;	
+}
+
+.th_four{
+	width: 10%;	
+}
+
+.th_five{
+	width: 10%;	
+}
+
+.th_six{
+	width: 10%;	
+}
+
+.th_seven{
+	width: 10%;	
+}
+.eight{
+	width: 5%;	
+}
+
+.textAlignRight{
+	text-align: right;	
+}
+
+.glyphicon.glyphicon-plus-sign{
+	width: 5px !important;
+	height: 5px !important;
+	padding-right: 30px !important;	
+}
+
+.delete_item{
+	padding: auto;
+	cursor: pointer;
+	cursor: hand;
+	visibility: hidden;	
+}
+
+.delete_item:hover{
+	color: red;	
+}
+
+/*** Footer Section ***/
+
+#footer_right_section{
+	padding-right: 29px !important;
+}
+
+#footer_sticky_section{
+	position: fixed;
+    bottom: 0;
+	text-align: center;
+    width: 100%;
+    	
+	/*New*/
+	border:thin ;
+	background: rgba(200,200,200,0.8);
+  	border: 1px solid rgba(0,0,0,0.2);
+	max-width:500px;
+	min-width:80px;
+}
+
+.discountBil{
+	padding:0 !important;
+	margin:0 !important;
+}
+
+.saveTransaction{
+	cursor: pointer;
+	cursor: hand;	
+}
+
+/* 
+ *	Max-Width: Avoid Table messing up
+ *	This query will take effect for any screen smaller than 760px
+ *	and also iPads specifically.
+ */
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1023px)  {
+	
+	#top_section{
+		height:auto;	
+	}
+
+	/* Force table not to act like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid ##ccc; }
+	
+	/* Behave like a "row" */
+	td { 
+		border: none;
+		border-bottom: 1px solid ##eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		
+		position: absolute;		/* Now like a table header */
+		top: 6px;				/* TOP and LEFT values mimic padding */
+		left: 6px;					
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/* Label Data (LEFT SIDE) */
+	td:nth-of-type(1):before { content: "No"; }
+	td:nth-of-type(2):before { content: "Item"; }
+	td:nth-of-type(3):before { content: "Description"; }
+	td:nth-of-type(4):before { content: "Location"; }
+	td:nth-of-type(5):before { content: "Quantity"; }
+	td:nth-of-type(6):before { content: "Price"; }
+	td:nth-of-type(7):before { content: "Discount"; }
+	td:nth-of-type(8):before { content: "Total"; }
+}
+
+/*** Smartphones (portrait and landscape) ***/
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+	body { 
+		padding: 0; 
+		margin: 0; 
+		width: 320px; }
+	}
+
+/*** iPads (portrait and landscape) ***/
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) {
+	body { 
+		width: 495px; 
+	}
+}
+
+/*** Overwrite Bootstrap CSS ***/
+
+/* Margin between inputs */
+form .form-group {
+	margin-bottom: 2px; 
+}
+
+/* Custome modal large */
+.modal.modal-lg .modal-dialog {
+	width: 55%;
+}
+
+.modal-lg .modal-body {
+	overflow-y: auto;
+}
+
+.editItemDescription{
+	padding: 5px !important;
+	cursor: pointer;
+	cursor: hand;
+}
+
+/*Reduce padding for input-group-addon discount*/
+#discount{
+	padding: 2px;	
+}
+
+.currencyCode{
+	padding: 3px !important;		  
+}
+
+.row.no-pad {
+  margin-right:0;
+  margin-left:0;
+}
+.row.no-pad > [class*='col-'] {
+  padding-right:0;
+  padding-left:0;
+}
+
+/*Reduce padding for tabable links*/
+.nav.nav-tabs a{
+	padding:5px;
+}
+
+/* Tooltip styling */
+.group{
+	width: 100%;
+	padding-bottom:35px;
+}
+.rowLeft{
+	float:left;
+	width:70%;	
+	text-align:left;
+	color:##4d4d4d;
+	padding-right:13px;
+}
+.rowRight{
+	float:right;
+	width:30%;	
+	text-align:right;
+}
+.leftTop{
+	font:bold 9pt Arial;	
+}
+.leftBottom{
+	font:italic 8pt Arial;	
+}
+
+.rightTop{
+	color:##999999;
+	font:bold 8pt Arial; 	
+}
+.rightBottom{
+	color:##4d4d4d;
+	font:bold 9pt Arial; 
+}
+
+input[disabled] {
+    background-color: #ffffff !important;
+}
+
+.nav.nav-tabs > .active > a{
+    /*border-color: red;
+	border-bottom-style: none;
+*/
+}
+
+.glyphiconA {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.flyover {
+	margin-top:-1000px;
+	margin-left: auto;
+	margin-right: auto;
+   	overflow: hidden;
+   	position: fixed;
+	width: 30%;
+	opacity: 0.9;
+	z-index: 1050;
+	transition: all 1s ease;
+}
+ 
+.flyover.in {
+  	margin-top: 10px !important;
+    left: 35%;
+}
+
+.alertReferenceNoLabel{
+	text-align: center;	
+}
+
+.currencyCode{
+	padding:0 !important;
+	margin:0 !important;	
+}
+
+/*BOTTOM PART NEW*/
+
+.desp_input , .location_input , .price_input , .dispec1_input , .unitOfMeasurement_input {
+	
+	outline: none;
+	box-shadow:none !important;
+	}
+	
+span#discount{
+	background-color:#FFF;
+	border:none !important;
+}
+	
+.calender-addon {
+	background-color:#FFF !important;
+	border-left:none !important;
+}
+
+#wos_date {
+	border-right:none !important;
+}
+
+.min-padding{
+	padding:0px 5px 0px 5px !important;
+}
+
+.min-gap{
+	padding: 0px 10px 0px 15px !important;
+}
+
+.addressHeight{
+	padding-top:10px !important;
+}
+	
+#Step1> .custno > .select2-choice{
+	height:35px !important;
+	line-height:35px !important;
+	font-size:14px;
+	
+}
+
+.itemno_input > .select2-choice , .itemno_label{
+	 border:none !important;
+	 background-image:none !important;
+	 outline: none;
+  	 box-shadow: none !important;
+	 }
+	 
+input.desp_input, select.location_input, select.unitOfMeasurement_input, input.priceHistory, input.dispec1_input , span.glyphiconA ,.noborder  , .qty_input , input.amt_input , input.input-disabled{
+	background-color:#FFF;
+	border:none !important;
+}
+
+.tabbable{
+	margin:0px !important;
+	padding:0px !important;
+    padding: 10px !important;
+	min-height:155px;
+}
+	
+#header h4{
+	color: #f0606d !important;	
+	font-weight: 700;
+}
+
+.nav-tabs{
+	border-bottom: 1px solid #f0606d ;
+	
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover { 
+	outline: 0;
+	color: #f0606d;
+	background-color: #f0606d !important;
+	border: 1px solid #ddd;
+	border-bottom-color: #f0606d !important;
+	cursor: default;
+	height:40px;
+	width:100px;
+	line-height:30px !important;
+	font-weight: 900;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color:#f0606d !important;
+    border-color: #f0606d #f0606d transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #fff;
+    cursor: default;
+	height:40px;
+	width:100px;
+	text-align:center;
+	line-height:30px;
+	font-weight: 900;
+}
+	
+.nav-tabs > li > a{
+	color:#454E59 ;
+	background-color:#BDBEC0;
+	height:40px;
+	width:100px;
+	text-align:center;
+	line-height:30px !important;
+	font-weight: 900;
+}
+	
+.nav-tabs > li > a:hover{
+	color:#BDBEC0 !important;
+	background-color:#454E59 !important;
+	border-color:#BDBEC0 !important;
+	height:40px;
+	width:100px;
+	text-align:center;
+	line-height:30px !important;
+}
+
+.title-uppercase{
+	text-transform: uppercase;
+	margin:20px;
+	color:#fff;
+}
+
+.uppercase{
+	text-transform: uppercase;
+}
+
+#takeTour{
+	height:39px;
+	background-image: linear-gradient(#7bda3d,#60c930);
+	border:none;
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+  	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  	border-color: #57aa20;
+	font-size: 12px;
+	padding: 5px 18px 5px 18px;	
+}
+	

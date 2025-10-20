@@ -1,0 +1,63 @@
+<cfsetting showdebugoutput="no">
+<cfoutput>
+<!---#url.uuid#<br/>
+#url.fcustomer#<br/>
+#url.fplacement#<br/>
+#url.fassignment#<br/>
+#url.finvoice#<br/>
+#url.femployee#<br/>--->
+<cfquery name="getCol" datasource="#dts#">
+	select * from avacolumn where entity in (''<cfif url.fCustomer eq 'true'>,'Customer'</cfif><cfif url.fPlacement eq 'true'>,'Placement'</cfif><cfif url.fAssignment eq 'true'>,'Assignment'</cfif><cfif url.fInvoice eq 'true'>,'Invoice'</cfif><cfif url.fEmployee eq 'true'>,'Employee'</cfif>) order by id
+</cfquery>
+
+<cfquery name="removesel" datasource="#dts#">
+	delete from selcolumn where `column` not in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#valuelist(getCol.column)#" separator="," list="yes">)
+</cfquery>
+
+<cfquery name="getSel" datasource="#dts#">
+	select `column` from selcolumn where uuid = "#url.uuid#"
+</cfquery>
+
+<!---#Valuelist(getsel.column)#--->
+
+<table width="80%">
+    <tr>	
+        <td width="30%"><strong>Available Column</strong></td>
+        <td width="30%"></td>
+        <td width="30%"><strong>Selected Column</strong></td>
+        <td width="10%"></td>
+    </tr>                  
+    <tr>
+        <td>
+            <select id="avaColumn" name="avaColumn" size="20" MULTIPLE style="width:80%">  
+            	<cfloop query="getCol">
+                	<cfif listcontains(valuelist(getsel.column), getcol.column)>
+                    <cfelse>	                                                  
+                    	<option value="#getCol.column#">#getCol.column#</option>
+                    </cfif>
+                </cfloop>           
+            </select>
+        </td>
+        <td align="left">                		
+            <input type="Button" value="Add >>" style="width:100px" onClick="SelectMoveRows(document.reportContent.avaColumn,document.reportContent.selColumn)">
+            <br>
+            <br>
+            <input type="Button" value="<< Remove" style="width:100px" onClick="SelectMoveRows(document.reportContent.selColumn,document.reportContent.avaColumn)">						
+            
+        </td>
+        <td align="left">
+            <select id="selColumn" name="selColumn" size="20" MULTIPLE style="width:80%">
+                <cfloop query="getsel">          
+                    <option value="#getsel.column#">#getsel.column#</option>
+                </cfloop>                        
+            </select>
+        </td>
+        <td align="left">                     
+            <input type="Button" value="Up" style="width:100px" onClick="">
+            <br>
+            <br>
+            <input type="Button" value="Down" style="width:100px" onClick="">						                    	
+        </td>
+    </tr>
+</table>
+</cfoutput>

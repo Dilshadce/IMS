@@ -1,0 +1,1936 @@
+<cfoutput>
+	<cfset uuid = createuuid()>
+	<style type="text/css">
+		@media print { ##non-printable { display: none; } }
+	</style>
+	<cfsetting requesttimeout="0" showdebugoutput="yes">
+	<cfinclude template="/object/dateobject.cfm">
+	<cfinclude template="/object/stringobject.cfm">
+    
+	<cfquery name="getpayroll" datasource="#dts#">
+    SELECT mmonth,myear FROM payroll_main.gsetup 
+    WHERE comp_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#replace(dts,'_i','')#">
+    </cfquery>
+    
+	<cfset payrollmonth = getpayroll.mmonth>
+	<cfset payrollyear = getpayroll.myear>
+        
+    <cfquery name="getplacement" datasource="#dts#">
+    SELECT * FROM placement
+    WHERE 1 = 1
+    and placementno in (
+        SELECT placementno FROM assignmentslip 
+        WHERE 1=1 
+        AND payrollperiod = "#form.month#"
+        AND created_on > #createdate(payrollyear,1,7)#
+    <cfif isdefined('form.batches')>
+    AND batches in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.batches#" separator="," list="yes">)
+    </cfif>
+    )
+    <cfif form.getfrom neq "" and form.getto neq "">
+    and custno between <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.getfrom#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.getto#">
+    </cfif>
+    <cfif form.agentfrom neq "" and form.agentto neq "">
+    and consultant between <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.agentfrom#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.agentto#">
+    </cfif>
+    <!--- <cfif form.areafrom neq "" and form.areato neq "">
+    and location between <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.areafrom#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.areato#">
+    </cfif>  --->
+    </cfquery>
+    
+	<cfif payrollmonth eq form.month>
+		<cfquery name="paytra1" datasource="#replace(dts,'_i','_p')#">
+        SELECT * FROM PAYTRA1  WHERE empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfquery name="paytran" datasource="#replace(dts,'_i','_p')#">
+        SELECT * FROM PAYTRAN WHERE empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfquery name="getlevy" datasource="#replace(dts,'_i','_p')#">
+        SELECT LEVY_SD,EMPNO,LEVY_FW_W FROM COMM WHERE empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfset paytra1tbl = "paytra1">
+		<cfset paytrantbl = "paytran">
+	<cfelse>
+		<cfquery name="paytra1" datasource="#replace(dts,'_i','_p')#">
+        SELECT * FROM pay1_12m_fig WHERE tmonth = "#form.month#" AND empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfquery name="paytran" datasource="#replace(dts,'_i','_p')#">
+        SELECT * FROM pay2_12m_fig WHERE tmonth = "#form.month#" AND empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfquery name="getlevy" datasource="#replace(dts,'_i','_p')#">
+        SELECT LEVY_SD,EMPNO,LEVY_FW_W FROM COMM_12m WHERE tmonth = "#form.month#" AND empno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.empno)#" list="yes" separator=",">)
+        </cfquery>
+		<cfset paytra1tbl = "pay1_12m_fig">
+		<cfset paytrantbl = "pay2_12m_fig">
+	</cfif>
+
+	<cfquery name="getgeneral" datasource="#dts#">
+    select lastaccyear,filterall,lCATEGORY,lGROUP,lSIZE,lMATERIAL,lMODEL,lRATING,lAGENT,lDRIVER,lLOCATION,agentlistuserid,compro from gsetup
+    </cfquery>
+    
+	<cfquery name="getassignment" datasource="#dts#">
+    SELECT * FROM (
+    SELECT aa.*,if(claimadd1 = 'Y',coalesce(addchargeself,0),0)+if(claimadd2 = 'Y',coalesce(addchargeself2,0),0)+if(claimadd3 = 'Y',coalesce(addchargeself3,0),0)+if(claimadd4 = 'Y',coalesce(addchargeself4,0),0)+if(claimadd5 = 'Y',coalesce(addchargeself5,0),0)+if(claimadd6 = 'Y',coalesce(addchargeself6,0),0) as totalamt FROM assignmentslip aa
+    WHERE payrollperiod = "#form.month#"
+    and created_on > #createdate(payrollyear,1,7)#
+    <cfif form.billfrom neq "" and form.billto neq "">
+    and refno between <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.billfrom#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.billto#">
+    </cfif>
+    <cfif form.areafrom neq "" and form.areato neq "">
+    and branch between <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.areafrom#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.areato#">
+    </cfif>
+    <cfif isdefined('form.batches')>
+    and batches in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.batches#" separator="," list="yes">)
+    </cfif>
+    <cfif form.createdfrm neq "" and form.createdto neq "">
+    and (created_by BETWEEN <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.createdfrm#"> and <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.createdto#">)
+    </cfif>
+    <!--- <cfif getplacement.recordcount neq 0> --->
+    and placementno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#VALUELIST(getplacement.placementno)#" list="yes" separator=",">)
+    <!--- </cfif> ---> ) as a
+    LEFT JOIN
+    (SELECT placementno as pno, location,consultant,custno as cno,custname,empname FROM placement WHERE year(completedate)>=(#getpayroll.myear#-1)) as b on a.placementno = b.pno
+    order by <cfif form.orderby eq 'custname'>b.<cfelseif form.orderby eq 'empno'>a.</cfif>#form.orderby#,refno
+    </cfquery>
+    
+		<head>
+		</head>
+		<body>
+			<table>
+				<tr>
+					<th colspan="100%" align="left">
+						<font style="font-size:20px">
+							<b>
+								Batch Control Report
+							</b>
+						</font>
+					</th>
+				</tr>
+				<tr>
+					<th colspan="100%" align="left">
+						#getgeneral.compro#
+					</th>
+				</tr>
+				<tr>
+					<th colspan="100%" align="left">
+						For Pay Period: #dateformat(createdate('#payrollyear#','#form.month#','1'),'mmmm yyyy')#
+					</th>
+				</tr>
+				<cfif isdefined('form.batches')>
+					<tr>
+						<th colspan="100%" align="left">
+							Batch : #form.batches#
+						</th>
+					</tr>
+				</cfif>
+				<tr>
+					<th colspan="100%" align="left">
+                        User : #getassignment.created_by#
+					</th>
+				</tr>
+				<cfif isdefined('form.batches')>
+					<cfquery name="getbanktype" datasource="#dts#">
+Select banktype from assignmentslip WHERE batches in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.batches#" list="yes" separator=",">
+) GROUP BY batches
+</cfquery>
+					<tr>
+						<th colspan="100%" align="left">
+							Bank Info : 
+                            <cfif len(getbanktype.banktype) neq 0>#valuelist(getbanktype.banktype)#</cfif>
+						</th>
+					</tr>
+				</cfif>
+				<tr>
+					<td>
+						<br>
+						<br>
+					</td>
+				</tr>
+			</table>
+			<table border="1">
+				<tr>
+                    <th valign="top" align="left">
+						Entity
+					</th>
+					<th valign="top" align="left">
+						Batch No
+					</th>
+					<th valign="top" align="left">
+						Giro Pay Date
+					</th>
+					<!--- <th valign="top" align="left">User</th> --->
+					<th valign="top" align="left">
+						Assignmentslip No
+					</th>
+					<th valign="top" align="left">
+						Cust ID
+					</th>
+					<th valign="top" align="left">
+						Customer
+					</th>
+					<th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Basic Pay</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Paid PH &
+					<br>
+					Leave</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>OT</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Payments &
+					<br />
+					Deductions</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>PB/AWS</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>EPF/SOCSO/WI/ADM for PB/AWS</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Back/Over Pay</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>EPF</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>SOCSO</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>EIS</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Admin Fee</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Rebate</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>NS</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Total Additional
+					<br />
+					Charges / Deductions
+					<br />
+					(exclude Adm Fee, Rebate & NS)</th>
+					<th valign="top" align="left">
+						Invoice Gross
+					</th>
+					<th valign="top" align="left">
+						GST
+					</th>
+					<th valign="top" align="left">
+						Total Invoice
+					</th>
+					<th valign="top" align="left">
+						MA
+					</th>
+					<th>&nbsp;
+						
+					</th>
+					<th valign="top" align="left">
+						Employee No
+					</th>
+					<th valign="top" align="left">
+						Employee
+					</th>
+					<th valign="top" align="left">
+						CHQ No
+					</th>
+					<th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Basic Pay</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Paid PH & Leave</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>OT</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Payments & Deductions</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>PB/AWS</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>Back/Over Pay</th> <th valign="top" align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>NS</th>
+					<th valign="top" align="right">
+						EE Gross
+					</th>
+					<th valign="top" align="right">
+						Reimb
+					</th>
+					<th valign="top" align="right">
+						Deduction
+					</th>
+					<th valign="top" align="right">
+						EE EPF
+					</th>
+					<th valign="top" align="right">
+						EE SOCSO
+					</th>
+                    <th valign="top" align="right">
+						EE EIS
+					</th>
+					<th valign="top" align="right">
+						TAX
+					</th>
+					<th valign="top" align="right">
+						NET PAY /
+						<br />
+						GIRO Amount
+					</th>
+					<th valign="top" align="right">
+						ER EPF
+					</th>
+					<th valign="top" align="right">
+						ER SOCSO
+					</th>
+                    <th valign="top" align="right">
+						ER EIS
+					</th>
+					<th valign="top" align="right">
+						Invoice less Salary
+					</th>
+				</tr>
+				<cfset ibasicpay = 0>
+				<cfset ipaidlvl = 0>
+				<cfset iot = 0>
+				<cfset ipayded = 0>
+				<cfset ipbaws = 0 >
+				<cfset ipbawsext = 0 >
+				<cfset ibackoverpay = 0 >
+				<cfset icpf = 0 >
+				<cfset isdf = 0 >
+                <cfset ieis = 0 >
+				<cfset iadminfee = 0>
+				<cfset irebate = 0 >
+				<cfset ins = 0 >
+				<cfset iaddcharges = 0 >
+				<cfset iinvgross = 0 >
+				<cfset igst = 0 >
+				<cfset itotalinv = 0 >
+				<cfset pbasicpay = 0 >
+				<cfset ppaidlvl = 0 >
+				<cfset pot = 0 >
+				<cfset ppayded = 0 >
+				<cfset ppbaws = 0>
+				<cfset pbackoverpay = 0 >
+				<cfset pns = 0 >
+				<cfset peegross = 0>
+				<cfset preimb = 0>
+				<cfset pded = 0>
+				<cfset peecpf = 0>
+				<cfset pfund = 0>
+				<cfset pnetpay = 0>
+				<cfset pinvless = 0 >
+				<cfset percpf = 0 >
+				<cfset psdf = 0 >
+				<cfset peesdf = 0 >
+				<cfset persdf = 0 >
+                <cfset peis = 0 >
+				<cfset peeeis = 0 >
+				<cfset pereis = 0 >
+				<cfset ma1list = "">
+				<cfset ma2list = "">
+				<cfset subibasicpay = 0>
+				<cfset subipaidlvl = 0>
+				<cfset subiot = 0>
+				<cfset subipayded = 0>
+				<cfset subipbaws = 0 >
+				<cfset subipbawsext = 0 >
+				<cfset subibackoverpay = 0 >
+				<cfset subicpf = 0 >
+				<cfset subisdf = 0 >
+                <cfset subieis = 0 >
+				<cfset subiadminfee = 0>
+				<cfset subirebate = 0 >
+				<cfset subins = 0 >
+				<cfset subiaddcharges = 0 >
+				<cfset subiinvgross = 0 >
+				<cfset subigst = 0 >
+				<cfset subitotalinv = 0 >
+				<cfset subpbasicpay = 0 >
+				<cfset subppaidlvl = 0 >
+				<cfset subpot = 0 >
+				<cfset subppayded = 0 >
+				<cfset subppbaws = 0>
+				<cfset subpbackoverpay = 0 >
+				<cfset subpns = 0 >
+				<cfset subpeegross = 0 >
+				<cfset subpreimb = 0>
+				<cfset subpded = 0>
+				<cfset subpeecpf = 0>
+				<cfset subpercpf = 0>
+				<cfset subpfund = 0>
+				<cfset subpnetpay = 0>
+				<cfset subpeesdf = 0>
+				<cfset subpersdf = 0>
+                <cfset subpeeeis = 0>
+				<cfset subpereis = 0>
+				<cfset subpsdf = 0>
+                <cfset subpeis = 0>
+				<cfset subpinvless = 0 >
+				<cfset subma1list = "">
+				<cfset subma2list = "">
+				<cfset startbatches = getassignment.batches >
+				<cfset startapprovedbydate = getassignment.approvedbydate>
+				<cfset batchlist = startbatches>
+				
+                <cfloop query="getassignment">
+					<cfif getassignment.batches neq startbatches>
+						<cfset oldbatches = startbatches>
+						<cfset approvedbydateold = startapprovedbydate>
+						<cfset startbatches = getassignment.batches >
+						<cfset startapprovedbydate = getassignment.approvedbydate>
+						<cfset batchlist = batchlist&","&getassignment.batches>
+						<tr>
+							<td colspan="100%">
+								<hr />
+							</td>
+						</tr>
+						<tr>
+							<th align="left" colspan="6">
+								Sub Total
+							</th>
+							<th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subibasicpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipaidlvl,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiot,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipayded,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipbaws,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipbawsext,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subibackoverpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subicpf,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subisdf,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subieis,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiadminfee,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subirebate,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subins,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiaddcharges,',.__')#</th>
+							<th align="right">
+								#numberformat(subiinvgross,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subigst,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subitotalinv,',.__')#
+							</th>
+							<td colspan="5">
+							</td>
+							<th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpbasicpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppaidlvl,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpot,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppayded,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppbaws,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpbackoverpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpns,',.__')#</th>
+							<th align="right">
+								#numberformat(subpeegross,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpreimb,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpded,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpeecpf,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpeesdf,',.__')#
+							</th>
+                            <th align="right">
+								#numberformat(subpeeeis,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpfund,',.__')#
+							</th>
+							<!---<th align="right">#numberformat(subpercpf,',.__')#</th>--->
+							<th align="right">
+								#numberformat(subpnetpay,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpercpf,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpersdf,',.__')#
+							</th>
+                            <th align="right">
+								#numberformat(subpereis,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpinvless,',.__')#
+							</th>
+						</tr>
+                        
+						<cfquery name="checkapproval" datasource="#dts#">
+                        SELECT approved_on,approved_by FROM argiro
+                        WHERE
+                        batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">
+                        and appstatus = "Approved"
+                        </cfquery>
+                        
+						<cfif checkapproval.recordcount neq 0>
+							<tr>
+								<td colspan="100%">
+									Batch approved on #dateformat(checkapproval.approved_on,'dd/mm/yyyy')# by #checkapproval.approved_by#
+								</td>
+							</tr>
+							<cfquery name="getintax" datasource="#dts#">
+                            SELECT funddd FROM icgiro
+                            WHERE
+                            batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">
+							and empno = '#trim(getassignment.empno)#'
+							and invoiceno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.refno)#">
+                            </cfquery>
+						</cfif>
+						<cfif form.getfrom eq "" and form.getto eq "" and form.agentfrom eq "" and form.agentto eq "" and form.areafrom eq "" and form.areato eq "" and form.billfrom eq "" and form.billto eq "" and isdefined('form.batches') and form.createdfrm eq "" and form.createdto eq "" >
+							<cfquery name="insertgirotemp" datasource="#dts#">
+                            INSERT INTO argirotemp
+                            (
+                                  `uuid`,
+                                  `batchno`,
+                                  `invgross`,
+                                  `gstamt`,
+                                  `totalinv`,
+                                  `eegross`,
+                                  `reimb`,
+                                  `dedamt`,
+                                  `eecpf`,
+                                  `funddd`,
+                                  `netpay`,
+                                  `ercpf`,
+                                  `sdf`,
+                                `eis`,
+                                  `invless`,
+                                `ibasicpay`,
+                                `ipaidlvl`,
+                                `iot`,
+                                `ipayded`,
+                                `ipbaws`,
+                                `ipbawsext`,
+                                `ibackoverpay`,
+                                `icpf`,
+                                `isdf`,
+                                `ieis`,
+                                `iadminfee`,
+                                `irebate`,
+                                `ins`,
+                                `iaddcharges`,
+                                `pbasicpay`,
+                                `ppaidlvl`,
+                                `pot`,
+                                `ppayded`,
+                                `ppbaws`,
+                                `pbackoverpay`,
+                                `pns`,
+                                `eesdf`,
+                                `ersdf`
+                                <cfif dateformat(approvedbydateold,'dd/mm/yyyy') neq "">
+                                ,`approvedbydate`
+                                </cfif>
+                            )
+                            VALUES
+                            (
+                            <cfqueryparam cfsqltype="cf_sql_varchar" value="#uuid#">,
+                            <cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiinvgross,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subigst,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subitotalinv,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeegross,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpreimb,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpded,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeecpf,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpfund,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpnetpay,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpercpf,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpsdf,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeis,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpinvless,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subibasicpay,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipaidlvl,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiot,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipayded,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipbaws,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipbawsext,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subibackoverpay,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subicpf,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subisdf,'.__')#">,
+                                <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subieis,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiadminfee,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subirebate,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subins,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiaddcharges,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpbasicpay,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppaidlvl,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpot,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppayded,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppbaws,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpbackoverpay,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpns,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeesdf,'.__')#">,
+                            <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpersdf,'.__')#">
+                            <cfif dateformat(approvedbydateold,'dd/mm/yyyy') neq "">
+                            ,"#dateformat(approvedbydateold,'yyyy-mm-dd')#"
+                            </cfif>
+                            )
+                            </cfquery>
+						</cfif>
+						<tr>
+							<td colspan="100%">&nbsp;
+								
+							</td>
+						</tr>
+						<cfset subibasicpay = 0>
+						<cfset subipaidlvl = 0>
+						<cfset subiot = 0>
+						<cfset subipayded = 0>
+						<cfset subipbaws = 0 >
+						<cfset subipbawsext = 0 >
+						<cfset subibackoverpay = 0 >
+						<cfset subicpf = 0 >
+						<cfset subisdf = 0 >
+                        <cfset subieis = 0 >
+						<cfset subiadminfee = 0>
+						<cfset subirebate = 0 >
+						<cfset subins = 0 >
+						<cfset subiaddcharges = 0 >
+						<cfset subiinvgross = 0 >
+						<cfset subigst = 0 >
+						<cfset subitotalinv = 0 >
+						<cfset subpbasicpay = 0 >
+						<cfset subppaidlvl = 0 >
+						<cfset subpot = 0 >
+						<cfset subppayded = 0 >
+						<cfset subppbaws = 0>
+						<cfset subpbackoverpay = 0 >
+						<cfset subpns = 0 >
+						<cfset subpeegross = 0 >
+						<cfset subpreimb = 0>
+						<cfset subpded = 0>
+						<cfset subpeecpf = 0>
+						<cfset subpfund = 0>
+						<cfset subpnetpay = 0>
+						<cfset subpinvless = 0 >
+						<cfset subpercpf = 0 >
+						<cfset subpsdf = 0 >
+						<cfset subpeesdf = 0 >
+						<cfset subpersdf = 0 >
+                        <cfset subpeis = 0 >
+						<cfset subpeeeis = 0 >
+						<cfset subpereis = 0 >
+						<cfset subma1list = "">
+						<cfset subma2list = "">
+					</cfif>
+					
+					<cfset getdbded.dbded115 =0.00><!---Added by Nieo for LHDN PCB--->
+					<cfset getdbded.dbded114 =0.00><!---Added by Nieo for LHDN CP38--->
+					<cfset getdbded.dbded113 =0.00><!---Added by Nieo for LHDN Tax Clearance--->
+					<cfset getdbded.dbded109 =0.00><!---Added by Nieo for PTPTN fixed deduction--->
+						
+					<!---Added by Nieo for LHDN, PTPTN fixed deduction--->
+					<cfquery name="getdbded" datasource="#replace(dts,'_i','_p')#">
+						SELECT <cfloop index="i" from="101" to="115">
+						dbded#i#<cfif i neq 115>,</cfif>
+						</cfloop>
+						FROM pmast
+						WHERE empno = '#trim(getassignment.empno)#'            
+					</cfquery>
+					<!---Added by Nieo for LHDN, PTPTN fixed deduction--->
+
+					<cfquery name="getpayroll" datasource="#replace(dts,'_i','_p')#">
+					SELECT * FROM #getassignment.emppaymenttype#
+					WHERE empno = '#getassignment.empno#'
+					</cfquery>
+					
+                   <!--- <cfif len(payrollmonth) lt 2>
+                    	<cfset paymonth = '0'&trim(payrollmonth)#>
+                    </cfif>--->
+                    
+					<cfquery name="getemprecord" datasource="#dts#">
+					SELECT empno FROM icgirotemp
+					WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.empno)#">		
+					<cfif isdefined('form.batches')>
+						and batchno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(form.batches)#" separator="," list="yes">)
+					</cfif>
+					and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(uuid)#">	
+                    and eegross <>0 and netpay<>0
+					</cfquery> 
+                        
+					<tr>
+                        <td  nowrap="nowrap">
+							#getassignment.branch#
+						</td>
+						<td  nowrap="nowrap">
+							#getassignment.batches#
+						</td>
+						<td  nowrap="nowrap">
+							#dateformat(getassignment.giropaydate,'dd/mm/yyyy')#
+						</td>
+						<!--- <td  nowrap="nowrap">#getassignment.created_by#</td> --->
+						<td  nowrap="nowrap">
+							#getassignment.refno#
+						</td>
+						<td  nowrap="nowrap">
+							#getassignment.custno#
+						</td>
+						<td  nowrap="nowrap">
+							#getassignment.custname#
+						</td>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.custsalary),',.__')#</td>
+						<cfset ibasicpay = ibasicpay + numberformat(val(getassignment.custsalary),'.__')>
+						<cfset subibasicpay = subibasicpay + numberformat(val(getassignment.custsalary),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.custphnlsalary),',.__')#</td>
+						<cfset ipaidlvl = ipaidlvl + numberformat(val(getassignment.custphnlsalary),'.__')>
+						<cfset subipaidlvl = subipaidlvl + numberformat(val(getassignment.custphnlsalary),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.custottotal),',.__')#</td>
+						<cfset iot = iot + numberformat(val(getassignment.custottotal),'.__')>
+						<cfset subiot = subiot + numberformat(val(getassignment.custottotal),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.custallowance),',.__')#</td>
+						<cfset ipayded = ipayded + numberformat(val(getassignment.custallowance),'.__')>
+						<cfset subipayded = subipayded + numberformat(val(getassignment.custallowance),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.pberamt)+val(getassignment.awseramt),',.__')#</td>
+						<cfset ipbaws = ipbaws + numberformat(val(getassignment.pberamt)+val(getassignment.awseramt),'.__')>
+						<cfset subipbaws = subipbaws + numberformat(val(getassignment.pberamt)+val(getassignment.awseramt),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.pbcpf)+val(getassignment.pbsdf)+val(getassignment.pbwi)+val(getassignment.pbadm)+val(getassignment.awscpf)+val(getassignment.awssdf)+val(getassignment.awswi)+val(getassignment.awsadm),',.__')#</td>
+						<cfset ipbawsext = ipbawsext + numberformat(val(getassignment.pbcpf)+val(getassignment.pbsdf)+val(getassignment.pbwi)+val(getassignment.pbadm)+val(getassignment.awscpf)+val(getassignment.awssdf)+val(getassignment.awswi)+val(getassignment.awsadm),'.__')>
+						<cfset subipbawsext = subipbawsext + numberformat(val(getassignment.pbcpf)+val(getassignment.pbsdf)+val(getassignment.pbwi)+val(getassignment.pbadm)+val(getassignment.awscpf)+val(getassignment.awssdf)+val(getassignment.awswi)+val(getassignment.awsadm),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.custpayback),',.__')#</td>
+						<cfset ibackoverpay = ibackoverpay + numberformat(val(getassignment.custpayback),'.__')>
+						<cfset subibackoverpay = subibackoverpay + numberformat(val(getassignment.custpayback),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getpayroll.EPFCC),',.__')#</td>
+						<cfset icpf = icpf + numberformat(val(getpayroll.EPFCC),'.__')>
+						<cfset subicpf = subicpf + numberformat(val(getpayroll.EPFCC),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getpayroll.SOCSOCC),',.__')#</td>
+						<cfset isdf = isdf + numberformat(val(getpayroll.SOCSOCC),'.__')>
+						<cfset subisdf = subisdf + numberformat(val(getpayroll.SOCSOCC),'.__')>
+                        <td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getpayroll.EISCC),',.__')#</td>
+						<cfset ieis = ieis + numberformat(val(getpayroll.EISCC),'.__')>
+						<cfset subieis = subieis + numberformat(val(getpayroll.EISCC),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.adminfee),',.__')#</td>
+						<cfset iadminfee = iadminfee + numberformat(val(getassignment.adminfee),'.__')>
+						<cfset subiadminfee = subiadminfee + numberformat(val(getassignment.adminfee),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.rebate),',.__')#</td>
+						<cfset irebate = irebate + numberformat(val(getassignment.rebate),'.__')>
+						<cfset subirebate = subirebate + numberformat(val(getassignment.rebate),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.nscustded),',.__')#</td>
+						<cfset ins = ins + numberformat(val(getassignment.nscustded),'.__')>
+						<cfset subins = subins + numberformat(val(getassignment.nscustded),'.__')>
+						<cfset totaladd = ROUND((numberformat(val(getassignment.custdeduction),'.__') - numberformat(val(getassignment.adminfee),'.__') + numberformat(val(getassignment.rebate),'.__') + numberformat(val(getassignment.nscustded),'.__'))*100)/100>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(totaladd),',.__')#</td>
+						<cfset iaddcharges = iaddcharges + numberformat(val(totaladd),'.__')>
+						<cfset subiaddcharges = subiaddcharges + numberformat(val(totaladd),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.custtotalgross),',.__')#
+						</td>
+						<cfset iinvgross = iinvgross + numberformat(val(getassignment.custtotalgross),'.__')>
+						<cfset subiinvgross = subiinvgross + numberformat(val(getassignment.custtotalgross),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.taxamt),',.__')#
+						</td>
+						<cfset igst = igst + numberformat(val(getassignment.taxamt),'.__')>
+						<cfset subigst = subigst + numberformat(val(getassignment.taxamt),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.custtotal),',.__')#
+						</td>
+						<cfset itotalinv = itotalinv + numberformat(val(getassignment.custtotal),'.__')>
+						<cfset subitotalinv = subitotalinv + numberformat(val(getassignment.custtotal),'.__')>
+
+						<cfquery name="levysd" dbtype="query">
+SELECT LEVY_SD,LEVY_FW_W FROM getlevy WHERE UPPER(EMPNO) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#UCASE(getassignment.empno)#">
+</cfquery>
+						<!--- <cfif getassignment.emppaymenttype neq "payweek1">
+							<cfset levysd.LEVY_SD = 0>
+							<cfset levysd.LEVY_FW_W = 0>
+							</cfif> --->
+						<cfquery name="checkma" datasource="#dts#">
+SELECT count(refno) as rc, sum(if(claimadd1 = 'Y',coalesce(addchargeself,0),0)+if(claimadd2 = 'Y',coalesce(addchargeself2,0),0)+if(claimadd3 = 'Y',coalesce(addchargeself3,0),0)+if(claimadd4 = 'Y',coalesce(addchargeself4,0),0)+if(claimadd5 = 'Y',coalesce(addchargeself5,0),0)+if(claimadd6 = 'Y',coalesce(addchargeself6,0),0)) as totalamt, sum(coalesce(ded1,0)+coalesce(ded2,0)+coalesce(ded3,0)) as totalded 
+FROM assignmentslip 
+WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.empno#"> 
+and payrollperiod = "#form.month#"
+and created_on > #createdate(payrollyear,1,7)#
+and paydate = "#getassignment.paydate#"
+and refno = "#getassignment.refno#"
+</cfquery>
+<!--- REMOVE BECAUSE EEGROSS DOES NOT SHOW DOUBLE ASSIGNMENT
+						<cfif getassignment.paydate eq "paytra1">
+							<cfif listfind(ma1list,#getassignment.empno#) neq 0>
+								<cfset getpayroll.grosspay = 0>
+								<cfset getpayroll.epfww = 0>
+								<cfset getpayroll.tded = 0>
+								<cfset getpayroll.epfcc = 0>
+								<cfset getpayroll.netpay = 0>
+								<cfset getpayroll.ded101 = 0>
+								<cfset getpayroll.aw116 = 0>
+								<cfset getpayroll.aw117 = 0>
+								<cfset getassignment.selfsalary = 0>
+								<cfset getassignment.selfphnlsalary = 0>
+								<cfset getassignment.selfottotal = 0 >
+								<cfset getassignment.selfallowance = 0>
+								<cfset getassignment.selfpayback = 0>
+								<cfset checkma.totalamt = 0 >
+								<cfset checkma.totalded = 0 >
+								<cfset levysd.levy_sd = 0>
+								<cfset levysd.levy_fw_w = 0>
+							</cfif>
+						<cfelse>
+							<cfif listfind(ma2list,#getassignment.empno#) neq 0>
+								<cfset getpayroll.grosspay = 0>
+								<cfset getpayroll.epfww = 0>
+								<cfset getpayroll.tded = 0>
+								<cfset getpayroll.epfcc = 0>
+								<cfset getpayroll.netpay = 0>
+								<cfset getpayroll.ded101 = 0>
+								<cfset getpayroll.aw116 = 0>
+								<cfset getpayroll.aw117 = 0>
+								<cfset getassignment.selfsalary = 0>
+								<cfset getassignment.selfphnlsalary = 0>
+								<cfset getassignment.selfottotal = 0 >
+								<cfset getassignment.selfallowance = 0>
+								<cfset getassignment.selfpayback = 0>
+								<cfset checkma.totalamt = 0 >
+								<cfset checkma.totalded = 0 >
+								<cfset levysd.levy_sd = 0>
+								<cfset levysd.levy_fw_w = 0>
+							</cfif>
+						</cfif>
+						--->
+						<cfif checkma.rc neq 1>
+							<cfset ma = "Y">
+							<cfif getassignment.paydate eq "paytra1">
+								<cfset ma1list = ma1list&trim(getassignment.empno)&",">
+							<cfelse>
+								<cfset ma2list = ma2list&trim(getassignment.empno)&",">
+							</cfif>
+						<cfelse>
+							<cfset ma = "">
+						</cfif>
+						<cfquery name="getpayrolldetail" dbtype="query">
+SELECT grosspay FROM #getassignment.paydate#
+WHERE UPPER(EMPNO) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#UCASE(getassignment.empno)#">
+</cfquery>
+						<cfquery name="getpayrolldetail2" dbtype="query">
+SELECT grosspay FROM <cfif getassignment.paydate eq "paytra1">paytran<cfelse>paytra1</cfif>
+WHERE UPPER(EMPNO) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#UCASE(getassignment.empno)#">
+</cfquery>
+
+						<cfquery name="checkapproval" datasource="#dts#">
+						SELECT approved_on,approved_by,uuid FROM argiro
+						WHERE
+						batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.batches#">
+						and (appstatus = "Approved" OR appstatus = "Pending")
+						</cfquery>
+        
+						<cfif val(getpayrolldetail.grosspay) + val(getpayrolldetail2.grosspay) neq 0>
+							<cfset levysd.levy_sd = numberformat(val(levysd.levy_sd) * (val(getpayrolldetail.grosspay)/(val(getpayrolldetail.grosspay) + val(getpayrolldetail2.grosspay))),'.__')>
+						</cfif>
+						<td  nowrap="nowrap">
+							#ma#
+						</td>
+						<td  nowrap="nowrap">
+						</td>
+						<td  nowrap="nowrap">
+							#getassignment.empno#
+						</td>
+						<td  nowrap="nowrap">
+							#getassignment.empname#
+						</td>
+						<td  nowrap="nowrap">
+							#getpayroll.cheque_no#
+						</td>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.selfsalary),',.__')#</td>
+						<cfset pbasicpay = pbasicpay + numberformat(val(getassignment.selfsalary),'.__')>
+						<cfset subpbasicpay = subpbasicpay + numberformat(val(getassignment.selfsalary),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.selfphnlsalary),',.__')#</td>
+						<cfset ppaidlvl = ppaidlvl + numberformat(val(getassignment.selfphnlsalary),'.__')>
+						<cfset subppaidlvl = subppaidlvl + numberformat(val(getassignment.selfphnlsalary),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.selfottotal),',.__')#</td>
+						<cfset pot = pot + numberformat(val(getassignment.selfottotal),'.__')>
+						<cfset subpot = subpot + numberformat(val(getassignment.selfottotal),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.selfallowance),',.__')#</td>
+						<cfset ppayded = ppayded + numberformat(val(getassignment.selfallowance),'.__')>
+						<cfset subppayded = subppayded + numberformat(val(getassignment.selfallowance),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getpayroll.aw116)+val(getpayroll.aw117),',.__')#</td>
+						<cfset ppbaws = ppbaws + numberformat(val(getpayroll.aw116)+val(getpayroll.aw117),'.__')>
+						<cfset subppbaws = subppbaws + numberformat(val(getpayroll.aw116)+val(getpayroll.aw117),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getassignment.selfpayback),',.__')#</td>
+						<cfset pbackoverpay = pbackoverpay + numberformat(val(getassignment.selfpayback),'.__')>
+						<cfset subpbackoverpay = subpbackoverpay + numberformat(val(getassignment.selfpayback),'.__')>
+						<td nowrap="nowrap" align="right"
+						<cfif isdefined('form.summary')>
+							style="display:none"
+						</cfif>
+						>#numberformat(val(getpayroll.ded101),',.__')#</td>
+						<cfset pns = pns + numberformat(val(getpayroll.ded101),'.__')>
+						<cfset subpns = subpns + numberformat(val(getpayroll.ded101),'.__')>
+						
+						
+						<cfset peegross = numberformat(val(peegross) + val(getassignment.selfsalary) + val(getassignment.selfphnlsalary) + val(getassignment.selfottotal) + val(getassignment.selfallowance) + val(getpayroll.aw116)+val(getpayroll.aw117) +val(getassignment.selfpayback) + val(getpayroll.ded101 ),'.__')>
+						<cfset subpeegross = numberformat(val(subpeegross) + val(getassignment.selfsalary) + val(getassignment.selfphnlsalary) + val(getassignment.selfottotal) + val(getassignment.selfallowance) + val(getpayroll.aw116)+val(getpayroll.aw117) + val(getassignment.selfpayback) + val(getpayroll.ded101) ,'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val( getassignment.selfsalary) + val(getassignment.selfphnlsalary) + val(getassignment.selfottotal) + val(getassignment.selfallowance) + val(getpayroll.aw116)+val(getpayroll.aw117) + val(getassignment.selfpayback) + val(getpayroll.ded101) ,'.__')#
+						</td>
+
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(checkma.totalamt),',.__')#
+						</td>
+						<cfset preimb = preimb + numberformat(val(checkma.totalamt),'.__')>
+						<cfset subpreimb = subpreimb + numberformat(val(checkma.totalamt),'.__')>
+						
+                        <cfif getemprecord.recordcount neq 0  or val(getassignment.selftotal) eq 0>
+								<cfset getdbded.dbded109=0.00>
+                                <cfset getdbded.dbded114=0.00>
+                                <cfset getdbded.dbded113=0.00>
+						</cfif>
+                        
+						<!---added for LHDN CP38 deduction--->
+                        <cfquery name="getded" datasource="#dts#">
+                            SELECT sum(deduction) as deduction FROM icgiro
+                            WHERE
+                            batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.batches)#"> 
+							and empno = '#trim(getassignment.empno)#'
+							and invoiceno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.refno)#">
+							and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#checkapproval.uuid#">
+                            </cfquery>
+						<td  nowrap="nowrap" align="right">
+							
+                            <!---Added by Nieo 20170928 0946, update netapay when deduction--->
+                            <cfif getded.recordcount neq 0 and getded.deduction neq ''>
+                            <cfelse> 
+                                <!---Added by Nieo 20171213 1501, fix CP38 bugs with assignmentslip based--->
+                                <cfif (getpayroll.ded109 gt 0 or getpayroll.ded113 gt 0 or getpayroll.ded114 gt 0 or getdbded.dbded109 gt 0 or getdbded.dbded113 gt 0 or getdbded.dbded114 gt 0) and getassignment.selftotal neq 0>
+                                    
+                                    <cfquery name="getcurrentassigntotal" datasource="#dts#">
+                                    SELECT emppaymenttype,custtotalgross FROM assignmentslip
+                                    WHERE empno="#getassignment.empno#"
+                                    AND payrollperiod = "#payrollmonth#"
+                                    AND created_on > #createdate(payrollyear,1,7)#
+                                    </cfquery>
+                                    
+                                    <cfquery name="getcurrentassign" dbtype="query">
+                                    SELECT emppaymenttype,custtotalgross FROM getcurrentassigntotal
+                                    WHERE emppaymenttype != <cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.emppaymenttype#">
+                                    </cfquery>
+
+                                    <cfset currentded109 = 0>
+                                    <cfset currentded113 = 0>
+                                    <cfset currentded114 = 0>
+                                        
+                                    <cfloop query="getcurrentassign">
+                                        <cfquery name="checkded" datasource="#replace(dts,'_i','_p')#">
+                                            SELECT ded109,ded113,ded114 
+                                            FROM #getcurrentassign.emppaymenttype#
+                                            WHERE empno = "#getassignment.empno#"
+                                            AND payyes="Y"
+                                        </cfquery>
+
+                                        <cfif checkded.recordcount neq 0>
+                                            <cfif checkded.ded109 neq 0>
+                                                <cfset currentded109 += val(checkded.ded109)>
+                                            </cfif>
+                                            <cfif checkded.ded113 neq 0>
+                                                <cfset currentded113 += val(checkded.ded113)>
+                                            </cfif>
+                                            <cfif checkded.ded114 neq 0>
+                                                <cfset currentded114 += val(checkded.ded114)>
+                                            </cfif>
+                                        </cfif>
+                                    </cfloop>
+
+                                    <cfset currentded109 = val(getdbded.dbded109)-val(currentded109)>
+                                    <cfset currentded113 = val(getdbded.dbded113)-val(currentded113)>
+                                    <cfset currentded114 = val(getdbded.dbded114)-val(currentded114)>
+
+                                    <cfif currentded109 lt 0>
+                                        <cfset currentded109 = 0>
+                                    </cfif>
+
+                                    <cfif currentded113 lt 0>
+                                        <cfset currentded113 = 0>
+                                    </cfif>
+
+                                    <cfif currentded114 lt 0>
+                                        <cfset currentded114 = 0>
+                                    </cfif>
+                                    
+                                    <cfquery name="updatededpayweek" datasource="#replace(dts,'_i','_p')#">
+                                        UPDATE #getassignment.emppaymenttype#
+                                        SET ded114=<cfqueryparam cfsqltype="cf_sql_double" value="#val(currentded114)#">,
+                                        ded113=<cfqueryparam cfsqltype="cf_sql_double" value="#val(currentded113)#">,
+                                        ded109=<cfqueryparam cfsqltype="cf_sql_double" value="#val(currentded109)#">,
+                                        payyes="Y"
+                                        WHERE empno = '#trim(getassignment.empno)#'
+                                    </cfquery>
+                                        
+                                    <cfset getdbded.dbded109=val(currentded109)>
+                                    <cfset getdbded.dbded114=val(currentded114)>
+                                    <cfset getdbded.dbded113=val(currentded113)>
+                                        
+                                    <!---Added by Nieo 20171213 1512 5to total all deduction in payweek--->
+                                    <cfset tded109 = 0>
+                                    <cfset tded113 = 0>
+                                    <cfset tded114 = 0>
+                                        
+                                    <cfloop query="getcurrentassigntotal">
+                                        <cfquery name="checkded" datasource="#replace(dts,'_i','_p')#">
+                                            SELECT ded109,ded113,ded114 
+                                            FROM #getcurrentassigntotal.emppaymenttype#
+                                            WHERE empno = "#getassignment.empno#"
+                                            AND payyes="Y"
+                                        </cfquery>
+
+                                        <cfif checkded.recordcount neq 0>
+                                            <cfif checkded.ded109 neq 0>
+                                                <cfset tded109 += val(checkded.ded109)>
+                                            </cfif>
+                                            <cfif checkded.ded113 neq 0>
+                                                <cfset tded113 += val(checkded.ded113)>
+                                            </cfif>
+                                            <cfif checkded.ded114 neq 0>
+                                                <cfset tded114 += val(checkded.ded114)>
+                                            </cfif>
+                                        </cfif>
+                                    </cfloop>
+                                    <!---Added by Nieo 20171213 1512 5to total all deduction in payweek--->
+
+                                    <!---<cfif tded109 gt 0 or tded113 gt 0 or tded114 gt 0>--->
+                                        <cfquery name="updatededpaytra1" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE paytra1
+                                            SET ded114=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded114)#">,
+                                            ded113=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded113)#">,
+                                            ded109=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded109)#">,
+                                            payyes="Y"
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                        <cfquery name="updatededpaytran" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE paytran
+                                            SET ded114=0.00,
+                                            ded113=0.00,
+                                            ded109=0.00
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                        <cfquery name="updateNetpay" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE paytra1
+                                            SET netpay=grosspay-ifnull(epfww,0.00)-ifnull(socsoww,0.00)-ifnull(eisww,0.00)-ifnull(ded115,0.00)-ifnull(ded114,0.00)-ifnull(ded109,0.00)-ifnull(ded113,0.00)+ifnull(tdedu,0.00),
+                                            payyes="Y"
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                        <cfquery name="updateNetpay" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE paytran
+                                            SET netpay=grosspay-ifnull(epfww,0.00)-ifnull(socsoww,0.00)-ifnull(eisww,0.00)-ifnull(ded115,0.00)-ifnull(ded114,0.00)-ifnull(ded109,0.00)-ifnull(ded113,0.00)+ifnull(tdedu,0.00),
+                                            payyes="Y"
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                        <cfquery name="updatededpay_tm" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE pay_tm
+                                            SET ded114=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded114)#">,
+                                            ded113=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded113)#">,
+                                            ded109=<cfqueryparam cfsqltype="cf_sql_double" value="#val(tded109)#">,
+                                            payyes="Y"
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                        <cfquery name="updateNetpay" datasource="#replace(dts,'_i','_p')#">
+                                            UPDATE pay_tm
+                                            SET netpay=grosspay-ifnull(epfww,0.00)-ifnull(socsoww,0.00)-ifnull(eisww,0.00)-ifnull(ded115,0.00)-ifnull(ded114,0.00)-ifnull(ded109,0.00)-ifnull(ded113,0.00)+ifnull(tdedu,0.00),
+                                            payyes="Y"
+                                            WHERE empno = '#trim(getassignment.empno)#'
+                                        </cfquery>
+                                    <!---</cfif>--->
+                                </cfif>
+                                <!---Added by Nieo 20171213 1501, fix CP38 bugs with assignmentslip based--->
+                            </cfif>
+                            <!---End Added by Nieo 20170928 0946, update netapay when deduction--->
+                            <cfif getded.recordcount neq 0 and getded.deduction neq ''>#numberformat(val(getded.deduction),',.__')#<cfelse>#numberformat(val(checkma.totalded)+val(getdbded.dbded114)+val(getdbded.dbded113)+val(getdbded.dbded109),',.__')#</cfif>
+                                        
+						</td>                        
+						
+                        <cfif getded.recordcount neq 0  and getded.deduction neq ''>
+                        	<cfset pded = pded + numberformat(val(getded.deduction),'.__') >
+                            <cfset subpded = subpded + numberformat(val(getded.deduction),'.__')>
+                        <cfelse>
+							<cfset pded = pded + numberformat(val(checkma.totalded),'.__') + numberformat(val(getdbded.dbded114)+val(getdbded.dbded113)+val(getdbded.dbded109),'.__') >
+                            <cfset subpded = subpded + numberformat(val(checkma.totalded),'.__')+ numberformat(val(getdbded.dbded114)+val(getdbded.dbded113)+val(getdbded.dbded109),'.__')>
+                        </cfif>
+						<!---added for LHDN CP38 deduction--->
+							
+                        
+						<!---<td  nowrap="nowrap" align="right">#numberformat(val(getpayroll.EPFWW),',.__')#</td>--->
+						<cfset peecpf = peecpf + numberformat(val(getassignment.selfcpf),'.__')>
+						<cfset subpeecpf = subpeecpf + numberformat(val(getassignment.selfcpf),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.selfcpf),',.__')#
+						</td>
+						<cfset peesdf = peesdf + numberformat(val(getassignment.selfsdf),'.__')>
+						<cfset subpeesdf = subpeesdf + numberformat(val(getassignment.selfsdf),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.selfsdf),'.__')#
+						</td>
+                        <cfset peeeis = peeeis + numberformat(val(getassignment.selfeis),'.__')>
+						<cfset subpeeeis = subpeeeis + numberformat(val(getassignment.selfeis),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.selfeis),'.__')#
+						</td>
+						
+						<cfif getemprecord.recordcount neq 0>
+								<!---<cfset getpayroll.ded115=0.00>
+								<cfset getdbded.dbded114=0.00>--->
+                                <cfset getdbded.dbded109 =0.00>
+						</cfif>						
+						
+                        
+						<cfif checkapproval.recordcount	neq 0>
+                            <!---Updated by Nieo 20171110 0931, improve accuracy--->
+							<cfquery name="getintax" datasource="#dts#">
+                            SELECT sum(ic.funddd) as funddd FROM icgiro ic
+                            LEFT JOIN argiro ar
+                            ON ic.batchno=ar.batchno and ic.uuid=ar.uuid
+                            WHERE
+                            ic.batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.batches)#"> 
+							and ic.empno = '#trim(getassignment.empno)#'
+							and ic.invoiceno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getassignment.refno)#">
+							and (appstatus = "Approved" OR appstatus = "Pending")
+                            </cfquery>
+                            <!---Updated by Nieo 20171110 0931, improve accuracy--->
+                                
+							<cfset pfund = pfund + numberformat(val(getintax.funddd),'.__')>
+							<cfset subpfund = subpfund + numberformat(val(getintax.funddd),'.__')>
+							<td  nowrap="nowrap" align="right">
+							#numberformat(val(getintax.funddd),'.__')#
+						<cfelse>							
+							<cfset pfund = pfund + numberformat(val(getpayroll.ded115),'.__')>
+							<cfset subpfund = subpfund + numberformat(val(getpayroll.ded115),'.__')>
+							<td  nowrap="nowrap" align="right">
+							#numberformat(numberformat(val(getpayroll.ded115),'.__'),'.__')#
+						</cfif>
+						</td>
+						<cfif checkapproval.recordcount	neq 0>
+							<cfset totalnet = numberformat(val(getassignment.selftotal),'.__')-numberformat(val(getded.deduction),'.__')-numberformat(val(getintax.funddd),'.__')>
+						<cfelse>
+							<cfset totalnet = numberformat(val(getassignment.selftotal),'.__')-numberformat(val(checkma.totalded),'.__')-numberformat(val(getpayroll.ded115),'.__')- numberformat(val(getdbded.dbded113),'.__')- numberformat(val(getdbded.dbded114),'.__')- numberformat(val(getdbded.dbded109),'.__')>
+						</cfif>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(totalnet),',.__')#
+						</td>
+						<!---<cfset percpf = percpf + numberformat(val(getpayroll.EPFCC),'.__')>
+							<cfset subpercpf = subpercpf + numberformat(val(getpayroll.EPFCC),'.__')>--->
+						<!---<td  nowrap="nowrap" align="right">#numberformat(val(getassignment.selfusualpay),',.__')#</td>--->
+						<cfset percpf = percpf + numberformat(val(getassignment.custcpf),'.__')>
+						<cfset subpercpf = subpercpf + numberformat(val(getassignment.custcpf),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.custcpf),',.__')#
+						</td>
+						<cfset persdf = persdf + numberformat(val(getassignment.custsdf),'.__')>
+						<cfset subpersdf = subpersdf + numberformat(val(getassignment.custsdf),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.custsdf),',.__')#
+						</td>
+                        <cfset pereis = pereis + numberformat(val(getassignment.custeis),'.__')>
+						<cfset subpereis = subpereis + numberformat(val(getassignment.custeis),'.__')>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(getassignment.custeis),',.__')#
+						</td>
+						<cfset pnetpay = pnetpay + numberformat(val(totalnet),'.__')>
+						<cfset subpnetpay = subpnetpay + numberformat(val(totalnet),'.__')>
+						<cfset invlesspay = numberformat(val(getassignment.custtotalgross),'.__') - (numberformat(val(getassignment.selftotal)-val(getpayroll.ded101)-val(getdbded.dbded113)-val(getdbded.dbded114)-val(getdbded.dbded109),'.__')+ numberformat(val(checkma.totalamt),'.__')+numberformat(val(getpayroll.EPFWW),'.__')+numberformat(val(levysd.levy_sd),'.__')+numberformat(val(levysd.levy_fw_w),'.__'))>
+                        <cfset subpinvless = val(subpinvless) + numberformat(val(invlesspay),'.__')>
+                        <cfset pinvless = val(pinvless) + val(subpinvless)>
+						<td  nowrap="nowrap" align="right">
+							#numberformat(val(invlesspay),',.__')#,
+							<br>
+							#getassignment.custtotalgross# Invoice gross - (#val(getassignment.selftotal)# Salary + #val(checkma.totalamt)# Add Charges - #val(getpayroll.ded101)# DED + #val(getpayroll.EPFWW)# EPF)							
+                        </td>
+					</tr>
+					<cfif form.getfrom eq "" and form.getto eq "" and form.agentfrom eq "" and form.agentto eq "" and form.areafrom eq "" and form.areato eq "" and form.billfrom eq "" and form.billto eq "" and isdefined('form.batches') and form.createdfrm eq "" and form.createdto eq "">
+						<cfquery name="insertrow" datasource="#dts#">
+INSERT INTO icgirotemp
+(
+  `uuid`,
+  `batchno`,
+  `giropaydate`,
+  `invoiceno`,
+  `custid`,
+  `customer`,
+  `invoicegross`,
+  `gstamt`,
+  `totalinv`,
+  `multipleassign`,
+  `empno`,
+  `empname`,
+  `chequeno`,
+  `eegross`,
+  `reimb`,
+  `deduction`,
+  `eecpf`,
+  `funddd`,
+  `netpay`,
+  `ercpf`,
+  `sdfamt`,
+`eisamt`,
+  `invless`,
+      `ibasicpay`,
+    `ipaidlvl`,
+    `iot`,
+    `ipayded`,
+    `ipbaws`,
+    `ipbawsext`,
+    `ibackoverpay`,
+    `icpf`,
+    `isdf`,
+    `ieis`,
+    `iadminfee`,
+    `irebate`,
+    `ins`,
+    `iaddcharges`,
+    `pbasicpay`,
+    `ppaidlvl`,
+    `pot`,
+    `ppayded`,
+    `ppbaws`,
+    `pbackoverpay`,
+    `pns`,
+    `eesdf`,
+    `ersdf`
+)
+VALUES
+(
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#uuid#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.batches#">,
+"#dateformat(getassignment.giropaydate,'yyyy-mm-dd')#",
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.refno#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.custno#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.custname#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custtotalgross),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.taxamt),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custtotal),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#ma#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.empno#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getassignment.empname#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#getpayroll.cheque_no#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getpayroll.grosspay),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(checkma.totalamt),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(checkma.totalded)+val(getdbded.dbded114)+val(getdbded.dbded113)+val(getdbded.dbded109),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfcpf),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getpayroll.ded115),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(totalnet),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfcpf),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfsdf),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfeis),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(invlesspay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custsalary),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custphnlsalary),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custottotal),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custallowance),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.pberamt)+val(getassignment.awseramt),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.pbcpf)+val(getassignment.pbsdf)+val(getassignment.pbwi)+val(getassignment.pbadm)+val(getassignment.awscpf)+val(getassignment.awssdf)+val(getassignment.awswi)+val(getassignment.awsadm),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custpayback),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custcpf),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custsdf),'.__')#">,
+    <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.custeis),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.adminfee),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.rebate),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.nscustded),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(totaladd),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfsalary),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfphnlsalary),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfottotal),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfallowance),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getpayroll.aw116)+val(getpayroll.aw117),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getassignment.selfpayback),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(val(getpayroll.ded101),'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeesdf,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpersdf,'.__')#">
+)
+</cfquery>
+					</cfif>
+					<cfif getassignment.recordcount eq getassignment.currentrow>
+						<cfset oldbatches = getassignment.batches>
+						<cfset approvedbydateold = getassignment.approvedbydate>
+						<tr>
+							<td colspan="100%">
+								<hr />
+							</td>
+						</tr>
+						<tr>
+							<th align="left" colspan="6">
+								Sub Total
+							</th>
+							<th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subibasicpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipaidlvl,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiot,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipayded,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipbaws,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subipbawsext,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subibackoverpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subicpf,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subisdf,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subieis,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiadminfee,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subirebate,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subins,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subiaddcharges,',.__')#</th>
+							<th align="right">
+								#numberformat(subiinvgross,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subigst,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subitotalinv,',.__')#
+							</th>
+							<td colspan="5">
+							</td>
+							<th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpbasicpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppaidlvl,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpot,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppayded,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subppbaws,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpbackoverpay,',.__')#</th> <th align="right"
+							<cfif isdefined('form.summary')>
+								style="display:none"
+							</cfif>
+							>#numberformat(subpns,',.__')#</th>
+							<th align="right">
+								#numberformat(subpeegross,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpreimb,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpded,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpeecpf,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpeesdf,',.__')#
+							</th>
+                            <th align="right">
+								#numberformat(subpeeeis,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpfund,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpnetpay,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpercpf,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpersdf,',.__')#
+							</th>
+                            <th align="right">
+								#numberformat(subpereis,',.__')#
+							</th>
+							<th align="right">
+								#numberformat(subpinvless,',.__')#
+							</th>
+						</tr>
+						<cfquery name="checkapproval" datasource="#dts#">
+SELECT approved_on,approved_by FROM argiro
+WHERE
+batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">
+and appstatus = "Approved"
+</cfquery>
+						<cfif checkapproval.recordcount neq 0>
+							<tr>
+								<td colspan="100%">
+									Batch approved on #dateformat(checkapproval.approved_on,'dd/mm/yyyy')# by #checkapproval.approved_by#
+								</td>
+							</tr>
+							<cfquery name="getintax" datasource="#dts#">
+                            SELECT funddd FROM icgiro
+                            WHERE
+                            batchno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">
+                            </cfquery>
+						</cfif>
+						<cfif form.getfrom eq "" and form.getto eq "" and form.agentfrom eq "" and form.agentto eq "" and form.areafrom eq "" and form.areato eq "" and form.billfrom eq "" and form.billto eq "" and isdefined('form.batches') and form.createdfrm eq "" and form.createdto eq "">
+							<cfquery name="insertgirotemp" datasource="#dts#">
+INSERT INTO argirotemp
+(
+      `uuid`,
+      `batchno`,
+      `invgross`,
+      `gstamt`,
+      `totalinv`,
+      `eegross`,
+      `reimb`,
+      `dedamt`,
+      `eecpf`,
+      `funddd`,
+      `netpay`,
+      `ercpf`,
+      `invless`,
+    `ibasicpay`,
+    `ipaidlvl`,
+    `iot`,
+    `ipayded`,
+    `ipbaws`,
+    `ipbawsext`,
+    `ibackoverpay`,
+    `icpf`,
+    `iadminfee`,
+    `irebate`,
+    `ins`,
+    `iaddcharges`,
+    `pbasicpay`,
+    `ppaidlvl`,
+    `pot`,
+    `ppayded`,
+    `ppbaws`,
+    `pbackoverpay`,
+    `pns`,
+    `eesdf`,
+	`ersdf`
+    <cfif dateformat(approvedbydateold,'dd/mm/yyyy') neq "">
+    ,`approvedbydate`
+    </cfif>
+)
+VALUES
+(
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#uuid#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#oldbatches#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiinvgross,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subigst,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subitotalinv,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeegross,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpreimb,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpded,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeecpf,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpfund,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpnetpay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpercpf,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpinvless,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subibasicpay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipaidlvl,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiot,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipayded,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipbaws,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subipbawsext,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subibackoverpay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subicpf,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiadminfee,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subirebate,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subins,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subiaddcharges,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpbasicpay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppaidlvl,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpot,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppayded,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subppbaws,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpbackoverpay,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpns,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpeesdf,'.__')#">,
+<cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(subpersdf,'.__')#">
+<cfif dateformat(approvedbydateold,'dd/mm/yyyy') neq "">
+,"#dateformat(approvedbydateold,'yyyy-mm-dd')#"
+</cfif>
+)
+</cfquery>
+						</cfif>
+						<tr>
+							<td colspan="100%">&nbsp;
+								
+							</td>
+						</tr>
+						<cfset subibasicpay = 0>
+						<cfset subipaidlvl = 0>
+						<cfset subiot = 0>
+						<cfset subipayded = 0>
+						<cfset subipbaws = 0 >
+						<cfset subipbawsext = 0 >
+						<cfset subibackoverpay = 0 >
+						<cfset subicpf = 0 >
+						<cfset subisdf = 0 >
+                            <cfset subieis = 0 >
+						<cfset subiadminfee = 0>
+						<cfset subirebate = 0 >
+						<cfset subins = 0 >
+						<cfset subiaddcharges = 0 >
+						<cfset subiinvgross = 0 >
+						<cfset subigst = 0 >
+						<cfset subitotalinv = 0 >
+						<cfset subpbasicpay = 0 >
+						<cfset subppaidlvl = 0 >
+						<cfset subpot = 0 >
+						<cfset subppayded = 0 >
+						<cfset subppbaws = 0>
+						<cfset subpbackoverpay = 0 >
+						<cfset subpns = 0 >
+						<cfset subpeegross = 0 >
+						<cfset subpreimb = 0>
+						<cfset subpded = 0>
+						<cfset subpeecpf = 0>
+						<cfset subpfund = 0>
+						<cfset subpnetpay = 0>
+						<cfset subpinvless = 0 >
+						<cfset subma1list = "">
+						<cfset subma2list = "">
+					</cfif>
+				</cfloop>
+				<tr>
+					<td colspan="100%">
+						<hr />
+					</td>
+				</tr>
+				<tr>
+					<th align="left" colspan="6">
+						Total Amount
+					</th>
+					<th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ibasicpay,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ipaidlvl,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(iot,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ipayded,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ipbaws,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ipbawsext,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ibackoverpay,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(icpf,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(isdf,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ieis,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(iadminfee,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(irebate,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ins,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(iaddcharges,',.__')#</th>
+					<th align="right">
+						#numberformat(iinvgross,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(igst,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(itotalinv,',.__')#
+					</th>
+					<td colspan="5">
+					</td>
+					<th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(pbasicpay,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ppaidlvl,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(pot,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ppayded,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(ppbaws,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(pbackoverpay,',.__')#</th> <th align="right"
+					<cfif isdefined('form.summary')>
+						style="display:none"
+					</cfif>
+					>#numberformat(pns,',.__')#</th>
+					<th align="right">
+						#numberformat(peegross,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(preimb,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(pded,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(peecpf,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(peesdf,',.__')#
+					</th>
+                    <th align="right">
+						#numberformat(peeeis,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(pfund,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(pnetpay,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(percpf,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(persdf,',.__')#
+					</th>
+                    <th align="right">
+						#numberformat(pereis,',.__')#
+					</th>
+					<th align="right">
+						#numberformat(pinvless,',.__')#
+					</th>
+				</tr>
+				<tr>
+					<td colspan="100%">
+						<hr />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="100%">
+						<hr />
+					</td>
+				</tr>
+				<cfquery name="getremark" datasource="#dts#">
+SELECT assigndesp,refno,batches FROM assignmentslip
+WHERE
+refno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#valuelist(getassignment.refno)#" list="yes" separator=",">)
+AND assigndesp <> ""
+AND assigndesp is not null
+ORDER BY batches,refno
+</cfquery>
+				<cfif getremark.recordcount neq 0>
+					<tr>
+						<td colspan="100%">
+							<table>
+								<tr>
+									<th>
+										Batch No
+									</th>
+									<th>
+										Invoice No
+									</th>
+									<th>
+										Remark
+									</th>
+								</tr>
+								<cfloop query="getremark">
+									<tr>
+										<td>
+											#getremark.batches#
+										</td>
+										<td>
+											#getremark.refno#
+										</td>
+										<td>
+											#getremark.assigndesp#
+										</td>
+									</tr>
+								</cfloop>
+							</table>
+						</td>
+					</tr>
+				</cfif>
+				<cfif isdefined('form.summary')>
+					<tr>
+						<td align="right" colspan="100%">
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							________________________
+							<br />
+							` (Approved by ___________/Date)
+						</td>
+					</tr>
+					<cfif form.getfrom eq "" and form.getto eq "" and form.agentfrom eq "" and form.agentto eq "" and form.areafrom eq "" and form.areato eq "" and form.billfrom eq "" and form.billto eq "" and isdefined('form.batches') and form.createdfrm eq "" and form.createdto eq "" and isdefined('form.summary')>
+						<cfquery name="checkexisted" datasource="#dts#">
+SELECT id,submited_by,submited_on,batchno FROM argiro WHERE batchno in (<cfqueryparam cfsqltype="cf_sql_varchar" value="#batchlist#" separator="," list="yes">) and appstatus in ("Approved","Pending") ORDER BY submited_on
+</cfquery>
+						<cfif checkexisted.recordcount neq listlen(batchlist)>
+							<tr>
+								<td align="right" colspan="100%">
+									<cfform name="submitform" id="submitform" action="submitforapprove.cfm" method="post">
+										<cfinput type="hidden" required="yes" message="No Batch For Approval" name="batchlist" id="batchlist" validateat="onsubmit" value="#batchlist#">
+										<cfinput type="hidden" name="uuidfield" id="uuidfield" value="#uuid#">
+										<cfinput type="submit" name="submit_btn" id="non-printable" value="Submit For Approval" validate="submitonce" validateat="onsubmit">
+									</cfform>
+								</td>
+							</tr>
+						</cfif>
+					</cfif>
+				</cfif>
+			</table>
+		</body>
+</cfoutput>

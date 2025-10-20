@@ -1,0 +1,3 @@
+select * from(select sum(qty) as qty,b.bth_qut,a.itemno,a.location,a.batchcode from ictran as a left join (select bth_qut,location,batchcode,itemno from lobthob)as b on a.itemno=b.itemno and a.batchcode=b.batchcode and a.location=b.location
+
+where type in ('TROU','OAR','INV','DO','ISS') and toinv='' and (void='' or void is null) group by a.itemno,a.batchcode,a.location) as aa where aa.qty<>aa.bth_qut

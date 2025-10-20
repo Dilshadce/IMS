@@ -1,0 +1,689 @@
+<cfquery name="getGsetup" datasource="#dts#">
+	SELECT dflanguage 
+    FROM gsetup;
+</cfquery>
+
+<cfquery name="getmodule" datasource="#dts#">
+	SELECT * 
+    FROM modulecontrol;
+</cfquery>
+
+<cfquery name="getUserDefinedMenu" datasource="#dts#">
+	SELECT menu_id 
+    FROM userDefinedMenu;
+</cfquery>
+
+<!---<cfif getUserDefinedMenu.recordcount EQ 0>  --->
+    <cfquery name="insertUserDefinedMenu" datasource="#dts#">
+       INSERT IGNORE INTO userDefinedMenu(menu_id,menu_name,new_menu_name)
+       SELECT menu_id, menu_name AS a,menu_name AS b
+       FROM main.menunew2;
+    </cfquery>
+<!---</cfif>--->
+
+<cfif getGsetup.dflanguage NEQ "english">
+	<cfset menuname=getGsetup.dflanguage>
+<cfelse>
+	<cfset menuname="menu_name">
+</cfif>
+
+<cfif hlang neq "">
+	<cfif hlang neq "english">
+    	<cfset menuname=hlang>
+    <cfelse>
+    	<cfset menuname="menu_name">
+    </cfif>
+</cfif>
+
+<cfquery name="getLevel1Menu" datasource="#dts#">
+	SELECT DISTINCT m.menu_id AS menu_id,m.#menuname# AS menu_name,m.menu_url AS menu_url,m.userpin_id as userpin_id,
+    				udm.new_menu_name AS newMenuName
+	FROM main.menunew2 AS m
+    LEFT JOIN userdefinedmenu AS udm ON m.menu_id = udm.menu_id
+	WHERE m.menu_level=1
+    AND m.menu_id > 9999
+	<cfif husergrpid NEQ "super">
+    	AND m.menu_id != 70000
+    </cfif>
+	ORDER BY m.menu_order;
+</cfquery>
+
+<cfquery name="getCurrentActiveMenu" datasource="main">
+	SELECT menu_id
+	FROM menunew2
+	WHERE menu_url LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#cgi.SCRIPT_NAME#%">;
+</cfquery>
+
+<cfif getCurrentActiveMenu.RecordCount GT 0>
+	<cfset session.menuid = getCurrentActiveMenu.menu_id>
+</cfif>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-Equiv="Cache-Control" Content="no-cache">
+   <!--- <meta name="viewport" content="width=device-width, initial-scale=1.0" />--->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="/latest/css/hoverscroll/jquery.hoverscroll.css" />
+    <link rel="stylesheet" href="/latest/css/side/side.css" />
+    <link rel="stylesheet" href="/latest/css/side/sidemenu.css" />
+    <script type="text/javascript" src="/latest/js/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/latest/js/hoverscroll/jquery.hoverscroll.js"></script>
+    <script type="text/javascript" src="/latest/js/side/sidemenu.js"></script>
+    <!---To hide the link value at status bar (bottom left of the browser) --->
+    <!---<script type="text/javascript">
+		function redirectMenuLevel2(link1){
+			window.open(link1,'mainFrame','','');
+			return true;
+		}
+	</script> --->
+</head>
+
+<body>
+<cfoutput>
+    <div id="logo_div" class="section" style="backgrond:##FFF">
+        <a href="##">
+        	<img alt="IMS Logo" src="/latest/img/ims logo.png" width="177" />
+        </a>
+    </div>
+<div class="section">
+	<ul id="menu" class="accordion">
+  
+    <cfif lcase(HcomID) eq "starker_i">
+    	<li id="itemA90000" class="itemA90000"><a href="##" target="mainFrame">#UCASE(DTS)#</a>
+        <ul class="sub-menu">
+        <li id="itemA91000" class="itemA91000"><a href="/REPORT/STARK/brewweight/s_brewweight.cfm" target="mainFrame">BM Weigh Record</a></li>
+        <li id="itemA92000" class="itemA92000"><a href="/REPORT/STARK/dailyprod/s_dailyprod.cfm" target="mainFrame">Daily Prod. Sheet</a></li>
+        <li id="itemA93000" class="itemA93000"><a href="/REPORT/STARK/beertransfer/s_beertransfer.cfm" target="mainFrame">Beer Transfer</a></li>
+        </ul>
+		</li>	
+        </cfif>
+		<cfloop query="getLevel1Menu">
+        	<cfif husergrpid NEQ "super">
+            	<cfif getLevel1Menu.userpin_id NEQ "">
+                    <cfif evaluate('getPin2.#userpin_id#') EQ "T">
+                    	<cfset parentUserPinID = userpin_id>
+                        <li id="item#getLevel1Menu.menu_id#" class="item#getLevel1Menu.menu_id#">
+                            <a href="../#getLevel1Menu.menu_url#" target="mainFrame">#getLevel1Menu.newMenuName#</a>    
+                            <ul class="sub-menu">
+                                <cfquery name="getLevel2Menu" datasource="#dts#">
+                                    SELECT DISTINCT udm.menu_id AS menu_id,
+                                                    udm.menu_name AS menu_name,
+                                                    IF(udm.menu_url = '',m.menu_url,udm.menu_url) AS menu_url,
+                                                    IFNULL(m.userpin_id,'#parentUserPinID#') AS userpin_id,
+                                                    udm.new_menu_name AS newMenuName
+                                    FROM main.menunew2 AS m
+                                    RIGHT JOIN userdefinedmenu AS udm ON m.menu_id = udm.menu_id
+                                    WHERE m.menu_parent_id =#getLevel1Menu.menu_id# OR udm.menu_parent_id=#getLevel1Menu.menu_id#
+                                    ORDER BY IF(udm.menu_order = 0,m.menu_order,udm.menu_order);
+                                </cfquery>
+                                <cfloop query="getLevel2Menu">
+									<cfif getLevel2Menu.userpin_id NEQ "">
+                                    	<cfif getLevel2Menu.menu_id eq "10600">
+											<cfif getmodule.auto eq "1">
+                                                <li id="item#getLevel2Menu.menu_id#" class="item#getLevel2Menu.menu_id#">
+                                                    <a href="../#getLevel2Menu.menu_url#" target="mainFrame">#getLevel2Menu.newMenuName#</a>
+                                                </li>
+                                            </cfif>
+                                        <cfelse>
+											<cfif evaluate('getPin2.#userpin_id#') EQ "T">
+                                                <li id="item#getLevel2Menu.menu_id#" class="item#getLevel2Menu.menu_id#">
+                                                    <a href="../#getLevel2Menu.menu_url#" target="mainFrame">#getLevel2Menu.newMenuName#</a>
+                                                </li>
+                                            </cfif>  
+                                        </cfif>      
+                                    </cfif>
+                                </cfloop>
+                            </ul>
+                        </li>	
+                    </cfif>	
+                </cfif>
+        	<cfelse>
+            	<li id="item#getLevel1Menu.menu_id#" class="item#getLevel1Menu.menu_id#">
+                    <a href="../#getLevel1Menu.menu_url#" target="mainFrame">#getLevel1Menu.newMenuName#</a>    
+                    <ul class="sub-menu">
+                        <cfquery name="getLevel2Menu" datasource="#dts#">
+                            SELECT DISTINCT m.menu_id AS menu_id,m.#menuname# AS menu_name,m.menu_url AS menu_url,m.userpin_id as userpin_id,
+                                            udm.new_menu_name AS newMenuName
+                            FROM main.menunew2 AS m
+                            LEFT JOIN userdefinedmenu AS udm ON m.menu_id = udm.menu_id
+                            WHERE m.menu_parent_id=#getLevel1Menu.menu_id#
+                            ORDER BY m.menu_order
+                        </cfquery>
+                        <cfloop query="getLevel2Menu">
+							<cfif getLevel2Menu.menu_id eq "10600">
+                                <cfif getmodule.auto eq "1">
+                                    <li id="item#getLevel2Menu.menu_id#" class="item#getLevel2Menu.menu_id#">
+                                        <a href="../#getLevel2Menu.menu_url#" target="mainFrame">#getLevel2Menu.newMenuName#</a>
+                                    </li>
+                                </cfif>
+                            <cfelse>
+                                <li id="item#getLevel2Menu.menu_id#" class="item#getLevel2Menu.menu_id#">
+                                    <a href="../#getLevel2Menu.menu_url#" target="mainFrame">#getLevel2Menu.newMenuName#</a>
+                                </li>
+                            </cfif>
+                        </cfloop>
+                    </ul>
+                </li>
+            </cfif>        
+		</cfloop>
+        
+        <!---ultra admin--->
+        <cfif lcase(husergrpid) eq "admin" and lcase(huserid) contains "ultra">
+        <li id="itemU99990" class="itemU99990"><a href="##" target="mainFrame">CFR Menu</a>
+        <ul class="sub-menu">  
+        <li id="itemU99999" class="itemU99999"><a href="/latest/body/bodymenu.cfm?id=70020&menuID=70020" target="mainFrame">Add Cfr</a></li>  
+        </ul>
+        </li>
+        </cfif>
+        
+     <!--- imiqgroup --->
+    <cfif dts eq "imiqgroup_i" or dts eq "intelquip_i">
+    	<li id="itemA90000" class="itemA90000"><a href="##" target="mainFrame">Imiq Group</a>
+        <ul class="sub-menu">        
+        <cfquery name="getright" datasource="#dts#">
+        SELECT * FROM imiqright WHERE userrightlevel = <cfif husergrpid eq "super">"Admin"<cfelse>"#husergrpid#"</cfif>
+        </cfquery>
+        <cfif getright.ottype_r eq "Y">
+        <li id="itemA93000" class="itemA93000"><a href="/imiqgroup/overhead/typelist.cfm" target="mainFrame">Overhead Type</a></li>  
+        </cfif>
+        <cfif getright.project_r eq "Y">
+        <li id="itemA93000" class="itemA93000"><a href="/imiqgroup/project/projectProfile.cfm?menuID=10319c" target="mainFrame">Project</a></li> 
+        </cfif>
+        <cfif getright.overhead_r eq "Y">           
+        <li id="itemA93000" class="itemA93000"><a href="/imiqgroup/overhead/overheadlist.cfm" target="mainFrame">Overhead</a></li>
+        </cfif>
+        <cfif getright.workcat_r eq "Y">
+        <li id="itemA93000" class="itemA93000"><a href="/imiqgroup/clientworkerrate/category/categorylist.cfm " target="mainFrame">Work Category</a></li>
+        </cfif>
+        <cfif getright.clientwr_r eq "Y">
+        <li id="itemA92000" class="itemA92000"><a href="/imiqgroup/clientworkerrate/clientwork/clientworklist.cfm" target="mainFrame">Client Work Rate</a></li> 
+        <li id="itemA92000" class="itemA92000"><a href="/imiqgroup/group/s_grouptable.cfm" target="mainFrame">Dredging Group</a></li> 
+        </cfif>
+        <cfif getright.empproj_r eq "Y">
+        <li id="itemA93000" class="itemA93000"><a href="/imiqgroup/empprojectplacement/employeeplacementlist.cfm" target="mainFrame">Project Placement</a></li>
+        </cfif>
+        <cfif getright.empts_r eq "Y">
+        <li id="itemA91000" class="itemA91000"><a href="/imiqgroup/timesheet/employeetimesheetlist.cfm" target="mainFrame">Employee Timesheet</a></li>
+        </cfif>
+         <cfif lcase(husergrpid) eq "admin" or lcase(husergrpid) eq "super">
+        <li id="itemA91000" class="itemA91000"><a href="/imiqgroup/userrightcontrol.cfm" target="mainFrame">User Access</a></li>
+        </cfif>
+        </ul>
+		</li>	
+        </cfif>
+        
+        <cfif dts eq "dapte_i" or dts eq "alpte_i">
+    	<li id="itemA90000" class="itemA90000"><a href="##" target="mainFrame">Adl</a>
+        <ul class="sub-menu">        
+        <li id="itemA93000" class="itemA93000"><a href="/andalus/importpos.cfm" target="mainFrame">Import POS Transaction</a></li>  
+        </ul>
+		</li>	
+        </cfif>
+        <cfif dts eq "startup_i">
+    	<li id="itemA90000" class="itemA90000"><a href="##" target="mainFrame">Customized Report</a>
+        <ul class="sub-menu">        
+        <li id="itemA93000" class="itemA93000"><a href="/startup/profitmargin.cfm?type=productmargin" target="mainFrame">Product Profit Margin</a></li>  
+        </ul>
+		</li>	
+        </cfif>
+        <!--- imiqgroup --->
+        <cfif lcase(hcomid) eq "gaf_i" or lcase(hcomid) eq "evco3_i">
+        <li id="itemjobsheet" class="itemjobsheet">
+                    <a href="" target="mainFrame">Job Sheet</a>    
+                    <ul class="sub-menu">
+                            <li id="itemcreatejob" class="itemcreatejob">
+                                <a href="../../default/crm/createjob.cfm" target="mainFrame">Create Jobsheet</a>
+                            </li>
+                            
+                            <li id="itemviewjob" class="itemviewjob">
+                                <a href="../../default/crm/viewjob.cfm" target="mainFrame">View Jobsheet</a>
+                            </li>
+                            
+                            <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/customerhistory.cfm" target="mainFrame">View Customer History</a>
+                            </li>
+                            
+                            <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/viewschedule.cfm" target="mainFrame">View Schedule</a>
+                            </li>
+                            
+                            <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/rptexpire.cfm" target="mainFrame">View Expire Contract</a>
+                            </li>
+                            
+                            <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/chkcntct.cfm" target="mainFrame">Check Contract</a>
+                            </li>
+                            
+
+                            
+                            <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/updatecntct.cfm" target="mainFrame">Update Contract</a>
+                            </li>
+                             <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/s_servicetype.cfm" target="mainFrame">Service Type Profile</a>
+                            </li>
+                            
+                             <li id="itemjobsheet" class="itemjobsheet">
+                                <a href="../../default/crm/s_cso.cfm" target="mainFrame">CSO Profile</a>
+                            </li>
+                            
+                           
+                    </ul>
+                </li>
+        </cfif>
+        
+        <cfif lcase(hcomid) eq "baronad_i">
+        <li id="itemspaceorder" class="itemspaceorder">
+                    <a href="" target="mainFrame">Media Order</a>    
+                    <ul class="sub-menu">
+                    		<li id="itemcreatespaceorder" class="itemcreatespaceorder">
+                                <a href="/latest/customization/baron_i/pub/publicationProfile.cfm" target="mainFrame">Create Publication</a>
+                            </li>
+                            <li id="itemcreatespaceorder" class="itemcreatespaceorder">
+                                <a href="/latest/customization/baron_i/spaceorderProfile.cfm" target="mainFrame">Create Media Order</a>
+                            </li>
+                            <li id="itemcreatematerialrequisation" class="itemcreatematerialrequisation">
+                                <a href="/latest/customization/baron_i/materialrequisationProfile.cfm" target="mainFrame">Create Material Req</a>
+                            </li>
+                            <li id="itemmediaorderingreport" class="itemmediaorderingreport">
+                                <a href="/latest/customization/baron_i/report/mediaorderingreport.cfm" target="mainFrame">Media Ordering Report</a>
+                            </li>
+                    </ul>
+                </li>
+        </cfif>
+        
+        <cfif lcase(hcomid) eq "hengshenghardware_i">
+        <li id="hengshengtranimport" class="hengshengtranimport">
+                    <a href="" target="mainFrame">Import Transaction</a>    
+                    <ul class="sub-menu">
+                    		<li id="hengshengtranimports" class="hengshengtranimports">
+                                <a href="/latest/customization/hengshenghardware_i/import_excel.cfm" target="mainFrame">Import Sales</a>
+                            </li>
+                            <li id="hengshengtranimportp" class="hengshengtranimportp">
+                                <a href="/latest/customization/hengshenghardware_i/import_excela.cfm" target="mainFrame">Import Purchase</a>
+                            </li>
+                    </ul>
+                    		
+        </li>
+        </cfif>
+        
+        <cfif lcase(hcomid) eq "amgworld_i" and (lcase(huserid) eq 'adminamgworld' or lcase(huserid) eq 'amgworld' or lcase(huserid) eq 'connieamg' or lcase(husergrpid) eq 'super')>
+        <li id="amgworldreport" class="amgworldreport">
+                    <a href="" target="mainFrame">AMG World</a>    
+                    <ul class="sub-menu">
+                    		<li id="amgworldprofitmargin" class="amgworldprofitmargin">
+                                <a href="/latest/customization/amgworld_i/profitmargin.cfm" target="mainFrame">Profit Margin Transfer</a>
+                            </li>
+							<li id="amgworldbackdatebill" class="amgworldbackdatebill">
+                                <a href="/latest/customization/amgworld_i/backdatereport.cfm" target="_blank">Back Date Bill</a>
+                            </li>
+                            
+                    </ul>
+                    		
+        </li>
+        </cfif>
+		
+		<cfif lcase(hcomid) eq "hasap_i" and (lcase(husergrpid) eq 'admin' or lcase(husergrpid) eq 'super')>
+        <li id="hasapreport" class="hasapreport">
+                    <a href="" target="mainFrame">HASAP</a>    
+                    <ul class="sub-menu">
+                    		<li id="hasapsalesreport" class="hasapsalesreport">
+                                <a href="/latest/customization/hasap_i/summaryproductsalesreport.cfm" target="mainFrame">Product Sales Summary Report</a>
+                            </li>
+                            
+                    </ul>
+                    		
+        </li>
+        </cfif>
+        
+        <cfif lcase(hcomid) eq "wijayasensasi_i" and (lcase(husergrpid) eq 'super' or lcase(husergrpid) eq 'admin')>
+        <li id="yummihousereport" class="yummihousereport">
+                    <a href="" target="mainFrame">Yummi House</a>    
+                    <ul class="sub-menu">
+                    		<li id="yummihousedriverprofile" class="yummihousedriverprofile">
+                                <a href="/latest/customization/yummihouse_i/driverProfile.cfm" target="mainFrame">End User/Member Profile</a>
+                            </li>
+                            <li id="yummihousecashsalesreport" class="yummihousecashsalesreport">
+                                <a href="/latest/customization/yummihouse_i/cashsaleslocationreport.cfm?type=1" target="mainFrame">Cash Sales Report 1</a>
+                            </li>
+                            <li id="yummihousecashsalesreport" class="yummihousecashsalesreport">
+                                <a href="/latest/customization/yummihouse_i/cashsaleslocationreport.cfm?type=2" target="mainFrame">Cash Sales Report 2</a>
+                            </li>
+                            
+                    </ul>
+                    		
+        </li>
+        </cfif>    
+        
+        <cfif lcase(hcomid) eq "cseuro_i">
+        <li id="cseuroreport" class="cseuroreport">
+                    <a href="" target="mainFrame">CS Euro</a>    
+                    <ul class="sub-menu">
+                    		<li id="cseuroprofitmargin" class="cseuroprofitmargin">
+                                <a href="/report/cseuro/profitmargin.cfm" target="mainFrame">Profit Margin</a>
+                            </li>
+                            
+                    </ul>
+                    		
+        </li>
+        </cfif>
+		
+<!---<li id="manpowerpaybill" class="manpowerpaybill">
+<a href="" target="mainFrame">Manpower Pay & Bill</a>  
+<ul class="sub-menu">
+<li id="cseuroprofitmargin" class="manpowerdoc">
+                                <a href="/latest/customization/manpower_i/customerpo/poProfile.cfm" target="mainFrame">Customer PO</a>
+                        </li>
+                        <li id="manpowercn" class="manpowercn">
+                                <a href="/latest/customization/manpower_i/creditnote/index.cfm?tran=cn" target="mainFrame">Credit Note</a>
+                        </li>
+			<li id="manpowerdnc" class="manpowerdn">
+                                <a href="/latest/customization/manpower_i/creditnote/index.cfm?tran=dn" target="mainFrame">Debit Note</a>
+                        </li>
+
+			<li id="manpowerpricematrix" class="manpowerpricematrix">
+                                <a href="/latest/customization/manpower_i/pricematrix/pricematrixProfile.cfm" target="mainFrame">Pay & Bill Structure</a>
+                        </li>
+                <li id="manpowertimesheetval" class="manpowertimesheetval">
+                                <a href="/latest/customization/manpower_i/mpapproval/TimesheetApprovalMainT.cfm" target="mainFrame">Process Time Sheet</a>
+                        </li>     
+                        <li id="billableonlyitem" class="billableonlyitem">
+                                <a href="/default/maintenance/s_categorytable.cfm?type=Iccate" target="mainFrame">Billable Item</a>
+                        </li>
+                        <li id="billableonlyitem" class="billableonlyitem">
+                                <a href="/default/maintenance/s_shelftable.cfm?type=icshelf" target="mainFrame">Allowances</a>
+                        </li>
+                        <li id="billableonlyitem" class="billableonlyitem">
+                                <a href="/Report/BEPS/batchcontroldetailreport.cfm" target="mainFrame">Batch Control</a>
+                        </li>
+                        <li id="billableonlyitem" class="billableonlyitem">
+                                <a href="/Report/BEPS/batchapproval/viewapproval.cfm" target="mainFrame">Batch Approval</a>
+                        </li>
+                        
+</ul>
+</li>  
+
+        <li id="manpowerhr" class="manpowerhr">
+                    <a href="" target="mainFrame">Manpower HR</a>    
+                    <ul class="sub-menu">
+                    	<li id="manpowerdoc" class="manpowerdoc">
+                                <a href="/latest/customization/manpower_i/docMgmt/docType.cfm" target="mainFrame">Document Type</a>
+                        </li>
+
+			<li id="manpowerdoclink" class="manpowerdoclink">
+                                <a href="/latest/customization/manpower_i/docLink/docLink.cfm" target="mainFrame">Document Link</a>
+                        </li>
+
+			
+                        
+                        <li id="manpowerhr" class="manpowerhr">
+                                <a href="/latest/customization/manpower_i/notisetting/notisetting.cfm" target="mainFrame">Notification Setting</a>
+                        </li>
+                        
+                        <li id="manpowerhr" class="manpowerhr">
+                                <a href="/latest/customization/manpower_i/hrMgrProfile/hrMgrProfile.cfm" target="mainFrame">Hiring Manager Profile</a>
+                        </li>
+
+<li id="manpowerhr" class="manpowerhr">
+                                <a href="/default/maintenance/costcodetable.cfm" target="mainFrame">Leave Profile</a>
+                        </li>
+<li id="manpowerhr" class="manpowerhr">
+                                <a href="/default/maintenance/coloridtable.cfm" target="mainFrame">Time Sheet Profile</a>
+                        </li>
+<li id="manpowerhr" class="manpowerhr">
+                                <a href="/default/maintenance/s_grouptable.cfm?type=Icitem" target="mainFrame">Claim Profile</a>
+                        </li>
+<li id="manpowerhr" class="manpowerhr">
+                                <a href="/default/maintenance/sizeidtable.cfm" target="mainFrame">OT Table</a>
+                        </li>
+<li id="manpowerhr" class="manpowerhr">
+                                <a href="/eformreport/eformreport.cfm" target="mainFrame">Eform Report</a>
+                        </li>
+                       
+                        <li id="manpowerhr" class="manpowerhr">
+                                <a href="/etimesheet/etimesheetform.cfm" target="mainFrame">Timesheet Report</a>
+                        </li>
+                        
+                        <li id="manpowerhr" class="manpowerhr">
+                                <a href="/eleave/eleave.cfm" target="mainFrame">Leave & Claim Report</a>
+                        </li>
+                        
+                        <li id="manpowerhr" class="manpowerhr">
+                                <a href="/report/manpower/flexiblereport/flexiblereport.cfm" target="mainFrame">Common Report</a>
+                        </li>
+                    </ul>
+                    		
+        </li>
+        
+        <li id="manpowerCFS" class="manpowerCFS">		
+            <a href="" target="mainFrame">Manpower CFS</a>  		
+            <ul class="sub-menu">		
+                    <li id="billableonlyitem" class="billableonlyitem">		
+                        <a href="">Coming Soon</a>	
+                    </li>
+                    <li id="billableonlyitem" class="billableonlyitem">		
+                            <a href="/CFSpaybill/listCFSEmployee.cfm" target="mainFrame">CFS Employee</a>		
+                    </li>		
+                    <li id="billableonlyitem" class="billableonlyitem">		
+                             <a href="/CFSpaybill/listCFSprofile.cfm" target="mainFrame">CFS Profile</a>		
+                     </li>                    		
+                     <li id="billableonlyitem" class="billableonlyitem">		
+                             <a href="/CFSpaybill/generateInvoiceBankfile.cfm" target="mainFrame">Create CFS Transaction</a>		
+                     </li>		
+                    <li id="billableonlyitem" class="billableonlyitem">		
+
+                             <a href="/CFSpaybill/listCFStran.cfm" target="mainFrame">CFS Transaction</a>		
+                     </li>		
+                     <li id="billableonlyitem" class="billableonlyitem">		
+
+                             <a href="/CFSpaybill/assignCFSbatch.cfm" target="mainFrame">CFS Batch Control</a>		
+                     </li>		
+                     <li id="billableonlyitem" class="billableonlyitem">		
+
+                             <a href="/CFSpaybill/listCFSbatches.cfm" target="mainFrame">CFS Batch Approval</a>		
+                     </li>	
+
+             </ul>		
+         </li>--->
+
+        
+        <cfif lcase(hcomid) eq "eumasjewel_i" or lcase(hcomid) eq "taisang_i" or lcase(hcomid) eq "debelle_i" or lcase(hcomid) eq "may_i" or lcase(hcomid) eq "mkj_i" or lcase(hcomid) eq "demogold_i">
+        <cfif lcase(husergrpid) eq "admin" or lcase(husergrpid) eq "super">
+         <li id="maintaineumas" class="maintaineumas">
+                    <a href="" target="mainFrame">Gold Maintenance</a>    
+                    <ul class="sub-menu">
+                    
+                    		<li id="itemgoldcontent" class="itemgoldcontent">
+                                <a href="/latest/customization/eumasjewel_i/itemMaintenance/itemMaintenance.cfm?URLMENUID=&MENUID=10203" target="mainFrame">Item Maintenance</a>
+                            </li>
+            
+                    		<li id="itemgoldcontent" class="itemgoldcontent">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/goldcontentProfile.cfm?URLMENUID=&MENUID=10203" target="mainFrame">Gold Content</a>
+                            </li>
+                            <li id="itemgoldgroup" class="itemgoldgroup">
+                              <a href="/latest/customization/eumasjewel_i/group/s_grouptable.cfm" target="mainFrame">Group</a>
+                            </li>
+                            <li id="itemgoldcategory" class="itemgoldcategory">
+                              <a href="/latest/customization/eumasjewel_i/category/s_categorytable.cfm" target="mainFrame">Category</a>
+                            </li>
+                            <li id="itemgoldloc" class="itemgoldloc">
+                              <a href="/latest/customization/eumasjewel_i/brand/s_brandtable.cfm" target="mainFrame">Loc</a>
+                            </li>
+                            <li id="itemgoldcard" class="itemgoldcard">
+                                <a href="/latest/customization/eumasjewel_i/creditcard/creditcardProfile.cfm?URLMENUID=&MENUID=10203" target="mainFrame">Card Maintenance</a>
+                            </li>
+                            <li id="itemgoldcost" class="itemgoldcost">
+                                <a href="/latest/customization/eumasjewel_i/workmanshipcost/workmanship.cfm" target="mainFrame">Workmanship Costing</a>
+                            </li>
+                            
+                             <li id="itemgoldcost2" class="itemgoldcost2">
+                                <a href="/latest/customization/eumasjewel_i/ReverseAdjustment/reverseadjustment.cfm" target="mainFrame">Reverse Adjustment</a>
+                            </li>
+                            <li id="itemgoldval" class="itemgoldval">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/stockValueReport.cfm" target="mainFrame">Stock Value Report</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/profitAndLose.cfm" target="mainFrame">Profit and Loses Report</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/stockInReport.cfm" target="mainFrame">Stock In Report</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/payToSuppGoldReport.cfm" target="mainFrame">Pay To Supplier Gold</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/goodReturnSupp.cfm" target="mainFrame">Good Return Supplier</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/posting/posting.cfm" target="mainFrame">Posting</a>
+                            </li>
+                            </ul>
+                            </li>
+                    </cfif>
+        <li id="itemeumas" class="itemeumas">
+                    <a href="" target="mainFrame">Gold Transaction</a>    
+                    <ul class="sub-menu">
+                      <li id="itemstockin" class="itemstockin">
+                          <a href="/latest/customization/eumasjewel_i/stockInEntry.cfm?type=RC&action=create" target="mainFrame">Stock In Entry</a>
+                        </li>
+                            <li id="itemstockout" class="itemstockout">
+                                <a href="/latest/customization/eumasjewel_i/stockoutEntry.cfm?type=INV&action=create" target="mainFrame">Stock Out Entry</a>
+                            </li>
+                            
+                             <li id="itemstockin" class="itemstockin">
+                                <a href="/latest/customization/eumasjewel_i/tradein/tradeinEntry.cfm?type=RC&action=create" target="mainFrame">Trade In Entry</a>
+                            </li>
+                            
+                            <li id="itemdeposit" class="itemdeposit">
+                                <a href="/latest/customization/eumasjewel_i/deposit/depositEntry.cfm" target="mainFrame">Deposit Entry</a>
+                            </li>
+                               <li id="itemdeposit" class="itemdeposit">
+                                <a href="/latest/customization/eumasjewel_i/balance/balanceEntry.cfm" target="mainFrame">Balance Entry</a>
+                            </li>
+                            <li id="itemdeposit" class="itemdeposit">
+                                <a href="/latest/customization/eumasjewel_i/BranchTransfer/index.cfm" target="mainFrame">Transfer / Adjustment</a>
+                            </li>                            
+                            <li id="itemAssembly" class="itemAssembly">
+                                <a href="/latest/customization/eumasjewel_i/itemAssembly/itemAssembly.cfm" target="mainFrame">Item Assembly</a>
+                            </li>
+                            <cfif lcase(husergrpid) eq "admin" or lcase(husergrpid) eq "super">
+                                <li id="itemAssemblyList" class="itemAssemblyList">
+                                    <a href="/latest/customization/eumasjewel_i/itemAssembly/itemAssemblyList.cfm" target="mainFrame">Item Assembly List</a>
+                                </li>
+                            </cfif>
+                            <li id="itemAssemblyList" class="itemAssemblyList">
+                                <a href="/latest/customization/eumasjewel_i/updateStmt/updateItem.cfm" target="mainFrame">Update Workmanship Costing And Selling Price</a>
+                            </li>
+                    </ul>
+                    <li id="itemeumas" class="itemeumas">
+                    <a href="" target="mainFrame">Marketing</a>    
+                    <ul class="sub-menu">
+                      <li id="itemstockin" class="itemstockin">
+                          <a href="/latest/customization/eumasjewel_i/memberMaintenance/memberMaintenance.cfm" target="mainFrame">Member</a>
+                       </li> 
+                       <li id="itemstockin" class="itemstockin">
+                          <a href="/latest/customization/eumasjewel_i/voucherMaintenance/voucherMaintenance.cfm" target="mainFrame">Voucher</a>
+                       </li> 
+                       <li id="itemstockin" class="itemstockin">
+                          <a href="/latest/customization/eumasjewel_i/smsAndEmail/smsMaintenance.cfm" target="mainFrame">SMS</a>
+                       </li> 
+                       <li id="itemstockin" class="itemstockin">
+                          <a href="/latest/customization/eumasjewel_i/smsAndEmail/emailMaintenance.cfm" target="mainFrame">Email</a>
+                       </li>    
+                    </ul> 
+                </li>
+                    
+                  
+                    
+                </li>
+        <li id="maintaineumas" class="maintaineumas">
+                    <a href="" target="mainFrame">Gold Report</a>    
+                    <ul class="sub-menu">
+            				<li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/5Reports/5Reports.cfm" target="mainFrame">Daily 6 Reports</a>
+                            </li>
+                    		<li id="itemgoldcontent" class="itemgoldcontent">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/stockbalance.cfm" target="mainFrame">Stock Balance</a>
+                            </li>
+                            <li id="itemgoldgroup" class="itemgoldgroup">
+                              <a href="/latest/customization/eumasjewel_i/goldcontent/report/stockledger.cfm" target="mainFrame">Stock Ledger</a>
+                            </li>
+                            <li id="itemgoldcategory" class="itemgoldcategory">
+                              <a href="/latest/customization/eumasjewel_i/goldcontent/report/balancereport.cfm" target="mainFrame">Balance Report By Date</a>
+                            </li>
+                            <li id="itemgoldloc" class="itemgoldloc">
+                              <a href="/latest/customization/eumasjewel_i/goldcontent/report/tradeingold.cfm" target="mainFrame">Trade In Gold Report</a>
+                            </li>
+                            <li id="itemgoldcard" class="itemgoldcard">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/salesreport.cfm" target="mainFrame">Employee Sales By Date</a>
+                            </li>
+                            <li id="itemgoldcard" class="itemgoldcard">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/salesReportByType.cfm" target="mainFrame">Employee Sales By Type</a>
+                            </li>
+                             <li id="itemgoldcard" class="itemgoldcard">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/newsalesreport.cfm" target="mainFrame">Sales Report</a>
+                            </li>
+                            <li id="itemgoldcost" class="itemgoldcost">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/dailyinout.cfm" target="mainFrame">Daily In Out</a>
+                            </li>
+                              <li id="itemgoldcost" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/creditcardreport.cfm" target="mainFrame">Credit Card</a>
+                            </li>
+                             <li id="itemgoldcost" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/adjustmentreport.cfm?type=adjust" target="mainFrame">Adjustment</a>
+                            </li>
+                            <li id="itemgoldcost" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/adjustmentreport.cfm?type=transfer" target="mainFrame">Transfer</a>
+                            </li>
+                            
+                             <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/depositReport.cfm" target="mainFrame">Deposit</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/sellingPriceReport.cfm" target="mainFrame">Selling Price Report</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/memberReport.cfm" target="mainFrame">Member Report</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/top10Cate.cfm" target="mainFrame">Top 10 Best Selling Categories</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/addAndDedReport.cfm" target="mainFrame">Addition And Deduction</a>
+                            </li>
+                            <li id="itemdeposit" class="itemcc">
+                                <a href="/latest/customization/eumasjewel_i/goldcontent/report/tranReport.cfm" target="mainFrame">Transaction Report</a>
+                            </li>
+                            </ul>
+                            </li>
+        </cfif>
+        
+        <cfif LCase(Hcomid) EQ "ktycsb_i">
+        	 <li id="ktycsb_cus_report" class="ktycsb_so_report">
+             	<a href="" target="mainFrame">Customize Report</a>    
+                <ul class="sub-menu">
+                	<li id="ktycsb_so_report" class="ktycsb_so_report">
+                    	<a href="/latest/customization/ktycsb_i/salesMasterData.cfm" target="mainFrame">Sales Master Data</a>
+                    </li>
+                </ul>
+             </li>
+        </cfif>
+        	
+
+
+
+	</ul>
+
+    
+</div>
+<div id="bottomDiv" class="bottomNavigationDiv">
+	<span id="searchNavigation"></span>
+	<span id="favoriteNavigation"></span>
+</div>
+</cfoutput>
+</body>
+</html>

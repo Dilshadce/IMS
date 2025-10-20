@@ -1,0 +1,95 @@
+DROP TABLE IF EXISTS `gracecup_i`.`doctype`;
+CREATE TABLE  `gracecup_i`.`doctype` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `doctype` varchar(200) NOT NULL DEFAULT '',
+  `created_by` varchar(45) NOT NULL DEFAULT '',
+  `created_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(45) NOT NULL DEFAULT '',
+  `updated_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `gracecup_i`.`doctypeat`;
+CREATE TABLE  `gracecup_i`.`doctypeat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `doctype_id` int(10) unsigned NOT NULL,
+  `doctype` varchar(200) NOT NULL DEFAULT '',
+  `remark` varchar(200) NOT NULL DEFAULT '',
+  `created_by` varchar(200) NOT NULL DEFAULT '',
+  `created_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(200) NOT NULL DEFAULT '',
+  `updated_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `gracecup_i`.`doclink`;
+CREATE TABLE  `gracecup_i`.`doclink` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `doctype` varchar(200) NOT NULL DEFAULT '',
+  `client` varchar(200) DEFAULT '',
+  `associate` varchar(200) DEFAULT '',
+  `docuuid` varchar(200) DEFAULT '',
+  `expirydate` date DEFAULT '0000-00-00',
+  `docowner` varchar(200) DEFAULT '',
+  `email` varchar(200) DEFAULT '',
+  `startdate` date DEFAULT '0000-00-00',
+  `monthsbefore` int(10) unsigned DEFAULT '0',
+  `frequency` int(10) unsigned DEFAULT '0',
+  `created_by` varchar(45) NOT NULL DEFAULT '',
+  `created_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(45) NOT NULL DEFAULT '',
+  `updated_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `gracecup_i`.`doclinkat`;
+CREATE TABLE  `gracecup_i`.`doclinkat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `doclink_id` int(10) unsigned NOT NULL,
+  `doctype` varchar(200) NOT NULL,
+  `client` varchar(200) NOT NULL,
+  `associate` varchar(200) NOT NULL,
+  `docuuid` varchar(200) NOT NULL,
+  `expirydate` datetime NOT NULL,
+  `docowner` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `startdate` date NOT NULL,
+  `monthsbefore` int(10) unsigned NOT NULL,
+  `frequency` int(10) unsigned NOT NULL,
+  `created_by` varchar(45) NOT NULL DEFAULT '',
+  `created_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(45) NOT NULL DEFAULT '',
+  `updated_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remark` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `gracecup_i`.`docupload`;
+CREATE TABLE  `gracecup_i`.`docupload` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(200) DEFAULT '',
+  `name` varchar(200) DEFAULT '',
+  `path` varchar(200) DEFAULT '',
+  `uploaded_by` varchar(45) DEFAULT '',
+  `uploaded_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `gracecup_i`.`docuploadat`;
+CREATE TABLE  `gracecup_i`.`docuploadat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `docupload_id` int(10) unsigned NOT NULL,
+  `uuid` varchar(45) NOT NULL DEFAULT '',
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `path` varchar(45) NOT NULL DEFAULT '',
+  `uploaded_by` varchar(45) NOT NULL DEFAULT '',
+  `uploaded_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(45) NOT NULL DEFAULT '',
+  `updated_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remark` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
