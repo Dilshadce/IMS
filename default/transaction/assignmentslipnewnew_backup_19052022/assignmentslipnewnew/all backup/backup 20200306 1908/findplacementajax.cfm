@@ -1,0 +1,79 @@
+
+<cfinclude template = "/CFC/convert_single_double_quote_script.cfm">
+<cfset dts1 = replace(dts,'_i','_p','All')>
+ <cfset dts2=replace(dts,'_i','','all')>
+    <cfquery name="company_details" datasource="payroll_main">
+        SELECT * FROM gsetup WHERE comp_id = "#dts2#"
+        </cfquery>
+
+        <cfif val(company_details.mmonth) eq "13">
+        <cfset company_details.mmonth = 12 >
+        </cfif>
+
+        <cfset currentdate = createdate(val(company_details.myear),val(company_details.mmonth),1)>
+	<cfquery name="getitemno" datasource="#dts#">
+   		select placementno as xplacementno,empno as xempno,custname as xcustname,custno as xcustno,empno as xempno ,clienttype,startdate,completedate,assignmenttype,iname,supervisor,invoicegroup,jobpostype from placement 
+        WHERE 1=1
+        and jobstatus = '2'
+        <cfif dts neq 'manpowertest_i'>
+        and placementno not like '%test%'
+        </cfif>	
+        <cfif url.placementno neq "">
+        and placementno like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#url.placementno#%">
+        </cfif>
+        <cfif isdefined('url.empname')>
+		  <cfif url.empname neq "">
+          and empno in (select empno FROM #dts1#.pmast WHERE name like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#url.empname#%">)
+		  </cfif>
+		</cfif> 
+        limit 15
+	</cfquery>
+	<cfoutput>
+    <table width="780px">
+    <tr>
+    <th width="120px"><font style="text-transform:uppercase">#UCASE(url.nametype)# NO</font></th>
+    <th width="200px"><font style="text-transform:uppercase">EMPLOYEE NAME</font></th>
+    <th width="3800px"><font style="text-transform:uppercase">CUSTOMER NAME</font></th>
+    <th width="80px">ACTION</th>
+    </tr>
+    <cfloop query="getitemno" >
+     <cfquery name="getbillref" datasource="#dts#">
+    SELECT arrem10 FROM arcust WHERE custno = "#xcustno#"
+    </cfquery>
+    <!---<cfquery name="gettimesheet" datasource="#dts1#">
+    SELECT tsrowcount FROM timesheet WHERE empno = "#getitemno.xempno#" and tmonth = "#company_details.mmonth#" and editable = "Y" ORDER BY tsrowcount
+    </cfquery>--->
+    <tr  onMouseOut="javascript:this.style.backgroundColor='';" onMouseOver="javascript:this.style.backgroundColor='99FF00';">
+    <td>#getitemno.xplacementno#</td>
+    <cfquery name="getemployeename" datasource="#dts#">
+	SELECT name,paystatus,dbirth
+	FROM #dts1#.pmast where empno='#getitemno.xempno#'
+	</cfquery>
+    <td>#getemployeename.name#</td>
+    <td>#getitemno.xcustname#</td>
+    <input type=hidden name='xcustname' id='xcustname' value=''>
+    <cfquery name="getlastworkingdate" datasource="#dts#">
+        select completedate as assignmentslipdate from assignmentslip where empno='#getitemno.xempno#' order by assignmentslipdate desc
+    </cfquery>
+    
+       
+    <cfif getitemno.xcustno eq '300033162'>
+        <cfquery name="checkadvanced" datasource="#dts#">
+            select refno from assignmentslip 
+            WHERE 1=1
+            and empname like "Advance%"   
+            and custno = "300033162"
+            and month(assignmentslipdate) = "#company_details.mmonth#"
+            and payrollperiod<>99
+        </cfquery>
+    </cfif>
+        
+    <!---<cfset checkdatedate = createdate(listlast(urlDecode(url.completedate),'/'),listgetat(urlDecode(url.completedate),2,'/'),listfirst(urlDecode(url.completedate),'/'))>--->
+            
+    <td><a style="cursor:pointer" onClick="<cfif getemployeename.paystatus neq "A">alert('Emplyee Pay Status is Not Active');<cfelseif getemployeename.dbirth eq "" or  getemployeename.dbirth eq "0000-00-00">alert('Emplyee Date Of Birth is Empty');<cfelse>document.getElementById('placementno').value='#getitemno.xplacementno#';document.getElementById('custno').value='#getitemno.xcustno#';document.getElementById('empno').value='#getitemno.xempno#';selectlist('#getitemno.clienttype#','paymenttype');document.getElementById('paymenttype2').value='#getitemno.clienttype#';document.getElementById('lastworkingdate').value='#dateformat(getlastworkingdate.assignmentslipdate,'DD/MM/YYYY')#';document.getElementById('jobstartdate').innerHTML='#dateformat(getitemno.startdate,'DD/MM/YYYY')#';document.getElementById('jobcompletedate').innerHTML='#dateformat(getitemno.completedate,'DD/MM/YYYY')#';document.getElementById('jobcompletedate').style.color='red';document.getElementById('empname').value='#replace(getemployeename.name,"'","","all")#';document.getElementById('assignmenttype').value=<cfif getbillref.arrem10 eq '0'><cfif getitemno.xcustno eq '300033162'><cfif getitemno.jobpostype eq '1' or getitemno.jobpostype eq '2'><cfif checkadvanced.recordcount neq 0 and getitemno.xempno eq '100123480'><cfif trim(getitemno.invoicegroup) neq ''>'#getitemno.invoicegroup#'<cfelse>'#getitemno.xcustno#'</cfif><cfelse><cfif trim(getitemno.invoicegroup) neq ''>'#getitemno.invoicegroup#-2'<cfelse>'#getitemno.xcustno#-2'</cfif></cfif><cfelseif getitemno.jobpostype eq '5'><cfif checkadvanced.recordcount gte 2 and getitemno.xempno eq '100123480'><cfif trim(getitemno.invoicegroup) neq ''>'#getitemno.invoicegroup#-4'<cfelse>'#getitemno.xcustno#-4'</cfif><cfelseif checkadvanced.recordcount neq 0 and getitemno.xempno eq '100123480'><cfif trim(getitemno.invoicegroup) neq ''>'#getitemno.invoicegroup#'<cfelse>'#getitemno.xcustno#'</cfif><cfelse><cfif trim(getitemno.invoicegroup) neq ''>'#getitemno.invoicegroup#-1'<cfelse>'#getitemno.xcustno#-1'</cfif></cfif></cfif><cfelse><cfif trim(getitemno.invoicegroup) neq ''>'#REReplace(getitemno.invoicegroup, "'", "", "ALL")#'<cfelse>'#REReplace(getitemno.xcustno, "'", "", "ALL")#'</cfif></cfif><cfelse>'invoice'</cfif>;document.getElementById('xcustname').value='#URLEncodedFormat(getitemno.xcustname)#';document.getElementById('custname').value=unescape('#URLEncodedFormat(getitemno.xcustname)#');document.getElementById('custname2').value=unescape('#URLEncodedFormat(getitemno.xcustname)#');document.getElementById('iname').value='#getitemno.iname#';document.getElementById('supervisor').value='#REReplace(getitemno.supervisor, "[^a-zA-Z]", "", "ALL")#';<!---<cfif gettimesheet.recordcount neq 0>gettimesheet('#getitemno.xplacementno#','#getitemno.xempno#');<cfelse>--->getpanel('#getitemno.xplacementno#');<!---</cfif>--->ColdFusion.Window.hide('findplacement');</cfif>" >SELECT</a></td>
+    </tr>
+    </cfloop>
+
+    </table>
+    </div>
+    </cfoutput>

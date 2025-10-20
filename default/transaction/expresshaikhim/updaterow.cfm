@@ -1,0 +1,251 @@
+
+<cfif isdefined('url.uuid') and isdefined('url.trancode')>
+<cfset url.uuid = URLDECODE(url.uuid)>
+<cfset url.coltype = URLDECODE(url.coltype)>
+<cfset url.qty = val(URLDECODE(url.qty))>
+<cfset url.unit = URLDECODE(url.unit)>
+<cfset url.brem4 = trim(URLDECODE(url.brem4))>
+<cfset url.brem1 = trim(URLDECODE(url.brem1))>
+<cfset url.brem2 = trim(URLDECODE(url.brem2))>
+<cfset url.job = trim(URLDECODE(url.job))>
+<cfset url.promotiontype =trim(URLDECODE(url.promotiontype))>
+
+<cfquery name="getgsetup2" datasource="#dts#">
+	select 
+	concat('.',repeat('_',Decl_Uprice)) as Decl_Uprice,
+	Decl_Uprice as Decl_Uprice1, DECL_DISCOUNT as DECL_DISCOUNT1,
+	concat('.',repeat('_',Decl_Discount)) as Decl_Discount
+	from gsetup2
+</cfquery>
+
+<cfset stDecl_UPrice = getgsetup2.Decl_Uprice>
+<cfset stDecl_Discount = getgsetup2.Decl_Discount>
+
+<cftry>
+<cfquery name="checkbillpromo" datasource="#dts#">
+	select refno,type,custno,itemno from ictrantemp where uuid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#"> and trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+</cfquery>
+
+<cfif checkbillpromo.type eq 'PO' or checkbillpromo.type eq 'RC' or checkbillpromo.type eq 'PR'>
+
+<cfelse>
+	<cfquery name="checkpromotion" datasource="#dts#">
+    	SELECT * FROM promoitem as a right join promotion as b on a.promoid = b.promoid WHERE a.itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(checkbillpromo.itemno)#"> and b.periodfrom <="#dateformat(now(),'yyyy-mm-dd')#" and b.periodto >= "#dateformat(now(),'yyyy-mm-dd')#" and (b.customer='#checkbillpromo.custno#' or b.customer='')
+    </cfquery>
+    
+    <cfif checkpromotion.type eq "buy">
+    <cfif checkpromotion.pricedistype eq "Varprice" and (url.qty gte checkpromotion.rangefrom and url.qty lte checkpromotion.rangeto)>
+    
+    <cfquery name="updateictranqty" datasource="#dts#">
+    UPDATE ictrantemp SET 
+    price_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#val(checkpromotion.itemprice)#">
+    WHERE 
+    trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+    and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+    </cfquery>
+    <cfelse>
+    <cfquery name="getitemprice" datasource="#dts#">
+    select price from icitem where itemno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(checkbillpromo.itemno)#">
+    </cfquery>
+    <cfquery name="updateictranqty" datasource="#dts#">
+    UPDATE ictrantemp SET 
+    price_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#val(getitemprice.price)#">
+    WHERE 
+    trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+    and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+    </cfquery>
+    
+	</cfif>
+    </cfif>
+    
+    </cfif>
+    
+<cfcatch>
+</cfcatch></cftry>
+
+
+
+<cfset xfactor1=1>
+<cfset xfactor2=1>
+
+<cfquery name="updaterow" datasource="#dts#">
+UPDATE ictrantemp SET 
+qty_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.qty#">,
+unit_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.unit#">,
+location = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.coltype#">,
+job=<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.job#">,
+brem1=<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.brem1#">,
+brem2=<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.brem2#">,
+promotion = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.promotiontype#">
+<cfif url.promotiontype neq "">
+,rem11 = ""
+</cfif>
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+
+<cfquery name="getitemdetail" datasource="#dts#">
+SELECT itemno,unit_bil FROM ictrantemp WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+<cfquery name="selecticitem" datasource="#dts#">
+SELECT unit,unit2,unit3,unit4,unit5,unit6,factor1,if(factor2=0,1,factor2) as factor2,factorU3_a,if(factorU3_b=0,1,factorU3_b) as factorU3_b,factorU4_a,if(factorU4_b=0,1,factorU4_b) as factorU4_b,factorU5_a,if(factorU5_b=0,1,factorU5_b) as factorU5_b,factorU6_a,if(factorU6_b=0,1,factorU6_b) as factorU6_b FROM icitem where itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getitemdetail.itemno#" >
+</cfquery>
+
+<cfset qtyReal = qty>
+<cfset unit = getitemdetail.unit_bil>
+<cfif unit neq "" and unit neq "#selecticitem.unit#">
+
+<cfif unit eq "#selecticitem.unit2#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factor1) ) / val(selecticitem.factor2)>
+<cfset xfactor1=selecticitem.factor1>
+<cfset xfactor2=selecticitem.factor2>
+<cfelseif unit eq "#selecticitem.unit3#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU3_a) ) / val(selecticitem.factorU3_b)>
+<cfset xfactor1=selecticitem.factorU3_a>
+<cfset xfactor2=selecticitem.factorU3_b>
+<cfelseif unit eq "#selecticitem.unit4#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU4_a) ) / val(selecticitem.factorU4_b)>
+<cfset xfactor1=selecticitem.factorU4_a>
+<cfset xfactor2=selecticitem.factorU4_b>
+<cfelseif unit eq "#selecticitem.unit5#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU5_a) ) / val(selecticitem.factorU5_b)>
+<cfset xfactor1=selecticitem.factorU5_a>
+<cfset xfactor2=selecticitem.factorU5_b>
+<cfelseif unit eq "#selecticitem.unit6#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU6_a) ) / val(selecticitem.factorU6_b)>
+<cfset xfactor1=selecticitem.factorU6_a>
+<cfset xfactor2=selecticitem.factorU6_b>
+</cfif>
+
+</cfif>
+
+
+<cfquery name="updaterow" datasource="#dts#">
+UPDATE ictrantemp SET 
+
+factor1=<cfqueryparam cfsqltype="cf_sql_varchar" value="#xfactor1#">,
+factor2=<cfqueryparam cfsqltype="cf_sql_varchar" value="#xfactor2#">
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+
+
+<cfset discountamount = 0 >
+<cfif url.brem4 neq "">
+<cfquery name="getprice" datasource="#dts#">
+SELECT price_bil,qty_bil FROM ictrantemp
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+	<cfif right(url.brem4,1) eq "%">
+    <cfset totpercent = val(url.brem4)>
+        <cfif totpercent lte 100 and totpercent gt 0>
+        <cfset adiscountamount = numberformat(val(getprice.price_bil) * ((100-totpercent)/100),stDecl_UPrice) * val(qtyReal)>
+        <cfset discountamount = numberformat(val(getprice.price_bil),stDecl_UPrice) * val(qtyReal) - val(adiscountamount)>
+        </cfif>
+    <cfelse>
+    <cfset totdis = val(url.brem4)>
+        <cfif totdis lte val(getprice.price_bil)>
+        <cfset adiscountamount =numberformat( val(getprice.price_bil) - val(totdis),stDecl_UPrice) * val(qtyReal)>
+        <cfset discountamount = numberformat(val(getprice.price_bil),stDecl_UPrice) * val(qtyReal) - val(adiscountamount)>
+        </cfif>
+    </cfif>
+</cfif>
+<cfquery name="updatediscountamount" datasource="#dts#">
+UPDATE ictrantemp SET disamt_bil = "#numberformat(val(discountamount),stDecl_UPrice)#",
+brem4 = "#url.brem4#"
+<cfif right(url.brem4,1) eq "%">
+,dispec1='#val(url.brem4)#'
+</cfif>
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>   
+
+
+
+
+<cfquery name="updateictranqty" datasource="#dts#">
+UPDATE ictrantemp SET 
+qty = <cfqueryparam cfsqltype="cf_sql_varchar" value="#qtyReal#">,
+amt_bil = round((price_bil * qty_bil)+0.000001 - disamt_bil,2),
+amt1_bil = round((price_bil * qty_bil)+0.000001 - disamt_bil,2)
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+<cfquery name="updateamt" datasource="#dts#">
+UPDATE ictrantemp SET 
+disamt = (disamt_bil * if(currrate = 0,1,currrate)),
+amt = round((amt_bil * if(currrate = 0,1,currrate))+0.000001,2),
+amt1 = round((amt1_bil * if(currrate = 0,1,currrate))+0.000001,2)
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+<!---
+<cfquery name="getpromotionitemno" datasource="#dts#">
+	select itemno,custno,qty from ictrantemp 
+    WHERE
+    trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+<cfquery name="checkpromotion" datasource="#dts#">
+            SELECT * FROM promoitem as a right join promotion as b on a.promoid = b.promoid WHERE a.itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getpromotionitemno.itemno#"> and b.periodfrom <="#dateformat(now(),'yyyy-mm-dd')#" and b.periodto >= "#dateformat(now(),'yyyy-mm-dd')#" and (b.customer='#getpromotionitemno.custno#' or b.customer='') and b.type = "free" <cfif isdefined("url.promotiontype")>and b.promoid='#url.promotiontype#'</cfif>
+            </cfquery>
+            <cfif checkpromotion.recordcount neq 0>
+            <cfset validfree = 0>
+            <cfset itemfreeqty = 0>
+            <cfset promoqtyamt = getpromotionitemno.qty>
+            
+			<cfif getpromotionitemno.qty neq 0>
+            <cfloop query="checkpromotion">
+            <cfif val(checkpromotion.priceamt) lte promoqtyamt>
+            <cfset leftcontrol = promoqtyamt / val(checkpromotion.priceamt)>
+            <cfset validfree = int(leftcontrol) >
+            <cfset itemfreeqty =itemfreeqty + ( validfree * val(checkpromotion.rangeFrom))>
+            <cfset promoqtyamt = getpromotionitemno.qty * (leftcontrol-validfree)/leftcontrol >
+            </cfif>
+            </cfloop>
+			</cfif>
+            <cfif itemfreeqty gt 0>
+            <cfset qtyfree = itemfreeqty >
+            
+            <cfif val(form.factor2) neq 0>
+            <cfset qtyfree_bil = val(qtyfree) * val(form.factor2) / val(form.factor1)>
+			<cfelse>
+            <cfset qtyfree_bil = 0>
+            </cfif>
+            
+<cfquery name="updaterow" datasource="#dts#">
+UPDATE ictrantemp SET 
+qty_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#qtyfree_bil#">,
+qty = <cfqueryparam cfsqltype="cf_sql_varchar" value="#qtyfree#">
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+
+--->
+<cfquery name="getsum" datasource="#dts#">
+SELECT SUM(amt1_bil) as sumsubtotal,count(trancode) as notran FROM ictrantemp where uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#" />
+</cfquery>
+
+<cfoutput>
+<input type="hidden" name="hidsubtotal" id="hidsubtotal" value="#numberformat(getsum.sumsubtotal,'.__')#" />
+<input type="hidden" name="hiditemcount" id="hiditemcount" value="#getsum.notran#" />
+</cfoutput>
+
+
+</cfif>

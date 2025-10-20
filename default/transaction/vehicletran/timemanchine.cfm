@@ -1,0 +1,105 @@
+<link href="/stylesheet/stylesheet.css" rel="stylesheet" type="text/css">
+    <script type='text/javascript' src='/ajax/core/engine.js'></script>
+	<script type='text/javascript' src='/ajax/core/util.js'></script>
+	<script type='text/javascript' src='/ajax/core/settings.js'></script>
+    <script type='text/javascript' src='/ajax/core/shortcut.js'></script>
+    <script language="javascript" type="text/javascript" src="/scripts/ajax.js"></script>
+    <link href="/scripts/CalendarControl.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="/scripts/CalendarControl.js"></script>
+    <script type="text/javascript" src="/scripts/prototypenew.js" ></script>
+    
+<h2>On Hold Entry</h2>
+<link href="/stylesheet/stylesheet.css" rel="stylesheet" type="text/css">
+<cfquery name="getlast" datasource="#dts#">
+SELECT uuid,trdatetime,type,driver,rem9,rem5 from ictrantemp where onhold='Y' and type='#url.tran#' group by uuid order by trdatetime desc limit 100
+</cfquery>
+<cfoutput>
+<table>
+<tr>
+<td>
+<select name="oldlist" id="oldlist" onchange="ajaxFunction(document.getElementById('gethistorydetail'),'/default/transaction/vehicletran/timemanchineajax.cfm?uuid='+document.getElementById('oldlist').value);">
+<cfloop query="getlast">
+<option value="#getlast.uuid#">#getlast.type#-#dateformat(getlast.trdatetime,'YYYY-MM-DD')# #timeformat(getlast.trdatetime,'HH:MM:SS')#</option>
+</cfloop>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+<input type="button" name="btngo" value="Revert Back" onclick="revertback()" />&nbsp;&nbsp;&nbsp;
+<input type="button" name="btngo" value="Delete" onclick="ctrl10()" />
+</td>
+</tr>
+</table>
+</cfoutput>
+<cfquery name="getdriverdetail" datasource="#dts#">
+select * from driver where driverno='#getlast.driver#'
+</cfquery>
+<cfquery name="getsumamt" datasource="#dts#">
+select sum(amt) as amt from ictrantemp where uuid='#getlast.uuid#'
+</cfquery>
+
+<div id="gethistorydetail">
+<cfoutput>
+<table>
+<tr>
+<th>Vehicle No</th>
+<td>
+#getlast.rem5#
+</td>
+</tr>
+<tr>
+<th>Member Name</th>
+<td>
+#getdriverdetail.name# #getdriverdetail.name2#
+</td>
+</tr>
+<tr>
+<th>Address</th>
+<td>
+#getdriverdetail.add1# #getdriverdetail.add2# #getdriverdetail.add3#
+</td>
+</tr>
+<tr>
+<th>Amount</th>
+<td>
+#numberformat(getsumamt.amt,',_.__')#
+</td>
+</tr>
+<tr>
+<th>Current Mileage</th>
+<td>
+#getlast.rem9#
+</td>
+</tr>
+<div id="onholdajax"></div>
+</table>
+</cfoutput>
+</div>
+
+<cfoutput>
+<script type="text/javascript">
+	function revertback()
+	{
+	var answer = confirm('Are you sure you want to proceed?')
+	if(answer)
+	{
+	var newuuid = document.getElementById('oldlist').value;
+	opener.window.location.href="index.cfm?tran=#url.tran#&uuid="+newuuid;
+	window.close();
+	}
+	}
+	
+	function ctrl10()
+	{
+	var answer = confirm('Are you sure to delete all onhold transaction?');
+	if(answer)
+	{
+	var onholdurl = '/default/transaction/vehicletran/deleteonholdajax.cfm?uuid='+document.getElementById("oldlist").value;
+	ajaxFunction(document.getElementById('onholdajax'),onholdurl);
+	setTimeout('window.location.reload();',500);
+	}
+	}
+	
+</script>
+</cfoutput>

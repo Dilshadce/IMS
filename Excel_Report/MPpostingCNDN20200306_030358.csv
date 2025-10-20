@@ -1,0 +1,47 @@
+RECTYPE,CNTBTCH,CNTITEM,IDCUST,IDINVC,TEXTTRX,INVCDESC,DATEINVC,SWMANRTE,DATEDUE,SWTAXBL,SWMANTX,CODETAXGRP,TAXSTTS1,AMTTAX1,FISCYR,FISCPER,
+RECTYPE,CNTBTCH,CNTITEM,CNTLINE,TEXTDESC,AMTEXTN,SWMANLTX,TAXSTTS1,IDACCTREV,COMMENT,ITEMTAX,,,,,,,
+RECTYPE,CNTBTCH,CNTITEM,CNTPAYM,DATEDUE,AMTDUE,,,,,,,,,,,,
+1,,1,300034636,CN600421,3,AP-MONTH=02,20200228,0,20200513,1,1,GST,3,30965.65,2020,02
+2,,1,1,Conversion Fee /TS# /Job#200163860,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,2,Conversion Fee /TS# /Job#200163861,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,3,Conversion Fee /TS# /Job#200163862,11340.00,0,1,3204-231, /Batch # /Timesheet #,680.40
+2,,1,4,Conversion Fee /TS# /Job#200163863,13996.80,0,1,3204-231, /Batch # /Timesheet #,839.81
+2,,1,5,Conversion Fee /TS# /Job#200163864,11556.00,0,1,3204-231, /Batch # /Timesheet #,693.36
+2,,1,6,Conversion Fee /TS# /Job#200163865,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,7,Conversion Fee /TS# /Job#200163866,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,8,Conversion Fee /TS# /Job#200163867,13608.00,0,1,3204-231, /Batch # /Timesheet #,816.48
+2,,1,9,Conversion Fee /TS# /Job#200163868,9007.20,0,1,3204-231, /Batch # /Timesheet #,540.43
+2,,1,10,Conversion Fee /TS# /Job#200163869,14256.00,0,1,3204-231, /Batch # /Timesheet #,855.36
+2,,1,11,Conversion Fee /TS# /Job#200163870,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,12,Conversion Fee /TS# /Job#200163872,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,13,Conversion Fee /TS# /Job#200163873,11556.00,0,1,3204-231, /Batch # /Timesheet #,693.36
+2,,1,14,Conversion Fee /TS# /Job#200163874,9045.00,0,1,3204-231, /Batch # /Timesheet #,542.70
+2,,1,15,Conversion Fee /TS# /Job#200163875,13482.00,0,1,3204-231, /Batch # /Timesheet #,808.92
+2,,1,16,Conversion Fee /TS# /Job#200163876,13482.00,0,1,3204-231, /Batch # /Timesheet #,808.92
+2,,1,17,Conversion Fee /TS# /Job#200163877,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,18,Conversion Fee /TS# /Job#200163878,12312.00,0,1,3204-231, /Batch # /Timesheet #,738.72
+2,,1,19,Conversion Fee /TS# /Job#200163879,9630.00,0,1,3204-231, /Batch # /Timesheet #,577.80
+2,,1,20,Conversion Fee /TS# /Job#200163881,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,21,Conversion Fee /TS# /Job#200163882,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,22,Conversion Fee /TS# /Job#200163883,13478.40,0,1,3204-231, /Batch # /Timesheet #,808.70
+2,,1,23,Conversion Fee /TS# /Job#200163884,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,24,Conversion Fee /TS# /Job#200163892,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,25,Conversion Fee /TS# /Job#200163893,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,26,Conversion Fee /TS# /Job#200163894,13737.60,0,1,3204-231, /Batch # /Timesheet #,824.26
+2,,1,27,Conversion Fee /TS# /Job#200163895,11664.00,0,1,3204-231, /Batch # /Timesheet #,699.84
+2,,1,28,Conversion Fee /TS# /Job#200163896,7560.00,0,1,3204-231, /Batch # /Timesheet #,453.60
+2,,1,29,Conversion Fee /TS# /Job#200163897,7704.00,0,1,3204-231, /Batch # /Timesheet #,462.24
+2,,1,30,Conversion Fee /TS# /Job#200163898,6840.00,0,1,3204-231, /Batch # /Timesheet #,410.40
+2,,1,31,Conversion Fee /TS# /Job#200163900,14400.00,0,1,3204-231, /Batch # /Timesheet #,864.00
+2,,1,32,Conversion Fee /TS# /Job#200163901,7200.00,0,1,3204-231, /Batch # /Timesheet #,432.00
+2,,1,33,Conversion Fee /TS# /Job#200163880,11556.00,0,1,3204-231, /Batch # /Timesheet #,693.36
+2,,1,34,Conversion Fee /TS# /Job#200163899,8514.00,0,1,3204-231, /Batch # /Timesheet #,510.84
+2,,1,35,Conversion Fee /TS# /Job#200163891,14580.00,0,1,3204-231, /Batch # /Timesheet #,874.80
+2,,1,36,Conversion Fee /TS# /Job#200163886,14256.00,0,1,3204-231, /Batch # /Timesheet #,855.36
+2,,1,37,Conversion Fee /TS# /Job#200163887,13608.00,0,1,3204-231, /Batch # /Timesheet #,816.48
+2,,1,38,Conversion Fee /TS# /Job#200163885,13608.00,0,1,3204-231, /Batch # /Timesheet #,816.48
+2,,1,39,Conversion Fee /TS# /Job#200163888,9072.00,0,1,3204-231, /Batch # /Timesheet #,544.32
+2,,1,40,Conversion Fee /TS# /Job#200163889,13860.00,0,1,3204-231, /Batch # /Timesheet #,831.60
+2,,1,41,Conversion Fee /TS# /Job#200163890,11880.00,0,1,3204-231, /Batch # /Timesheet #,712.80
+2,,1,42,Conversion Fee /TS# /Job#200163871,14454.00,0,1,3204-231, /Batch # /Timesheet #,867.24
+3,,1,1,20200513,547059.85

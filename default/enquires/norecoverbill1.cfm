@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>No Location Report</title>
+<link href="/stylesheet/reportprint.css" rel="stylesheet" type="text/css">
+<style type="text/css" media="print">
+	.noprint { display: none; }
+</style>
+</head>
+
+<cfquery name="getgeneral" datasource="#dts#">
+	select compro,lastaccyear from gsetup
+</cfquery>
+
+<cfquery name="getgsetup2" datasource='#dts#'>
+  Select * from gsetup2
+</cfquery>
+
+<cfset iDecl_UPrice = getgsetup2.Decl_UPrice>
+<cfset stDecl_UPrice = ",.">
+
+<cfloop index="LoopCount" from="1" to="#iDecl_UPrice#">
+  <cfset stDecl_UPrice = stDecl_UPrice & "_">
+</cfloop>
+
+
+<body>
+<cfoutput>
+<table width="100%" border="0" cellspacing="0" cellpadding="2" class="data">
+	<tr>
+		<td colspan="100%"><div align="center"><font size="3" face="Times New Roman,Times,serif"><strong>Bill Item Deleted No Tick Recover Report</strong></font></div></td>
+	</tr>
+    <tr> 
+      	<td colspan="4"><font size="2" face="Times New Roman,Times,serif">#getgeneral.compro#</font></td>
+      	<td colspan="8"><div align="right"><font size="2" face="Times New Roman,Times,serif">#dateformat(now(),"dd/mm/yyyy")#</font></div></td>
+    </tr>
+    <tr> 
+      	<td colspan="100%"><hr></td>
+    </tr>
+    <tr>
+      	<td><div align="left"><font size="2" face="Times New Roman,Times,serif"><strong>Type</strong></font></div></td>
+	  	<td><div align="left"><font size="2" face="Times New Roman,Times,serif"><strong>Ref No</strong></font></div></td>
+      	<td><div align="left"><font size="2" face="Times New Roman,Times,serif"><strong>Item No</strong></font></div></td>
+        
+    </tr>
+    <tr> 
+      	<td colspan="100%"><hr></td>
+    </tr>
+
+	<cfquery name="gettran" datasource="#dts#">
+		select * from iclink
+	</cfquery>
+	
+	<cfloop query="gettran">
+    
+    <cfquery name="checkvalue" datasource="#dts#">
+		select refno from ictran where itemno='#gettran.itemno#' and type='#gettran.type#' and refno='#gettran.refno#'
+	</cfquery>
+    <cfif checkvalue.recordcount eq 0>
+	
+    <tr onMouseOut="javascript:this.style.backgroundColor='';" onMouseOver="javascript:this.style.backgroundColor='99FF00';">
+    <td><div align="left"><font  face="Times New Roman,Times,serif">#gettran.frtype#</font></div></td>
+    <td><div align="left"><font  face="Times New Roman,Times,serif">#gettran.frrefno#</font></div></td>
+    <td><div align="left"><font  face="Times New Roman,Times,serif">#gettran.itemno#</font></div></td>
+    </tr>
+    
+		<tr><td><br></td></tr>
+    </cfif>
+	</cfloop>
+	<tr> 
+		<td colspan="100%"><hr></td>
+	</tr>
+	
+</table>
+
+</cfoutput>
+
+<cfif gettran.recordcount eq 0>
+	<h3 style="color:red">Sorry, No records were found.</h3>
+</cfif>
+
+<br><br>
+
+<div align="right">
+	<font  face="Arial,Helvetica,sans-serif">
+		<a href="javascript:print()" class="noprint"><u>Print</u></a>
+	</font>
+</div>
+
+<p class="noprint">
+	<font size="2">Please print in Landscape format. Go to File - Page Setup, select "Landscape".</font>
+</p>
+
+</body>
+</html>

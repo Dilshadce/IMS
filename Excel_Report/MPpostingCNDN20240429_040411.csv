@@ -1,0 +1,75 @@
+RECTYPE,CNTBTCH,CNTITEM,IDCUST,IDINVC,TEXTTRX,INVCDESC,DATEINVC,SWMANRTE,DATEDUE,SWTAXBL,SWMANTX,CODETAXGRP,TAXSTTS1,AMTTAX1,FISCYR,FISCPER,
+RECTYPE,CNTBTCH,CNTITEM,CNTLINE,TEXTDESC,AMTEXTN,SWMANLTX,TAXSTTS1,IDACCTREV,COMMENT,ITEMTAX,,,,,,,
+RECTYPE,CNTBTCH,CNTITEM,CNTPAYM,DATEDUE,AMTDUE,,,,,,,,,,,,
+1,,1,300034329,IN501247,1,AP-MONTH=04,20240418,0,20240602,1,1,GST,3,132.80,2024,04
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200187899,80.00,0,1,3102-323, /Batch # /Timesheet #,4.80
+2,,1,2,+Med Benefit Reimburse /TS# /Job#200187900,80.00,0,1,3102-323, /Batch # /Timesheet #,4.80
+2,,1,3,Admin Fee /TS# /Job#200187899,750.00,0,1,3102-323, /Batch # /Timesheet #,45.00
+2,,1,4,Admin Fee /TS# /Job#200187900,750.00,0,1,3102-323, /Batch # /Timesheet #,45.00
+2,,1,5,EIS /TS# /Job#200187899,9.90,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,6,EIS /TS# /Job#200187900,9.90,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,7,EPF /TS# /Job#200187899,660.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,8,EPF /TS# /Job#200187900,632.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,9,HRDF /TS# /Job#200187899,51.50,0,2,, /Batch # /Timesheet #,0.00
+2,,1,10,HRDF /TS# /Job#200187900,45.55,0,2,, /Batch # /Timesheet #,0.00
+2,,1,11,Night Shift Allowance /TS# /Job#200187899,300.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,12,Night Shift Allowance /TS# /Job#200187900,300.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,13,Normal /TS# /Job#200187899,5150.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,14,Normal /TS# /Job#200187900,4555.00,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,15,OT 1.5 /TS# /Job#200187900,155.28,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,16,SOCSO /TS# /Job#200187899,86.65,0,2,3102-323, /Batch # /Timesheet #,0.00
+2,,1,17,SOCSO /TS# /Job#200187900,86.65,0,2,3102-323, /Batch # /Timesheet #,0.00
+3,,1,1,20240602,13835.23
+1,,1,300035322,IN501248,1,AP-MONTH=04,20240424,0,20240524,1,1,GST,3,2821.15,2024,04
+2,,1,1,Admin Fee /TS# /Job#200189855,455.08,0,1,3101-301, /Batch # /Timesheet #,27.30
+2,,1,2,Admin Fee /TS# /Job#200189858,689.46,0,1,3101-301, /Batch # /Timesheet #,41.37
+2,,1,3,Admin Fee /TS# /Job#200188392,351.93,0,1,3101-301, /Batch # /Timesheet #,21.12
+2,,1,4,Admin Fee /TS# /Job#200189741,455.08,0,1,3101-301, /Batch # /Timesheet #,27.30
+2,,1,5,Admin Fee /TS# /Job#200189740,455.08,0,1,3101-301, /Batch # /Timesheet #,27.30
+2,,1,6,Admin Fee /TS# /Job#200189861,351.93,0,1,3101-301, /Batch # /Timesheet #,21.12
+2,,1,7,Admin Fee /TS# /Job#200189851,310.54,0,1,3101-301, /Batch # /Timesheet #,18.63
+2,,1,8,Admin Fee /TS# /Job#200188692,351.93,0,1,3101-301, /Batch # /Timesheet #,21.12
+2,,1,9,Admin Fee /TS# /Job#200187980,296.50,0,1,3101-301, /Batch # /Timesheet #,17.79
+2,,1,10,Admin Fee /TS# /Job#200189856,372.32,0,1,3101-301, /Batch # /Timesheet #,22.34
+2,,1,11,EIS /TS# /Job#200189855,6.50,0,1,3101-301, /Batch # /Timesheet #,0.39
+2,,1,12,EIS /TS# /Job#200189858,4.70,0,1,3101-301, /Batch # /Timesheet #,0.28
+2,,1,13,EIS /TS# /Job#200188392,5.10,0,1,3101-301, /Batch # /Timesheet #,0.31
+2,,1,14,EIS /TS# /Job#200189741,6.50,0,1,3101-301, /Batch # /Timesheet #,0.39
+2,,1,15,EIS /TS# /Job#200189740,6.50,0,1,3101-301, /Batch # /Timesheet #,0.39
+2,,1,16,EIS /TS# /Job#200189861,5.10,0,1,3101-301, /Batch # /Timesheet #,0.31
+2,,1,17,EIS /TS# /Job#200189851,4.50,0,1,3101-301, /Batch # /Timesheet #,0.27
+2,,1,18,EIS /TS# /Job#200188692,5.10,0,1,3101-301, /Batch # /Timesheet #,0.31
+2,,1,19,EIS /TS# /Job#200187980,4.40,0,1,3101-301, /Batch # /Timesheet #,0.26
+2,,1,20,EIS /TS# /Job#200189856,5.30,0,1,3101-301, /Batch # /Timesheet #,0.32
+2,,1,21,EPF /TS# /Job#200189855,429.00,0,1,3101-301, /Batch # /Timesheet #,25.74
+2,,1,22,EPF /TS# /Job#200189858,312.00,0,1,3101-301, /Batch # /Timesheet #,18.72
+2,,1,23,EPF /TS# /Job#200188392,333.00,0,1,3101-301, /Batch # /Timesheet #,19.98
+2,,1,24,EPF /TS# /Job#200189741,429.00,0,1,3101-301, /Batch # /Timesheet #,25.74
+2,,1,25,EPF /TS# /Job#200189740,429.00,0,1,3101-301, /Batch # /Timesheet #,25.74
+2,,1,26,EPF /TS# /Job#200189861,333.00,0,1,3101-301, /Batch # /Timesheet #,19.98
+2,,1,27,EPF /TS# /Job#200189851,294.00,0,1,3101-301, /Batch # /Timesheet #,17.64
+2,,1,28,EPF /TS# /Job#200188692,333.00,0,1,3101-301, /Batch # /Timesheet #,19.98
+2,,1,29,EPF /TS# /Job#200187980,288.00,0,1,3101-301, /Batch # /Timesheet #,17.28
+2,,1,30,EPF /TS# /Job#200189856,351.00,0,1,3101-301, /Batch # /Timesheet #,21.06
+2,,1,31,Mar'24 KPI Incentive /TS# /Job#200187980,420.00,0,1,3101-301, /Batch # /Timesheet #,25.20
+2,,1,32,Normal /TS# /Job#200189855,3300.00,0,1,3101-301, /Batch # /Timesheet #,198.00
+2,,1,33,Normal /TS# /Job#200189858,2400.00,0,1,3101-301, /Batch # /Timesheet #,144.00
+2,,1,34,Normal /TS# /Job#200188392,2550.00,0,1,3101-301, /Batch # /Timesheet #,153.00
+2,,1,35,Normal /TS# /Job#200189741,3300.00,0,1,3101-301, /Batch # /Timesheet #,198.00
+2,,1,36,Normal /TS# /Job#200189740,3300.00,0,1,3101-301, /Batch # /Timesheet #,198.00
+2,,1,37,Normal /TS# /Job#200189861,2550.00,0,1,3101-301, /Batch # /Timesheet #,153.00
+2,,1,38,Normal /TS# /Job#200189851,2250.00,0,1,3101-301, /Batch # /Timesheet #,135.00
+2,,1,39,Normal /TS# /Job#200188692,2550.00,0,1,3101-301, /Batch # /Timesheet #,153.00
+2,,1,40,Normal /TS# /Job#200187980,1800.00,0,1,3101-301, /Batch # /Timesheet #,108.00
+2,,1,41,Normal /TS# /Job#200189856,2700.00,0,1,3101-301, /Batch # /Timesheet #,162.00
+2,,1,42,SOCSO /TS# /Job#200189855,56.85,0,1,3101-301, /Batch # /Timesheet #,3.41
+2,,1,43,SOCSO /TS# /Job#200189858,41.15,0,1,3101-301, /Batch # /Timesheet #,2.47
+2,,1,44,SOCSO /TS# /Job#200188392,44.65,0,1,3101-301, /Batch # /Timesheet #,2.68
+2,,1,45,SOCSO /TS# /Job#200189741,56.85,0,1,3101-301, /Batch # /Timesheet #,3.41
+2,,1,46,SOCSO /TS# /Job#200189740,56.85,0,1,3101-301, /Batch # /Timesheet #,3.41
+2,,1,47,SOCSO /TS# /Job#200189861,44.65,0,1,3101-301, /Batch # /Timesheet #,2.68
+2,,1,48,SOCSO /TS# /Job#200189851,39.35,0,1,3101-301, /Batch # /Timesheet #,2.36
+2,,1,49,SOCSO /TS# /Job#200188692,44.65,0,1,3101-301, /Batch # /Timesheet #,2.68
+2,,1,50,SOCSO /TS# /Job#200187980,38.50,0,1,3101-301, /Batch # /Timesheet #,2.31
+2,,1,51,SOCSO /TS# /Job#200189856,46.35,0,1,3101-301, /Batch # /Timesheet #,2.78
+3,,1,1,20240524,38085.55

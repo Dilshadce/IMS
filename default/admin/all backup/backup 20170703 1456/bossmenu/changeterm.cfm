@@ -1,0 +1,78 @@
+<cfinclude template = "/CFC/convert_single_double_quote_script.cfm">
+<html>
+<head>
+<title>Change term</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="/stylesheet/stylesheet.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+function checkValidate(){
+	if(document.form.oldterm.value == ''){
+		alert('Please Select An Old term');
+		return false;
+	}
+	else{
+		if(document.form.newterm.value == ''){
+			alert('New term Cannot Be Empty!');
+			return false;
+		}
+		else if(document.form.oldterm.value == document.form.newterm.value){
+			alert('Old term Cannot Same With New term!');
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+}
+
+function dispDesp(obj,type){
+	document.getElementById(type).value=obj.options[obj.selectedIndex].title;
+}
+</script>
+
+</head>
+<body>
+<cfif isdefined("url.process")>
+	<cfoutput><h3>#form.status#</h3><hr></cfoutput>
+</cfif>
+<form name="form" action="act_changeterm.cfm" method="post">
+<H1>Change term</H1>
+<cfquery name="getterm" datasource="#dts#">
+	select term, desp from #target_icterm# order by term
+</cfquery>
+<table align="center" width="60%" class="data">
+	<tr>
+		<th>Old term</th>
+		<td>
+			<select name="oldterm" onChange="dispDesp(this,'newtermdesp');">
+          		<option value="">Choose a term</option>
+          		<cfoutput query="getterm">
+            		<option value="#convertquote(term)#" title="#desp#">#term# - #desp#</option>
+          		</cfoutput>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>New term</th>
+		<td>
+			<input type="text" name="newterm" value="">
+		</td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td>
+			<input type="text" name="newtermdesp" id="newtermdesp" value="" size="60">
+		</td>
+	</tr>
+	<tr><td colspan="100%"><hr></td></tr>
+	<tr>
+		<td colspan="100%" align="center">
+			<input type="submit" name="submit" value="Submit" onClick="return checkValidate();">
+			<input type="button" name="back" value="Back" onClick="window.open('bossmenu.cfm','_self')">
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

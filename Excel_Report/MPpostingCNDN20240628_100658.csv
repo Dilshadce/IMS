@@ -1,0 +1,97 @@
+RECTYPE,CNTBTCH,CNTITEM,IDCUST,IDINVC,TEXTTRX,INVCDESC,DATEINVC,SWMANRTE,DATEDUE,SWTAXBL,SWMANTX,CODETAXGRP,TAXSTTS1,AMTTAX1,FISCYR,FISCPER,
+RECTYPE,CNTBTCH,CNTITEM,CNTLINE,TEXTDESC,AMTEXTN,SWMANLTX,TAXSTTS1,IDACCTREV,COMMENT,ITEMTAX,,,,,,,
+RECTYPE,CNTBTCH,CNTITEM,CNTPAYM,DATEDUE,AMTDUE,,,,,,,,,,,,
+1,,1,300034852,CN501804,3,AP-MONTH=06,20240611,0,20240711,1,1,GST,3,3480.41,2024,06
+2,,1,1,MSP Fee /TS# /Job#200189914,-121.55,0,1,3300-301, /Batch # /Timesheet #,-7.29
+2,,1,2,MSP Fee /TS# /Job#200188523,-9.07,0,1,3300-301, /Batch # /Timesheet #,-0.54
+2,,1,3,MSP Fee /TS# /Job#200190164,-131.47,0,1,3300-301, /Batch # /Timesheet #,-7.89
+2,,1,4,MSP Fee /TS# /Job#200187937,-129.77,0,1,3300-301, /Batch # /Timesheet #,-7.79
+2,,1,5,MSP Fee /TS# /Job#200189635,-170.96,0,1,3300-301, /Batch # /Timesheet #,-10.26
+2,,1,6,MSP Fee /TS# /Job#200189895,-100.85,0,1,3300-301, /Batch # /Timesheet #,-6.05
+2,,1,7,MSP Fee /TS# /Job#200190593,-12.04,0,1,3300-301, /Batch # /Timesheet #,-0.72
+2,,1,8,MSP Fee /TS# /Job#200190591,-12.04,0,1,3300-301, /Batch # /Timesheet #,-0.72
+2,,1,9,MSP Fee /TS# /Job#200190240,-41.84,0,1,3300-301, /Batch # /Timesheet #,-2.51
+2,,1,10,MSP Fee /TS# /Job#200188532,-114.88,0,1,3300-301, /Batch # /Timesheet #,-6.89
+2,,1,11,MSP Fee /TS# /Job#200189759,-124.41,0,1,3300-301, /Batch # /Timesheet #,-7.46
+2,,1,12,MSP Fee /TS# /Job#200189988,-142.10,0,1,3300-301, /Batch # /Timesheet #,-8.53
+2,,1,13,MSP Fee /TS# /Job#200190577,-12.04,0,1,3300-301, /Batch # /Timesheet #,-0.72
+2,,1,14,MSP Fee /TS# /Job#200189744,-124.41,0,1,3300-301, /Batch # /Timesheet #,-7.46
+2,,1,15,Normal /TS# /Job#200189914,4191.24,0,1,3102-301, /Batch # /Timesheet #,251.47
+2,,1,16,Normal /TS# /Job#200188523,312.65,0,1,3102-301, /Batch # /Timesheet #,18.76
+2,,1,17,Normal /TS# /Job#200190164,4533.35,0,1,3102-301, /Batch # /Timesheet #,272.00
+2,,1,18,Normal /TS# /Job#200187937,4474.99,0,1,3102-301, /Batch # /Timesheet #,268.50
+2,,1,19,Normal /TS# /Job#200189635,5895.00,0,1,3102-301, /Batch # /Timesheet #,353.70
+2,,1,20,Normal /TS# /Job#200189895,3477.42,0,1,3102-301, /Batch # /Timesheet #,208.65
+2,,1,21,Normal /TS# /Job#200190593,415.16,0,1,3102-301, /Batch # /Timesheet #,24.91
+2,,1,22,Normal /TS# /Job#200190591,415.16,0,1,3102-301, /Batch # /Timesheet #,24.91
+2,,1,23,Normal /TS# /Job#200190240,1442.90,0,1,3102-301, /Batch # /Timesheet #,86.57
+2,,1,24,Normal /TS# /Job#200188532,3961.44,0,1,3102-301, /Batch # /Timesheet #,237.69
+2,,1,25,Normal /TS# /Job#200189759,4290.00,0,1,3102-301, /Batch # /Timesheet #,257.40
+2,,1,26,Normal /TS# /Job#200189988,4900.00,0,1,3102-301, /Batch # /Timesheet #,294.00
+2,,1,27,Normal /TS# /Job#200190577,415.16,0,1,3102-301, /Batch # /Timesheet #,24.91
+2,,1,28,Normal /TS# /Job#200189744,4290.00,0,1,3102-301, /Batch # /Timesheet #,257.40
+2,,1,29,Public Holiday 2.0 /TS# /Job#200188532,319.85,0,1,3102-301, /Batch # /Timesheet #,19.19
+2,,1,30,Reimbursement/Claim /TS# /Job#200188532,230.00,0,1,3102-301, /Batch # /Timesheet #,13.80
+2,,1,31,Reimbursement/Claim /TS# /Job#200188532,250.00,0,1,3102-301, /Batch # /Timesheet #,15.00
+2,,1,32,Reimbursement/Claim /TS# /Job#200189759,230.00,0,1,3102-301, /Batch # /Timesheet #,13.80
+2,,1,33,Reimbursement/Claim /TS# /Job#200189759,141.00,0,1,3102-301, /Batch # /Timesheet #,8.46
+2,,1,34,Reimbursement/Claim /TS# /Job#200189988,250.00,0,1,3102-301, /Batch # /Timesheet #,15.00
+2,,1,35,Reimbursement/Claim /TS# /Job#200189988,83.00,0,1,3102-301, /Batch # /Timesheet #,4.98
+2,,1,36,Reimbursement/Claim /TS# /Job#200190577,25.50,0,1,3102-301, /Batch # /Timesheet #,1.53
+2,,1,37,Reimbursement/Claim /TS# /Job#200189744,47.49,0,1,3102-301, /Batch # /Timesheet #,2.85
+2,,1,38,Reimbursement/Claim /TS# /Job#200189744,161.30,0,1,3102-301, /Batch # /Timesheet #,9.68
+3,,1,1,20240711,46985.59
+1,,1,300034626,CN501805,3,AP-MONTH=06,20240611,0,20240711,1,1,GST,3,8548.01,2024,06
+2,,1,1,MSP Fee /TS# /Job#200185755,-104.80,0,1,3300-301, /Batch # /Timesheet #,-6.29
+2,,1,2,MSP Fee /TS# /Job#200190223,-86.31,0,1,3300-301, /Batch # /Timesheet #,-5.18
+2,,1,3,MSP Fee /TS# /Job#200188100,-314.91,0,1,3300-301, /Batch # /Timesheet #,-18.89
+2,,1,4,MSP Fee /TS# /Job#200188035,-114.67,0,1,3300-301, /Batch # /Timesheet #,-6.88
+2,,1,5,MSP Fee /TS# /Job#200189848,-122.31,0,1,3300-301, /Batch # /Timesheet #,-7.34
+2,,1,6,MSP Fee /TS# /Job#200189251,-146.00,0,1,3300-301, /Batch # /Timesheet #,-8.76
+2,,1,7,MSP Fee /TS# /Job#200188524,-84.19,0,1,3300-301, /Batch # /Timesheet #,-5.05
+2,,1,8,MSP Fee /TS# /Job#200190428,-205.81,0,1,3300-301, /Batch # /Timesheet #,-12.35
+2,,1,9,MSP Fee /TS# /Job#200187450,-143.55,0,1,3300-301, /Batch # /Timesheet #,-8.61
+2,,1,10,MSP Fee /TS# /Job#200189186,-85.03,0,1,3300-301, /Batch # /Timesheet #,-5.10
+2,,1,11,MSP Fee /TS# /Job#200189670,-170.96,0,1,3300-301, /Batch # /Timesheet #,-10.26
+2,,1,12,MSP Fee /TS# /Job#200189920,-270.22,0,1,3300-301, /Batch # /Timesheet #,-16.21
+2,,1,13,MSP Fee /TS# /Job#200189928,-377.00,0,1,3300-301, /Batch # /Timesheet #,-22.62
+2,,1,14,MSP Fee /TS# /Job#200190050,-139.20,0,1,3300-301, /Batch # /Timesheet #,-8.35
+2,,1,15,MSP Fee /TS# /Job#200190056,-522.00,0,1,3300-301, /Batch # /Timesheet #,-31.32
+2,,1,16,MSP Fee /TS# /Job#200190359,-166.14,0,1,3300-301, /Batch # /Timesheet #,-9.97
+2,,1,17,MSP Fee /TS# /Job#200187951,-119.46,0,1,3300-301, /Batch # /Timesheet #,-7.17
+2,,1,18,Normal /TS# /Job#200185755,3613.87,0,1,3102-301, /Batch # /Timesheet #,216.83
+2,,1,19,Normal /TS# /Job#200190223,2976.13,0,1,3102-301, /Batch # /Timesheet #,178.57
+2,,1,20,Normal /TS# /Job#200188100,10859.00,0,1,3102-301, /Batch # /Timesheet #,651.54
+2,,1,21,Normal /TS# /Job#200188035,3954.00,0,1,3102-301, /Batch # /Timesheet #,237.24
+2,,1,22,Normal /TS# /Job#200189848,4217.60,0,1,3102-301, /Batch # /Timesheet #,253.06
+2,,1,23,Normal /TS# /Job#200189251,5034.76,0,1,3102-301, /Batch # /Timesheet #,302.09
+2,,1,24,Normal /TS# /Job#200188524,2903.23,0,1,3102-301, /Batch # /Timesheet #,174.19
+2,,1,25,Normal /TS# /Job#200190428,7096.77,0,1,3102-301, /Batch # /Timesheet #,425.81
+2,,1,26,Normal /TS# /Job#200187450,4950.00,0,1,3102-301, /Batch # /Timesheet #,297.00
+2,,1,27,Normal /TS# /Job#200189186,2932.00,0,1,3102-301, /Batch # /Timesheet #,175.92
+2,,1,28,Normal /TS# /Job#200189670,5895.00,0,1,3102-301, /Batch # /Timesheet #,353.70
+2,,1,29,Normal /TS# /Job#200189920,9318.00,0,1,3102-301, /Batch # /Timesheet #,559.08
+2,,1,30,Normal /TS# /Job#200189928,13000.00,0,1,3102-301, /Batch # /Timesheet #,780.00
+2,,1,31,Normal /TS# /Job#200190050,4800.00,0,1,3102-301, /Batch # /Timesheet #,288.00
+2,,1,32,Normal /TS# /Job#200190056,18000.00,0,1,3102-301, /Batch # /Timesheet #,1080.00
+2,,1,33,Normal /TS# /Job#200190359,5729.03,0,1,3102-301, /Batch # /Timesheet #,343.74
+2,,1,34,Normal /TS# /Job#200187951,4119.44,0,1,3101-301, /Batch # /Timesheet #,247.17
+2,,1,35,Reimbursement/Claim /TS# /Job#200187951,623.80,0,1,3101-301, /Batch # /Timesheet #,37.43
+3,,1,1,20240711,115398.08
+1,,1,300035386,CN501806,3,AP-MONTH=06,20240611,0,20240711,1,1,GST,3,554.06,2024,06
+2,,1,1,Background Check /TS# /Job#200190233,335.41,0,1,3102-301, /Batch # /Timesheet #,20.12
+2,,1,2,MSP Fee /TS# /Job#200190493,-26.19,0,1,3300-301, /Batch # /Timesheet #,-1.57
+2,,1,3,MSP Fee /TS# /Job#200190233,-170.63,0,1,3300-301, /Batch # /Timesheet #,-10.24
+2,,1,4,Normal /TS# /Job#200190493,903.23,0,1,3102-301, /Batch # /Timesheet #,54.19
+2,,1,5,Normal /TS# /Job#200190233,5883.87,0,1,3102-301, /Batch # /Timesheet #,353.03
+3,,1,1,20240711,7479.75
+1,,1,300034626,CN501807,3,AP-MONTH=06,20240611,0,20240711,1,1,GST,3,8.00,2024,06
+2,,1,1,Reimbursement/Claim /TS# /Job#200190050,100.00,0,1,3102-301, /Batch # /Timesheet #,6.00
+3,,1,1,20240711,108.00
+1,,1,300034626,CN501808,3,AP-MONTH=06,20240611,0,20240711,1,1,GST,3,96.79,2024,06
+2,,1,1,Apr'24 KPI Incentive /TS# /Job#200189186,541.99,0,1,3102-301, /Batch # /Timesheet #,32.52
+2,,1,2,Reimbursement/Claim /TS# /Job#200189186,87.90,0,1,3102-301, /Batch # /Timesheet #,5.27
+2,,1,3,Reimbursement/Claim /TS# /Job#200189848,100.00,0,1,3102-301, /Batch # /Timesheet #,6.00
+2,,1,4,Reimbursement/Claim /TS# /Job#200189848,250.00,0,1,3102-301, /Batch # /Timesheet #,15.00
+2,,1,5,Reimbursement/Claim /TS# /Job#200189848,230.00,0,1,3102-301, /Batch # /Timesheet #,13.80
+3,,1,1,20240711,1306.68

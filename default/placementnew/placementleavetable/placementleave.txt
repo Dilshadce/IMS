@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS `bepstest_i`.`placementleave`;
+CREATE TABLE  `bepstest_i`.`placementleave` (
+  `placementno` varchar(100) NOT NULL DEFAULT '',
+  `leavetype` varchar(100) NOT NULL DEFAULT '',
+  `claimdate` date NOT NULL DEFAULT '0000-00-00',
+  `days` decimal(17,1) NOT NULL DEFAULT '0.0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;

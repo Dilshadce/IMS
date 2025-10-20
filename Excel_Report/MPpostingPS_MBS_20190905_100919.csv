@@ -1,0 +1,46 @@
+RECTYPE,BATCHID,BTCHENTRY,SRCELEDGER,SRCETYPE,DATEENTRY,JRNLDESC,FSCSYR,FSCSPERD
+RECTYPE,BATCHNBR,JOURNALID,TRANSNBR,ACCTID,TRANSAMT,TRANSREF,TRANSDATE,SRCELDGR,SRCETYPE,COMMENT,TRANSDESC
+1,CH0819001,1,GL,JE,20190815,Cost of Sales - Pays,2019,8
+1,CH0819001,2,GL,JE,20190815,Cost of Sales - Pays,2019,8
+1,CH0819002,3,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819002,3,1,4102-211,2000,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819002,3,2,2201,-2000,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819002,3,3,4112-211,300,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0819002,3,4,2201,-300,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0819002,3,5,4112-211,200,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Language Allowance","Language Allowance"
+2,CH0819002,3,6,2201,-200,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Language Allowance","Language Allowance"
+2,CH0819002,3,7,4102-211,547.5,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0819002,3,8,2201,-547.5,/TS# /Job#200157042,20190815,GL,JE,/Batch #CH0819002 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+1,CH0819006,4,GL,JE,20190815,Cost of Sales - Pays,2019,8
+1,CH0819006,5,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,5,1,4612-211,2000,/TS# /Job#200149734,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Bonus","Bonus"
+2,CH0819006,5,2,2201,-2000,/TS# /Job#200149734,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Bonus","Bonus"
+2,CH0819006,5,3,4102-211,-193.55,/TS# /Job#200149734,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Unpaid Leave","Unpaid Leave"
+2,CH0819006,5,4,2201,193.55,/TS# /Job#200149734,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Unpaid Leave","Unpaid Leave"
+1,CH0819006,6,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,6,1,4102-211,2120,/TS# /Job#200159779,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,6,2,2201,-2120,/TS# /Job#200159779,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0819006,7,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,7,1,4102-211,2307,/TS# /Job#200157712,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,7,2,2201,-2307,/TS# /Job#200157712,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,7,3,4102-211,58.98,/TS# /Job#200157712,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0819006,7,4,2201,-58.98,/TS# /Job#200157712,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0819006,8,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,8,1,4102-211,2100,/TS# /Job#200154202,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,8,2,2201,-2100,/TS# /Job#200154202,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0819006,9,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,9,1,4102-211,2508,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,9,2,2201,-2508,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,9,3,4102-211,213.8,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0819006,9,4,2201,-213.8,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0819006,9,5,4102-211,200,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Fixed Allowance","Fixed Allowance"
+2,CH0819006,9,6,2201,-200,/TS# /Job#200155907,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Fixed Allowance","Fixed Allowance"
+1,CH0819006,10,GL,JE,20190815,Cost of Sales - Pays,2019,8
+2,CH0819006,10,1,4102-213,3357,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,10,2,2201,-3357,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0819006,10,3,4102-213,314.71,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0819006,10,4,2201,-314.71,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0819006,10,5,4112-213,200,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Perfect Attendance","Perfect Attendance"
+2,CH0819006,10,6,2201,-200,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Perfect Attendance","Perfect Attendance"
+2,CH0819006,10,7,4102-213,200,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0819006,10,8,2201,-200,/TS# /Job#200150279,20190815,GL,JE,/Batch #CH0819006 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"

@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `bepstest_i`.`placementleavetrack`;
+CREATE TABLE  `bepstest_i`.`placementleavetrack` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `trackmode` varchar(100) DEFAULT '',
+  `placementno` varchar(100) DEFAULT '',
+  `leavetype` varchar(100) DEFAULT '',
+  `claimdate` date DEFAULT '0000-00-00',
+  `days` varchar(100) DEFAULT '',
+  `created_by` varchar(100) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;

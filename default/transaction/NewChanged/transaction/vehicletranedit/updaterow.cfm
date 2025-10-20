@@ -1,0 +1,224 @@
+
+<cfif isdefined('url.refno') and isdefined('url.trancode')>
+<cfset url.refno = URLDECODE(url.refno)>
+<cfset url.tran = URLDECODE(url.tran)>
+<cfset url.qty = URLDECODE(url.qty)>
+<cfset url.brem4 = trim(URLDECODE(url.brem4))>
+<cfset url.brem1 = trim(URLDECODE(url.brem1))>
+<cfset url.cate = trim(URLDECODE(url.cate))>
+<cfset url.group = trim(URLDECODE(url.group))>
+<cfset url.supp = trim(URLDECODE(url.supp))>
+<cfset url.nodisplay = trim(URLDECODE(url.nodisplay))>
+<cfset url.subtotal = trim(URLDECODE(url.subtotal))>
+<cfset url.deductitem = trim(URLDECODE(url.deductitem))>
+<cfset url.updown = trim(URLDECODE(url.updown))>
+<cfset url.coltype = URLDECODE(url.coltype)>
+
+<cfquery name="getgsetup2" datasource="#dts#">
+	select 
+	concat('.',repeat('_',Decl_Uprice)) as Decl_Uprice,
+	Decl_Uprice as Decl_Uprice1, DECL_DISCOUNT as DECL_DISCOUNT1,
+	concat('.',repeat('_',Decl_Discount)) as Decl_Discount
+	from gsetup2
+</cfquery>
+
+<cfset stDecl_UPrice = getgsetup2.Decl_Uprice>
+<cfset stDecl_Discount = getgsetup2.Decl_Discount>
+
+
+<cfif url.updown eq 'up'>
+<cfif url.trancode gt 1>
+
+<cfquery name="getitemnotrancode" datasource="#dts#">
+select trancode,itemno from ictran
+WHERE 
+trancode = "#val(url.trancode)#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfquery name="checktrancode" datasource="#dts#">
+select trancode,itemno from ictran
+WHERE 
+trancode = "#val(url.trancode)-1#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+
+<cfif checktrancode.recordcount neq 0>
+<cfquery name="updatetrancode" datasource="#dts#">
+update ictran set trancode="#url.trancode#"
+WHERE 
+trancode = "#val(url.trancode)-1#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+and itemno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#checktrancode.itemno#">
+</cfquery>
+</cfif>
+<cfquery name="updatetrancode2" datasource="#dts#">
+update ictran set trancode="#val(url.trancode)-1#"
+WHERE 
+trancode = "#url.trancode#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+and itemno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#getitemnotrancode.itemno#">
+</cfquery>
+</cfif>
+<cfelseif url.updown eq 'down'>
+
+<cfquery name="totalitemcount" datasource="#dts#">
+select trancode from ictran
+WHERE 
+type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+<cfif url.trancode lt totalitemcount.recordcount>
+
+<cfquery name="getitemnotrancode" datasource="#dts#">
+select trancode,itemno from ictran
+WHERE 
+trancode = "#val(url.trancode)#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfquery name="checktrancode" datasource="#dts#">
+select trancode,itemno from ictran
+WHERE 
+trancode = "#val(url.trancode)+1#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfif checktrancode.recordcount neq 0>
+<cfquery name="updatetrancode" datasource="#dts#">
+update ictran set trancode="#url.trancode#"
+WHERE 
+trancode = "#val(url.trancode)+1#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+and itemno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#checktrancode.itemno#">
+</cfquery>
+</cfif>
+<cfquery name="updatetrancode2" datasource="#dts#">
+update ictran set trancode="#val(url.trancode)+1#"
+WHERE 
+trancode = "#url.trancode#"
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+and itemno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#getitemnotrancode.itemno#">
+</cfquery>
+</cfif>
+
+</cfif>
+
+
+<cfif url.updown eq ''>
+
+<cfquery name="updaterow" datasource="#dts#">
+UPDATE ictran SET 
+qty_bil = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.qty#">,
+brem1 = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.brem1#">,
+deductableitem = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.deductitem#">,
+brem2 = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.group#">,
+<cfif lcase(hcomid) eq "ltm_i">
+wos_group = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.group#">,
+</cfif>
+note1 = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.supp#">,
+source = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.cate#">,
+nodisplay = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.nodisplay#">,
+totalupdisplay = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.subtotal#">,
+location = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.coltype#">,
+job = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.coltype#">
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfquery name="getitemdetail" datasource="#dts#">
+SELECT itemno,unit FROM ictran WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfquery name="selecticitem" datasource="#dts#">
+SELECT unit,unit2,unit3,unit4,unit5,unit6,factor1,factor2,factorU3_a,factorU3_b,factorU4_a,factorU4_b,factorU5_a,factorU5_b,factorU6_a,factorU6_b FROM icitem where itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getitemdetail.itemno#" >
+</cfquery>
+
+<cfset qtyReal = qty>
+<cfset unit = getitemdetail.unit>
+<cfif unit neq "" and unit neq "#selecticitem.unit#">
+
+<cfif unit eq "#selecticitem.unit2#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factor1) ) / val(selecticitem.factor2)>
+<cfelseif unit eq "#selecticitem.unit3#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU3_a) ) / val(selecticitem.factorU3_b)>
+<cfelseif unit eq "#selecticitem.unit4#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU4_a) ) / val(selecticitem.factorU4_b)>
+<cfelseif unit eq "#selecticitem.unit5#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU5_a) ) / val(selecticitem.factorU5_b)>
+<cfelseif unit eq "#selecticitem.unit6#">
+<cfset qtyReal = ( val(qty) * val(selecticitem.factorU6_a) ) / val(selecticitem.factorU6_b)>
+</cfif>
+
+</cfif>
+
+
+<cfset discountamount = 0 >
+<cfif url.brem4 neq "">
+<cfquery name="getprice" datasource="#dts#">
+SELECT price_bil,qty_bil FROM ictran
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+	<cfif right(url.brem4,1) eq "%">
+    <cfset totpercent = val(url.brem4)>
+        <cfif totpercent lte 100 and totpercent gt 0>
+        <cfset adiscountamount = numberformat(val(getprice.price_bil) * ((100-totpercent)/100),stDecl_UPrice) * val(qtyReal)>
+        <cfset discountamount = numberformat(val(getprice.price_bil),stDecl_UPrice) * val(qtyReal) - val(adiscountamount)>
+        </cfif>
+    <cfelse>
+    <cfset totdis = val(url.brem4)>
+        <cfif totdis lte val(getprice.price_bil)>
+        <cfset adiscountamount =numberformat( val(getprice.price_bil) - val(totdis),stDecl_UPrice) * val(qtyReal)>
+        <cfset discountamount = numberformat(val(getprice.price_bil),stDecl_UPrice) * val(qtyReal) - val(adiscountamount)>
+        </cfif>
+    </cfif>
+</cfif>
+<cfquery name="updatediscountamount" datasource="#dts#">
+UPDATE ictran SET disamt_bil = "#numberformat(val(discountamount),stDecl_UPrice)#",
+brem4 = "#url.brem4#"
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>   
+
+
+
+
+<cfquery name="updateictranqty" datasource="#dts#">
+UPDATE ictran SET 
+qty = <cfqueryparam cfsqltype="cf_sql_varchar" value="#qtyReal#">,
+amt_bil = round((price_bil * qty_bil)+0.000001 - disamt_bil,2),
+amt1_bil = round((price_bil * qty_bil)+0.000001 - disamt_bil,2)
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+<cfquery name="updateamt" datasource="#dts#">
+UPDATE ictran SET 
+disamt = (disamt_bil * if(currrate = 0,1,currrate)),
+amt = round((amt_bil * if(currrate = 0,1,currrate))+0.000001,2),
+amt1 = round((amt1_bil * if(currrate = 0,1,currrate))+0.000001,2)
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+</cfif>
+<cfquery name="getsum" datasource="#dts#">
+SELECT SUM(amt1_bil) as sumsubtotal,count(trancode) as notran FROM ictran where type = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.tran#"> and refno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.refno#">
+</cfquery>
+
+
+<cfoutput>
+<input type="hidden" name="hidsubtotal" id="hidsubtotal" value="#numberformat(getsum.sumsubtotal,'.__')#" />
+<input type="hidden" name="hiditemcount" id="hiditemcount" value="#getsum.notran#" />
+</cfoutput>
+
+
+</cfif>

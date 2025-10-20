@@ -1,0 +1,969 @@
+RECTYPE,BATCHID,BTCHENTRY,SRCELEDGER,SRCETYPE,DATEENTRY,JRNLDESC,FSCSYR,FSCSPERD
+RECTYPE,BATCHNBR,JOURNALID,TRANSNBR,ACCTID,TRANSAMT,TRANSREF,TRANSDATE,SRCELDGR,SRCETYPE,COMMENT,TRANSDESC
+1,CH0919008,1,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,1,1,4103-111,3360,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,1,2,2201,-3360,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,1,3,4103-111,200,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,1,4,2201,-200,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,1,5,4103-111,820,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,1,6,2201,-820,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,1,7,4103-111,868,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,1,8,2201,-868,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,1,9,4103-111,1605.3,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,1,10,2201,-1605.3,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,2,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,2,1,4103-111,3174,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,2,2,2201,-3174,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,2,3,4103-111,400,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,2,4,2201,-400,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,2,5,4103-111,1140,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,2,6,2201,-1140,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,2,7,4103-111,514.5,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,2,8,2201,-514.5,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,2,9,4103-111,2570.6,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,2,10,2201,-2570.6,/TS# /Job#200160029,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,3,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,3,1,4103-111,3836,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,3,2,2201,-3836,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,3,3,4103-111,450,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,3,4,2201,-450,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,3,5,4103-111,700,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,3,6,2201,-700,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,3,7,4103-111,463.75,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,3,8,2201,-463.75,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,3,9,4103-111,1551,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,3,10,2201,-1551,/TS# /Job#200160015,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,4,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,4,1,4103-111,3131,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,4,2,2201,-3131,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,4,3,4103-111,1090,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,4,4,2201,-1090,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,4,5,4103-111,160,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,4,6,2201,-160,/TS# /Job#200160033,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,5,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,5,1,4103-111,3305,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,5,2,2201,-3305,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,5,3,4103-111,550,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,5,4,2201,-550,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,5,5,4103-111,1080,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,5,6,2201,-1080,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,5,7,4103-111,379.75,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,5,8,2201,-379.75,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,5,9,4103-111,1190.4,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,5,10,2201,-1190.4,/TS# /Job#200160016,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,6,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,6,1,4103-111,3622,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,6,2,2201,-3622,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,6,3,4103-111,520,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,6,4,2201,-520,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,6,5,4103-111,439.25,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,6,6,2201,-439.25,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,6,7,4103-111,1521.8,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,6,8,2201,-1521.8,/TS# /Job#200160039,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,7,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,7,1,4103-111,6366,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,7,2,2201,-6366,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,7,3,4103-111,230,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,7,4,2201,-230,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,7,5,4103-111,416.5,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,7,6,2201,-416.5,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,7,7,4103-111,554.1,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,7,8,2201,-554.1,/TS# /Job#200160040,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,8,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,8,1,4103-111,3759,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,8,2,2201,-3759,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,8,3,4103-111,862.5,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,8,4,2201,-862.5,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,8,5,4103-111,1290,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,8,6,2201,-1290,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,8,7,4103-111,554.75,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,8,8,2201,-554.75,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,8,9,4103-111,1864.6,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,8,10,2201,-1864.6,/TS# /Job#200160030,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,9,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,9,1,4103-111,4249,/TS# /Job#200160034,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,9,2,2201,-4249,/TS# /Job#200160034,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,9,3,4103-111,360,/TS# /Job#200160034,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,9,4,2201,-360,/TS# /Job#200160034,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0919008,10,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,10,1,4103-111,3245,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,10,2,2201,-3245,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,10,3,4103-111,140,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,10,4,2201,-140,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,10,5,4103-111,262.5,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,10,6,2201,-262.5,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,10,7,4103-111,1448.15,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,10,8,2201,-1448.15,/TS# /Job#200160041,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,11,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,11,1,4103-111,3852,/TS# /Job#200160042,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,11,2,2201,-3852,/TS# /Job#200160042,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,11,3,4103-111,2456.6,/TS# /Job#200160042,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,11,4,2201,-2456.6,/TS# /Job#200160042,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,12,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,12,1,4103-111,4399,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,12,2,2201,-4399,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,12,3,4103-111,550,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,12,4,2201,-550,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,12,5,4103-111,2400,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,12,6,2201,-2400,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,12,7,4103-111,1889.6,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,12,8,2201,-1889.6,/TS# /Job#200160058,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,13,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,13,1,4103-111,3933,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,13,2,2201,-3933,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,13,3,4103-111,175,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,13,4,2201,-175,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,13,5,4103-111,170,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,13,6,2201,-170,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,13,7,4103-111,696.5,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,13,8,2201,-696.5,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,13,9,4103-111,1313.38,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,13,10,2201,-1313.38,/TS# /Job#200160043,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,14,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,14,1,4103-111,3796,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,14,2,2201,-3796,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,14,3,4103-111,270,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,14,4,2201,-270,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,14,5,4103-111,1649,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,14,6,2201,-1649,/TS# /Job#200160044,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,15,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,15,1,4103-111,3458,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,15,2,2201,-3458,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,15,3,4103-111,220,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,15,4,2201,-220,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,15,5,4103-111,1501.6,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,15,6,2201,-1501.6,/TS# /Job#200160045,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,16,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,16,1,4103-111,6160,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,16,2,2201,-6160,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,16,3,4103-111,1100,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,16,4,2201,-1100,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,16,5,4103-111,1200,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,16,6,2201,-1200,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,16,7,4103-111,556.5,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,16,8,2201,-556.5,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,16,9,4103-111,1469.4,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,16,10,2201,-1469.4,/TS# /Job#200160056,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,17,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,17,1,4103-111,3581,/TS# /Job#200160055,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,17,2,2201,-3581,/TS# /Job#200160055,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,17,3,4103-111,1651.6,/TS# /Job#200160055,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,17,4,2201,-1651.6,/TS# /Job#200160055,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,18,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,18,1,4103-111,3901,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,18,2,2201,-3901,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,18,3,4103-111,40,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,18,4,2201,-40,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,18,5,4103-111,500.37,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,18,6,2201,-500.37,/TS# /Job#200160054,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,19,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,19,1,4103-111,3006,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,19,2,2201,-3006,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,19,3,4103-111,440,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,19,4,2201,-440,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,19,5,4103-111,997.59,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,19,6,2201,-997.59,/TS# /Job#200160037,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,20,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,20,1,4103-111,6160,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,20,2,2201,-6160,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,20,3,4103-111,800,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,20,4,2201,-800,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,20,5,4103-111,701.75,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,20,6,2201,-701.75,/TS# /Job#200160053,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,21,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,21,1,4103-111,7725,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,21,2,2201,-7725,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,21,3,4103-111,60,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,21,4,2201,-60,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,21,5,4103-111,128.98,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,21,6,2201,-128.98,/TS# /Job#200160052,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,22,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,22,1,4103-111,3557,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,22,2,2201,-3557,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,22,3,4103-111,825,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,22,4,2201,-825,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,22,5,4103-111,2310,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,22,6,2201,-2310,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,22,7,4103-111,1254.75,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,22,8,2201,-1254.75,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,22,9,4103-111,1014.25,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,22,10,2201,-1014.25,/TS# /Job#200160017,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,23,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,23,1,4103-111,3894,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,23,2,2201,-3894,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,23,3,4103-111,1480,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,23,4,2201,-1480,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,23,5,4103-111,276.5,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,23,6,2201,-276.5,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,23,7,4103-111,1616.8,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,23,8,2201,-1616.8,/TS# /Job#200160059,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,24,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,24,1,4103-111,4229,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,24,2,2201,-4229,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,24,3,4103-111,480,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,24,4,2201,-480,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,24,5,4103-111,289.75,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,24,6,2201,-289.75,/TS# /Job#200160031,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,25,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,25,1,4103-111,6192,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,25,2,2201,-6192,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,25,3,4103-111,300,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,25,4,2201,-300,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,25,5,4103-111,930,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,25,6,2201,-930,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,25,7,4103-111,458.5,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,25,8,2201,-458.5,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,25,9,4103-111,1632.62,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,25,10,2201,-1632.62,/TS# /Job#200160057,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,26,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,26,1,4103-111,3321,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,26,2,2201,-3321,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,26,3,4103-111,125,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,26,4,2201,-125,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,26,5,4103-111,1300,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,26,6,2201,-1300,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,26,7,4103-111,416.5,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,26,8,2201,-416.5,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,26,9,4103-111,2288,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,26,10,2201,-2288,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,27,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,27,1,4103-111,3765,/TS# /Job#200160046,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,27,2,2201,-3765,/TS# /Job#200160046,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,27,3,4103-111,1181.55,/TS# /Job#200160046,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,27,4,2201,-1181.55,/TS# /Job#200160046,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,28,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,28,1,4103-111,3965,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,28,2,2201,-3965,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,28,3,4103-111,670,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,28,4,2201,-670,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,28,5,4103-111,393.75,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,28,6,2201,-393.75,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,28,7,4103-111,1504.2,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,28,8,2201,-1504.2,/TS# /Job#200160047,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,29,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,29,1,4103-111,3424,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,29,2,2201,-3424,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,29,3,4103-111,60,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,29,4,2201,-60,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,29,5,4103-111,430.5,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,29,6,2201,-430.5,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,29,7,4103-111,1657.1,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,29,8,2201,-1657.1,/TS# /Job#200160048,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,30,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,30,1,4103-111,3247,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,30,2,2201,-3247,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,30,3,4103-111,900,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,30,4,2201,-900,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,30,5,4103-111,126,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,30,6,2201,-126,/TS# /Job#200160035,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,31,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,31,1,4103-111,4366,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,31,2,2201,-4366,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,31,3,4103-111,187.5,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,31,4,2201,-187.5,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,31,5,4103-111,940,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,31,6,2201,-940,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,31,7,4103-111,1334.4,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,31,8,2201,-1334.4,/TS# /Job#200160051,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,32,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,32,1,4103-111,5951,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,32,2,2201,-5951,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,32,3,4103-111,400,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,32,4,2201,-400,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,32,5,4103-111,720,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,32,6,2201,-720,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,32,7,4103-111,148.8,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,32,8,2201,-148.8,/TS# /Job#200160036,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,33,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,33,1,4103-111,6172,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,33,2,2201,-6172,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,33,3,4103-111,175,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,33,4,2201,-175,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,33,5,4103-111,710,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,33,6,2201,-710,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,33,7,4103-111,644,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,33,8,2201,-644,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,33,9,4103-111,1169,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,33,10,2201,-1169,/TS# /Job#200160050,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,34,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,34,1,4103-111,3650,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,34,2,2201,-3650,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,34,3,4103-111,420,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,34,4,2201,-420,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,34,5,4103-111,219,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,34,6,2201,-219,/TS# /Job#200160032,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,35,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,35,1,4103-111,4285,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,35,2,2201,-4285,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,35,3,4103-111,420,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,35,4,2201,-420,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,35,5,4103-111,413,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,35,6,2201,-413,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,35,7,4103-111,744.4,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,35,8,2201,-744.4,/TS# /Job#200160049,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,36,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,36,1,4103-111,700,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,36,2,2201,-700,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,36,3,4103-111,1240,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,36,4,2201,-1240,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,36,5,4103-111,29.75,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,36,6,2201,-29.75,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,36,7,4103-111,692.25,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,36,8,2201,-692.25,/TS# /Job#200160028,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,37,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,37,1,4103-111,840,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,37,2,2201,-840,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,37,3,4103-111,747.25,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,37,4,2201,-747.25,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,37,5,4103-111,594,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,37,6,2201,-594,/TS# /Job#200153936,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,38,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,38,1,4103-111,775,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,38,2,2201,-775,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,38,3,4103-111,1550,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,38,4,2201,-1550,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,38,5,4103-111,381.5,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,38,6,2201,-381.5,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,38,7,4103-111,1383,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,38,8,2201,-1383,/TS# /Job#200160018,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,39,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,39,1,4103-111,8069,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,39,2,2201,-8069,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,39,3,4103-111,640,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,39,4,2201,-640,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,39,5,4103-111,311.6,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,39,6,2201,-311.6,/TS# /Job#200160014,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,40,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,40,1,4103-111,4500,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,40,2,2201,-4500,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,40,3,4103-111,420,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,40,4,2201,-420,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,40,5,4103-111,304.5,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,40,6,2201,-304.5,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,40,7,4103-111,997.6,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,40,8,2201,-997.6,/TS# /Job#200160533,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,41,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,41,1,4103-111,3325,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,41,2,2201,-3325,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,41,3,4103-111,260,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,41,4,2201,-260,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,41,5,4103-111,780.6,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,41,6,2201,-780.6,/TS# /Job#200160061,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,42,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,42,1,4103-111,3365,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,42,2,2201,-3365,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,42,3,4103-111,200,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,42,4,2201,-200,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,42,5,4103-111,630,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,42,6,2201,-630,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,42,7,4103-111,315,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,42,8,2201,-315,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Variable Allowance","Variable Allowance"
+2,CH0919008,42,9,4103-111,362.5,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,42,10,2201,-362.5,/TS# /Job#200160024,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,43,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,43,1,4103-111,2916,/TS# /Job#200160026,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,43,2,2201,-2916,/TS# /Job#200160026,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,43,3,4103-111,120,/TS# /Job#200160026,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,43,4,2201,-120,/TS# /Job#200160026,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0919008,44,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,44,1,4103-111,7242,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,44,2,2201,-7242,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,44,3,4103-111,250,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,44,4,2201,-250,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 2.0","OT 2.0"
+2,CH0919008,44,5,4103-111,610,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,44,6,2201,-610,/TS# /Job#200160023,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0919008,45,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,45,1,4103-111,3621,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,45,2,2201,-3621,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,45,3,4103-111,400,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,45,4,2201,-400,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,45,5,4103-111,1010.35,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,45,6,2201,-1010.35,/TS# /Job#200160062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,46,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,46,1,4102-111,5000,/TS# /Job#200159933,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,46,2,2201,-5000,/TS# /Job#200159933,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,46,3,4102-111,1363.52,/TS# /Job#200159933,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,46,4,2201,-1363.52,/TS# /Job#200159933,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0919008,47,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,47,1,4102-111,2425,/TS# /Job#200158781,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,47,2,2201,-2425,/TS# /Job#200158781,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0919008,48,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,48,1,4102-111,970,/TS# /Job#200158781,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,48,2,2201,-970,/TS# /Job#200158781,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0919008,49,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,49,1,4103-111,4141,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,49,2,2201,-4141,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,49,3,4103-111,564.64,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,49,4,2201,-564.64,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,49,5,4113-111,200,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0919008,49,6,2201,-200,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0919008,49,7,4103-111,65.02,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,49,8,2201,-65.02,/TS# /Job#200157497,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,50,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,50,1,4103-111,3075,/TS# /Job#200156667,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,50,2,2201,-3075,/TS# /Job#200156667,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,50,3,4113-111,200,/TS# /Job#200156667,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Day Shift Allowance","Day Shift Allowance"
+2,CH0919008,50,4,2201,-200,/TS# /Job#200156667,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Day Shift Allowance","Day Shift Allowance"
+1,CH0919008,51,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,51,1,4103-111,3255,/TS# /Job#200159062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,51,2,2201,-3255,/TS# /Job#200159062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,51,3,4113-111,200,/TS# /Job#200159062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Day Shift Allowance","Day Shift Allowance"
+2,CH0919008,51,4,2201,-200,/TS# /Job#200159062,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Day Shift Allowance","Day Shift Allowance"
+1,CH0919008,52,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,52,1,4103-111,7907,/TS# /Job#200156475,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,52,2,2201,-7907,/TS# /Job#200156475,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,52,3,4103-111,110.75,/TS# /Job#200156475,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,52,4,2201,-110.75,/TS# /Job#200156475,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,53,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,53,1,4103-111,6240,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,53,2,2201,-6240,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,53,3,4113-111,150,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0919008,53,4,2201,-150,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0919008,53,5,4113-111,150,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Phone allowance","Phone allowance"
+2,CH0919008,53,6,2201,-150,/TS# /Job#200159541,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Phone allowance","Phone allowance"
+1,CH0919008,54,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,54,1,4103-111,665.5,/TS# /Job#200149971,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,54,2,2201,-665.5,/TS# /Job#200149971,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,54,3,4613-111,3327.5,/TS# /Job#200149971,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Bonus","Bonus"
+2,CH0919008,54,4,2201,-3327.5,/TS# /Job#200149971,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Bonus","Bonus"
+1,CH0919008,55,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,55,1,4103-111,2875.2,/TS# /Job#200160129,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,55,2,2201,-2875.2,/TS# /Job#200160129,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0919008,56,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,56,1,4102-111,2425,/TS# /Job#200159944,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,56,2,2201,-2425,/TS# /Job#200159944,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,56,3,4102-111,31,/TS# /Job#200159944,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,CH0919008,56,4,2201,-31,/TS# /Job#200159944,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,CH0919008,57,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,57,1,4102-111,2783,/TS# /Job#200151020,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,57,2,2201,-2783,/TS# /Job#200151020,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,CH0919008,58,GL,JE,20190916,Cost of Sales - Pays,2019,9
+2,CH0919008,58,1,4103-111,2940,/TS# /Job#200157870,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,58,2,2201,-2940,/TS# /Job#200157870,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919008,58,3,4103-111,75.18,/TS# /Job#200157870,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,CH0919008,58,4,2201,-75.18,/TS# /Job#200157870,20190916,GL,JE,/Batch #CH0919008 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,CH0919009,59,GL,JE,20190920,Cost of Sales - Pays,2019,9
+2,CH0919009,59,1,4103-301,6250,/TS# /Job#200158635,20190920,GL,JE,/Batch #CH0919009 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919009,59,2,2201,-6250,/TS# /Job#200158635,20190920,GL,JE,/Batch #CH0919009 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,CH0919009,59,3,4113-301,750,/TS# /Job#200158635,20190920,GL,JE,/Batch #CH0919009 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,CH0919009,59,4,2201,-750,/TS# /Job#200158635,20190920,GL,JE,/Batch #CH0919009 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919001,60,GL,JE,20190910,Cost of Sales - Pays,2019,9
+2,NO0919001,60,1,4112-324,100,/TS# /Job#200157024,20190910,GL,JE,/Batch #NO0919001 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919001,60,2,2201,-100,/TS# /Job#200157024,20190910,GL,JE,/Batch #NO0919001 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919001,61,GL,JE,20190910,Cost of Sales - Pays,2019,9
+2,NO0919001,61,1,4112-324,100,/TS# /Job#200158892,20190910,GL,JE,/Batch #NO0919001 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919001,61,2,2201,-100,/TS# /Job#200158892,20190910,GL,JE,/Batch #NO0919001 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919002,62,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919002,62,1,4102-324,8274.4,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919002,62,2,2201,-8274.4,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919002,62,3,4112-324,1000,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919002,62,4,2201,-1000,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919002,63,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919002,63,1,4103-324,11388,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919002,63,2,2201,-11388,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919002,63,3,4113-324,833.33,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919002,63,4,2201,-833.33,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919002,63,5,4103-324,5287.25,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Commission","Commission"
+2,NO0919002,63,6,2201,-5287.25,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Commission","Commission"
+1,NO0919002,64,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919002,64,1,4803-324,1654.77,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Disbursement","Disbursement"
+2,NO0919002,64,2,2318-324,-1654.77,/TS# /Job#200157677,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Disbursement","Disbursement"
+1,NO0919002,65,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919002,65,1,4802-324,352.9,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Disbursement (Mobile)","Disbursement (Mobile)"
+2,NO0919002,65,2,2318-324,-352.9,/TS# /Job#200160113,20190927,GL,JE,/Batch #NO0919002 /TSheet # /PaySlip # /Item: "Disbursement (Mobile)","Disbursement (Mobile)"
+1,NO0919003,66,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919003,66,1,4103-301,12000,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919003,66,2,2201,-12000,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919003,66,3,4103-301,81.65,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,NO0919003,66,4,2201,-81.65,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,NO0919003,66,5,4103-301,68.25,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+2,NO0919003,66,6,2201,-68.25,/TS# /Job#200156003,20190927,GL,JE,/Batch #NO0919003 /TSheet # /PaySlip # /Item: "Reimbursement/Claim","Reimbursement/Claim"
+1,NO0919004,67,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919004,67,1,4102-324,4950,/TS# /Job#200158771,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919004,67,2,2201,-4950,/TS# /Job#200158771,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919004,68,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919004,68,1,4102-324,8239,/TS# /Job#200152073,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919004,68,2,2201,-8239,/TS# /Job#200152073,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919004,69,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919004,69,1,4102-324,2887.5,/TS# /Job#200152070,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919004,69,2,2201,-2887.5,/TS# /Job#200152070,20190928,GL,JE,/Batch #NO0919004 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919005,70,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919005,70,1,4102-324,4066,/TS# /Job#200154997,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919005,70,2,2201,-4066,/TS# /Job#200154997,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919005,71,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919005,71,1,4102-324,3800,/TS# /Job#200153207,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919005,71,2,2201,-3800,/TS# /Job#200153207,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919005,72,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919005,72,1,4102-324,4080,/TS# /Job#200153153,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919005,72,2,2201,-4080,/TS# /Job#200153153,20190928,GL,JE,/Batch #NO0919005 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919007,73,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919007,73,1,4102-101,3800,/TS# /Job#200160011,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919007,73,2,2201,-3800,/TS# /Job#200160011,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919007,74,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919007,74,1,4102-101,4000,/TS# /Job#200157049,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919007,74,2,2201,-4000,/TS# /Job#200157049,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919007,74,3,4102-101,272.72,/TS# /Job#200157049,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+2,NO0919007,74,4,2201,-272.72,/TS# /Job#200157049,20190928,GL,JE,/Batch #NO0919007 /TSheet # /PaySlip # /Item: "OT 1.5","OT 1.5"
+1,NO0919007,75,GL,JE,20190928,Cost of Sales - Pays,2019,9
+1,NO0919007,76,GL,JE,20190928,Cost of Sales - Pays,2019,9
+1,NO0919008,77,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919008,77,1,4102-324,3300,/TS# /Job#200153320,20190928,GL,JE,/Batch #NO0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919008,77,2,2201,-3300,/TS# /Job#200153320,20190928,GL,JE,/Batch #NO0919008 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919008,78,GL,JE,20190928,Cost of Sales - Pays,2019,9
+1,NO0919009,79,GL,JE,20190927,Cost of Sales - Pays,2019,9
+2,NO0919009,79,1,4102-324,8500,/TS# /Job#200152385,20190927,GL,JE,/Batch #NO0919009 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919009,79,2,2201,-8500,/TS# /Job#200152385,20190927,GL,JE,/Batch #NO0919009 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919009,79,3,4112-324,1200,/TS# /Job#200152385,20190927,GL,JE,/Batch #NO0919009 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919009,79,4,2201,-1200,/TS# /Job#200152385,20190927,GL,JE,/Batch #NO0919009 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919011,80,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919011,80,1,4102-324,8745,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919011,80,2,2201,-8745,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919011,80,3,4102-324,500,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Fixed Allowance","Fixed Allowance"
+2,NO0919011,80,4,2201,-500,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Fixed Allowance","Fixed Allowance"
+2,NO0919011,80,5,4112-324,250,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Phone allowance","Phone allowance"
+2,NO0919011,80,6,2201,-250,/TS# /Job#200154247,20190928,GL,JE,/Batch #NO0919011 /TSheet # /PaySlip # /Item: "Phone allowance","Phone allowance"
+1,NO0919012,81,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,81,1,4103-324,1250,/TS# /Job#200154220,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,81,2,2201,-1250,/TS# /Job#200154220,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,81,3,4113-324,845,/TS# /Job#200154220,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,81,4,2201,-845,/TS# /Job#200154220,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,82,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,82,1,4103-324,1250,/TS# /Job#200155825,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,82,2,2201,-1250,/TS# /Job#200155825,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,82,3,4113-324,845,/TS# /Job#200155825,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,82,4,2201,-845,/TS# /Job#200155825,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,83,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,83,1,4103-324,1250,/TS# /Job#200154216,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,83,2,2201,-1250,/TS# /Job#200154216,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,83,3,4113-324,845,/TS# /Job#200154216,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,83,4,2201,-845,/TS# /Job#200154216,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,84,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,84,1,4103-324,1250,/TS# /Job#200155528,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,84,2,2201,-1250,/TS# /Job#200155528,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,84,3,4113-324,845,/TS# /Job#200155528,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,84,4,2201,-845,/TS# /Job#200155528,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,85,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,85,1,4103-324,1250,/TS# /Job#200154210,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,85,2,2201,-1250,/TS# /Job#200154210,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,85,3,4113-324,845,/TS# /Job#200154210,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,85,4,2201,-845,/TS# /Job#200154210,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,86,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,86,1,4103-324,1250,/TS# /Job#200154221,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,86,2,2201,-1250,/TS# /Job#200154221,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,86,3,4113-324,845,/TS# /Job#200154221,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,86,4,2201,-845,/TS# /Job#200154221,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,87,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,87,1,4103-324,1250,/TS# /Job#200160376,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,87,2,2201,-1250,/TS# /Job#200160376,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,87,3,4113-324,845,/TS# /Job#200160376,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,87,4,2201,-845,/TS# /Job#200160376,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,88,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,88,1,4103-324,1250,/TS# /Job#200155824,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,88,2,2201,-1250,/TS# /Job#200155824,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,88,3,4113-324,845,/TS# /Job#200155824,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,88,4,2201,-845,/TS# /Job#200155824,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,89,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,89,1,4103-324,1250,/TS# /Job#200154209,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,89,2,2201,-1250,/TS# /Job#200154209,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,89,3,4113-324,845,/TS# /Job#200154209,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,89,4,2201,-845,/TS# /Job#200154209,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,90,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,90,1,4103-324,1250,/TS# /Job#200154218,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,90,2,2201,-1250,/TS# /Job#200154218,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,90,3,4113-324,845,/TS# /Job#200154218,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,90,4,2201,-845,/TS# /Job#200154218,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,91,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,91,1,4103-324,1250,/TS# /Job#200155823,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,91,2,2201,-1250,/TS# /Job#200155823,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,91,3,4113-324,845,/TS# /Job#200155823,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,91,4,2201,-845,/TS# /Job#200155823,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,92,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,92,1,4103-324,1250,/TS# /Job#200154213,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,92,2,2201,-1250,/TS# /Job#200154213,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,92,3,4113-324,845,/TS# /Job#200154213,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,92,4,2201,-845,/TS# /Job#200154213,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,93,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,93,1,4103-324,1250,/TS# /Job#200154212,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,93,2,2201,-1250,/TS# /Job#200154212,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,93,3,4113-324,845,/TS# /Job#200154212,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,93,4,2201,-845,/TS# /Job#200154212,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,94,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,94,1,4103-324,1250,/TS# /Job#200156321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,94,2,2201,-1250,/TS# /Job#200156321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,94,3,4113-324,845,/TS# /Job#200156321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,94,4,2201,-845,/TS# /Job#200156321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,95,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,95,1,4103-324,1250,/TS# /Job#200156100,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,95,2,2201,-1250,/TS# /Job#200156100,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,95,3,4113-324,845,/TS# /Job#200156100,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,95,4,2201,-845,/TS# /Job#200156100,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,96,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,96,1,4103-324,1250,/TS# /Job#200154217,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,96,2,2201,-1250,/TS# /Job#200154217,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,96,3,4113-324,845,/TS# /Job#200154217,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,96,4,2201,-845,/TS# /Job#200154217,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,97,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,97,1,4103-324,1250,/TS# /Job#200154211,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,97,2,2201,-1250,/TS# /Job#200154211,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,97,3,4113-324,845,/TS# /Job#200154211,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,97,4,2201,-845,/TS# /Job#200154211,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919012,98,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919012,98,1,4103-324,1250,/TS# /Job#200160321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,98,2,2201,-1250,/TS# /Job#200160321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919012,98,3,4113-324,845,/TS# /Job#200160321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+2,NO0919012,98,4,2201,-845,/TS# /Job#200160321,20190928,GL,JE,/Batch #NO0919012 /TSheet # /PaySlip # /Item: "Auto Allowance","Auto Allowance"
+1,NO0919013,99,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,99,1,4103-301,3500,/TS# /Job#200152442,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,99,2,2201,-3500,/TS# /Job#200152442,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919013,100,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,100,1,4103-301,4213,/TS# /Job#200158224,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,100,2,2201,-4213,/TS# /Job#200158224,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919013,101,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,101,1,4103-301,2600,/TS# /Job#200160226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,101,2,2201,-2600,/TS# /Job#200160226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,101,3,4103-301,200,/TS# /Job#200160226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "OT 1.0","OT 1.0"
+2,NO0919013,101,4,2201,-200,/TS# /Job#200160226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "OT 1.0","OT 1.0"
+1,NO0919013,102,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,102,1,4103-301,2415,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,102,2,2201,-2415,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,102,3,4103-301,278.64,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "OT 1.0","OT 1.0"
+2,NO0919013,102,4,2201,-278.64,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "OT 1.0","OT 1.0"
+2,NO0919013,102,5,4113-301,70,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Night Shift Allowance","Night Shift Allowance"
+2,NO0919013,102,6,2201,-70,/TS# /Job#200158226,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Night Shift Allowance","Night Shift Allowance"
+1,NO0919013,103,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,103,1,4103-301,2600,/TS# /Job#200160225,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,103,2,2201,-2600,/TS# /Job#200160225,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919013,104,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,104,1,4103-301,3500,/TS# /Job#200155927,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,104,2,2201,-3500,/TS# /Job#200155927,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919013,105,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,105,1,4103-301,3500,/TS# /Job#200157021,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,105,2,2201,-3500,/TS# /Job#200157021,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919013,106,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919013,106,1,4103-301,2600,/TS# /Job#200160227,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919013,106,2,2201,-2600,/TS# /Job#200160227,20190928,GL,JE,/Batch #NO0919013 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919016,107,GL,JE,20190917,Cost of Sales - Pays,2019,9
+1,NO0919019,108,GL,JE,20190928,Cost of Sales - Pays,2019,9
+1,NO0919020,109,GL,JE,20190906,Cost of Sales - Pays,2019,9
+1,NO0919020,110,GL,JE,20190906,Cost of Sales - Pays,2019,9
+1,NO0919021,111,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919021,111,1,4102-324,4840,/TS# /Job#200156751,20190928,GL,JE,/Batch #NO0919021 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919021,111,2,2201,-4840,/TS# /Job#200156751,20190928,GL,JE,/Batch #NO0919021 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,112,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,112,1,4102-324,2851,/TS# /Job#200153085,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,112,2,2201,-2851,/TS# /Job#200153085,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,113,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,113,1,4102-324,2861,/TS# /Job#200158800,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,113,2,2201,-2861,/TS# /Job#200158800,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,114,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,114,1,4102-324,3170,/TS# /Job#200154715,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,114,2,2201,-3170,/TS# /Job#200154715,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,115,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,115,1,4102-324,2020,/TS# /Job#200155077,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,115,2,2201,-2020,/TS# /Job#200155077,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,116,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,116,1,4102-324,1605,/TS# /Job#200151413,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,116,2,2201,-1605,/TS# /Job#200151413,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,117,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,117,1,4102-324,1123.5,/TS# /Job#200160542,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,117,2,2201,-1123.5,/TS# /Job#200160542,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,118,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,118,1,4102-324,3400,/TS# /Job#200154278,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,118,2,2201,-3400,/TS# /Job#200154278,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,119,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,119,1,4102-324,1458,/TS# /Job#200151412,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,119,2,2201,-1458,/TS# /Job#200151412,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,120,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,120,1,4102-324,972,/TS# /Job#200160156,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,120,2,2201,-972,/TS# /Job#200160156,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,121,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,121,1,4102-324,2350,/TS# /Job#200155078,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,121,2,2201,-2350,/TS# /Job#200155078,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,122,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,122,1,4102-324,2650,/TS# /Job#200158065,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,122,2,2201,-2650,/TS# /Job#200158065,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,123,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,123,1,4102-324,1182,/TS# /Job#200154204,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,123,2,2201,-1182,/TS# /Job#200154204,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,124,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,124,1,4102-324,1150,/TS# /Job#200154750,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,124,2,2201,-1150,/TS# /Job#200154750,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,125,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,125,1,4102-324,1200,/TS# /Job#200157479,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,125,2,2201,-1200,/TS# /Job#200157479,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,126,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,126,1,4102-324,1300,/TS# /Job#200159582,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,126,2,2201,-1300,/TS# /Job#200159582,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,127,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,127,1,4102-324,2177,/TS# /Job#200158883,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,127,2,2201,-2177,/TS# /Job#200158883,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,128,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,128,1,4102-324,2160,/TS# /Job#200158066,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,128,2,2201,-2160,/TS# /Job#200158066,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,129,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,129,1,4102-324,3270,/TS# /Job#200155084,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,129,2,2201,-3270,/TS# /Job#200155084,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,130,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,130,1,4102-324,1675,/TS# /Job#200158067,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,130,2,2201,-1675,/TS# /Job#200158067,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,131,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,131,1,4102-324,1037.5,/TS# /Job#200151199,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,131,2,2201,-1037.5,/TS# /Job#200151199,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,132,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,132,1,4102-324,207.5,/TS# /Job#200160154,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,132,2,2201,-207.5,/TS# /Job#200160154,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,133,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,133,1,4102-324,2770,/TS# /Job#200158071,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,133,2,2201,-2770,/TS# /Job#200158071,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,134,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,134,1,4102-324,3826,/TS# /Job#200157276,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,134,2,2201,-3826,/TS# /Job#200157276,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,135,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,135,1,4102-324,13200,/TS# /Job#200152577,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,135,2,2201,-13200,/TS# /Job#200152577,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,136,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,136,1,4102-324,1250,/TS# /Job#200157024,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,136,2,2201,-1250,/TS# /Job#200157024,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,137,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,137,1,4102-324,2365,/TS# /Job#200159307,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,137,2,2201,-2365,/TS# /Job#200159307,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,138,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,138,1,4102-324,583.33,/TS# /Job#200156370,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,138,2,2201,-583.33,/TS# /Job#200156370,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,139,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,139,1,4102-324,1166.67,/TS# /Job#200160155,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,139,2,2201,-1166.67,/TS# /Job#200160155,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,140,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,140,1,4102-324,2124,/TS# /Job#200155822,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,140,2,2201,-2124,/TS# /Job#200155822,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,141,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,141,1,4102-324,1426,/TS# /Job#200158896,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,141,2,2201,-1426,/TS# /Job#200158896,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,142,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,142,1,4102-324,2200.75,/TS# /Job#200158090,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,142,2,2201,-2200.75,/TS# /Job#200158090,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,143,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,143,1,4102-324,2790,/TS# /Job#200158818,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,143,2,2201,-2790,/TS# /Job#200158818,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,144,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,144,1,4102-324,4981,/TS# /Job#200156280,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,144,2,2201,-4981,/TS# /Job#200156280,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,145,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,145,1,4102-324,3340,/TS# /Job#200156316,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,145,2,2201,-3340,/TS# /Job#200156316,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,146,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,146,1,4102-324,1460,/TS# /Job#200154235,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,146,2,2201,-1460,/TS# /Job#200154235,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,147,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,147,1,4102-324,1450,/TS# /Job#200154759,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,147,2,2201,-1450,/TS# /Job#200154759,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,148,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,148,1,4102-324,2020,/TS# /Job#200155104,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,148,2,2201,-2020,/TS# /Job#200155104,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,149,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,149,1,4102-324,2263,/TS# /Job#200155820,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,149,2,2201,-2263,/TS# /Job#200155820,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,150,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,150,1,4102-324,4085,/TS# /Job#200158888,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,150,2,2201,-4085,/TS# /Job#200158888,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,151,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,151,1,4102-324,2500,/TS# /Job#200157439,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,151,2,2201,-2500,/TS# /Job#200157439,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,152,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,152,1,4102-324,1130,/TS# /Job#200156317,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,152,2,2201,-1130,/TS# /Job#200156317,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,153,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,153,1,4102-324,3961,/TS# /Job#200155342,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,153,2,2201,-3961,/TS# /Job#200155342,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,154,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,154,1,4102-324,2420,/TS# /Job#200155108,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,154,2,2201,-2420,/TS# /Job#200155108,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,155,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,155,1,4102-324,2505,/TS# /Job#200155891,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,155,2,2201,-2505,/TS# /Job#200155891,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,156,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,156,1,4102-324,2388,/TS# /Job#200154758,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,156,2,2201,-2388,/TS# /Job#200154758,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,157,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,157,1,4102-324,4727,/TS# /Job#200156277,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,157,2,2201,-4727,/TS# /Job#200156277,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,158,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,158,1,4102-324,2850,/TS# /Job#200159589,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,158,2,2201,-2850,/TS# /Job#200159589,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,159,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,159,1,4102-324,6434,/TS# /Job#200155864,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,159,2,2201,-6434,/TS# /Job#200155864,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,160,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,160,1,4102-324,2320,/TS# /Job#200155419,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,160,2,2201,-2320,/TS# /Job#200155419,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,161,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,161,1,4102-324,2620,/TS# /Job#200155111,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,161,2,2201,-2620,/TS# /Job#200155111,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,162,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,162,1,4102-324,1806,/TS# /Job#200157379,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,162,2,2201,-1806,/TS# /Job#200157379,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,163,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,163,1,4102-324,708.33,/TS# /Job#200151211,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,163,2,2201,-708.33,/TS# /Job#200151211,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,164,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,164,1,4102-324,563.33,/TS# /Job#200160523,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,164,2,2201,-563.33,/TS# /Job#200160523,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,165,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,165,1,4102-324,2124,/TS# /Job#200157919,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,165,2,2201,-2124,/TS# /Job#200157919,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,166,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,166,1,4102-324,2250,/TS# /Job#200155296,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,166,2,2201,-2250,/TS# /Job#200155296,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,167,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,167,1,4102-324,1700,/TS# /Job#200155343,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,167,2,2201,-1700,/TS# /Job#200155343,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,168,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,168,1,4102-324,1940,/TS# /Job#200159572,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,168,2,2201,-1940,/TS# /Job#200159572,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,169,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,169,1,4102-324,2200,/TS# /Job#200157274,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,169,2,2201,-2200,/TS# /Job#200157274,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,170,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,170,1,4102-324,1700,/TS# /Job#200160490,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,170,2,2201,-1700,/TS# /Job#200160490,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,171,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,171,1,4102-324,3058,/TS# /Job#200158882,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,171,2,2201,-3058,/TS# /Job#200158882,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,172,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,172,1,4102-324,430.8,/TS# /Job#200151204,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,172,2,2201,-430.8,/TS# /Job#200151204,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,173,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,173,1,4102-324,1784,/TS# /Job#200160190,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,173,2,2201,-1784,/TS# /Job#200160190,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,174,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,174,1,4102-324,1940,/TS# /Job#200155487,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,174,2,2201,-1940,/TS# /Job#200155487,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,175,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,175,1,4102-324,2580,/TS# /Job#200158890,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,175,2,2201,-2580,/TS# /Job#200158890,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,176,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,176,1,4102-324,2470,/TS# /Job#200159604,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,176,2,2201,-2470,/TS# /Job#200159604,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,177,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,177,1,4102-324,1801,/TS# /Job#200155819,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,177,2,2201,-1801,/TS# /Job#200155819,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,178,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,178,1,4102-324,2491,/TS# /Job#200153004,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,178,2,2201,-2491,/TS# /Job#200153004,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,179,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,179,1,4102-324,2570,/TS# /Job#200155279,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,179,2,2201,-2570,/TS# /Job#200155279,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,180,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,180,1,4102-324,3470,/TS# /Job#200159571,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,180,2,2201,-3470,/TS# /Job#200159571,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,181,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,181,1,4102-324,3160,/TS# /Job#200155117,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,181,2,2201,-3160,/TS# /Job#200155117,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,182,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,182,1,4102-324,2150,/TS# /Job#200156103,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,182,2,2201,-2150,/TS# /Job#200156103,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,183,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,183,1,4102-324,1260,/TS# /Job#200155331,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,183,2,2201,-1260,/TS# /Job#200155331,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,184,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,184,1,4102-324,3450,/TS# /Job#200157026,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,184,2,2201,-3450,/TS# /Job#200157026,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,185,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,185,1,4102-324,2680,/TS# /Job#200155238,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,185,2,2201,-2680,/TS# /Job#200155238,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,186,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,186,1,4102-324,2200,/TS# /Job#200158228,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,186,2,2201,-2200,/TS# /Job#200158228,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,187,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,187,1,4102-324,2385,/TS# /Job#200152062,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,187,2,2201,-2385,/TS# /Job#200152062,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,188,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,188,1,4102-324,3328,/TS# /Job#200156677,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,188,2,2201,-3328,/TS# /Job#200156677,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,189,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,189,1,4102-324,2780,/TS# /Job#200154722,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,189,2,2201,-2780,/TS# /Job#200154722,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,190,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,190,1,4102-324,3090,/TS# /Job#200155119,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,190,2,2201,-3090,/TS# /Job#200155119,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,191,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,191,1,4102-324,1940,/TS# /Job#200157151,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,191,2,2201,-1940,/TS# /Job#200157151,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,192,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,192,1,4102-324,2170,/TS# /Job#200155122,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,192,2,2201,-2170,/TS# /Job#200155122,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,193,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,193,1,4102-324,1600,/TS# /Job#200160525,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,193,2,2201,-1600,/TS# /Job#200160525,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,194,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,194,1,4102-324,1600,/TS# /Job#200155527,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,194,2,2201,-1600,/TS# /Job#200155527,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,195,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,195,1,4102-324,2200,/TS# /Job#200158227,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,195,2,2201,-2200,/TS# /Job#200158227,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,196,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,196,1,4102-324,2350,/TS# /Job#200155892,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,196,2,2201,-2350,/TS# /Job#200155892,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,197,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,197,1,4102-324,4600,/TS# /Job#200158415,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,197,2,2201,-4600,/TS# /Job#200158415,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,198,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,198,1,4102-324,1700,/TS# /Job#200157674,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,198,2,2201,-1700,/TS# /Job#200157674,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,199,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,199,1,4102-324,2840,/TS# /Job#200158089,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,199,2,2201,-2840,/TS# /Job#200158089,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,200,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,200,1,4102-324,2200,/TS# /Job#200158229,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,200,2,2201,-2200,/TS# /Job#200158229,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,201,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,201,1,4102-324,1864,/TS# /Job#200159567,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,201,2,2201,-1864,/TS# /Job#200159567,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,202,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,202,1,4102-324,2240,/TS# /Job#200159570,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,202,2,2201,-2240,/TS# /Job#200159570,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,203,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,203,1,4102-324,2500,/TS# /Job#200158884,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,203,2,2201,-2500,/TS# /Job#200158884,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,204,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,204,1,4102-324,170,/TS# /Job#200158095,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,204,2,2201,-170,/TS# /Job#200158095,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,205,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,205,1,4102-324,1790,/TS# /Job#200155125,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,205,2,2201,-1790,/TS# /Job#200155125,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,206,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,206,1,4102-324,3250,/TS# /Job#200155128,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,206,2,2201,-3250,/TS# /Job#200155128,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,207,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,207,1,4102-324,2400,/TS# /Job#200155132,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,207,2,2201,-2400,/TS# /Job#200155132,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,208,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,208,1,4102-324,2730,/TS# /Job#200151901,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,208,2,2201,-2730,/TS# /Job#200151901,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,209,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,209,1,4102-324,2888,/TS# /Job#200154756,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,209,2,2201,-2888,/TS# /Job#200154756,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,210,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,210,1,4102-324,1280,/TS# /Job#200155868,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,210,2,2201,-1280,/TS# /Job#200155868,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,211,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,211,1,4102-324,2450,/TS# /Job#200155930,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,211,2,2201,-2450,/TS# /Job#200155930,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,212,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,212,1,4102-324,1700,/TS# /Job#200157273,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,212,2,2201,-1700,/TS# /Job#200157273,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,213,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,213,1,4102-324,3250,/TS# /Job#200159800,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,213,2,2201,-3250,/TS# /Job#200159800,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,214,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,214,1,4102-324,2700,/TS# /Job#200158223,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,214,2,2201,-2700,/TS# /Job#200158223,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,215,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,215,1,4102-324,2950,/TS# /Job#200159198,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,215,2,2201,-2950,/TS# /Job#200159198,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,216,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,216,1,4102-324,3748,/TS# /Job#200155133,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,216,2,2201,-3748,/TS# /Job#200155133,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+1,NO0919022,217,GL,JE,20190928,Cost of Sales - Pays,2019,9
+2,NO0919022,217,1,4102-324,1874,/TS# /Job#200160158,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"
+2,NO0919022,217,2,2201,-1874,/TS# /Job#200160158,20190928,GL,JE,/Batch #NO0919022 /TSheet # /PaySlip # /Item: "Normal","Normal"

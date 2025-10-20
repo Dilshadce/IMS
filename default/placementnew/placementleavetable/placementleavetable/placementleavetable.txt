@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `bepstest_i`.`placementleave`;
+CREATE TABLE  `bepstest_i`.`placementleave` (
+  `placementno` varchar(100) DEFAULT '',
+  `leavetype` varchar(100) DEFAULT '',
+  `claimdate` date DEFAULT '0000-00-00',
+  `days` decimal(17,2) DEFAULT '0.00',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(100) DEFAULT '',
+  `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;

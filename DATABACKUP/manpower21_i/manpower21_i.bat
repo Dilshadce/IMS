@@ -1,0 +1,1 @@
+C:\NEWSYSTEM\IMS\mysql.exe  --host=10.202.16.30 --user=appserver1 --password=Nickel266( manpower21_i < C:\NEWSYSTEM\IMS\DATABACKUP\manpower_i\manpower_i_20220111_225654_suresha.rao@manpower.com.my_YEAREND.sql

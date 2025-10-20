@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Version>14.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>10005</WindowHeight>
+  <WindowWidth>10005</WindowWidth>
+  <WindowTopX>120</WindowTopX>
+  <WindowTopY>135</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Table1">
+  <Table ss:ExpandedColumnCount="5" ss:ExpandedRowCount="24" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="15">
+   <Column ss:AutoFitWidth="0" ss:Width="110.25" ss:Span="2"/>
+   <Row>
+    <Cell><Data ss:Type="String">TYPE</Data></Cell>
+    <Cell><Data ss:Type="String">REFNO</Data></Cell>
+    <Cell><Data ss:Type="String">ITEMNO</Data></Cell>
+    <Cell><Data ss:Type="String">QTY</Data></Cell>
+    <Cell><Data ss:Type="String">PRICE</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-260-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">4.0000000000000002E-4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1.52E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-541-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-260-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">4.0000000000000002E-4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1.52E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-541-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-543-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1.52E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1.52E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-541-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-543-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-260-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">4.0000000000000002E-4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CN</Data></Cell>
+    <Cell><Data ss:Type="String">CN00018</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-541-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.0000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00002</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-895-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">3.8199999999999998E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00005</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00005</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00005</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00006</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-540-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2000000000000001E-3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00007</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-882-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">6.93E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00007</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-883-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">7.3899999999999993E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00007</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-884-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">7.5999999999999998E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00007</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-886-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">7.1599999999999997E-2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PR</Data></Cell>
+    <Cell><Data ss:Type="String">PRN00007</Data></Cell>
+    <Cell><Data ss:Type="String">1-839-887-11</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">7.8299999999999995E-2</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>6</ActiveRow>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

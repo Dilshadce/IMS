@@ -1,0 +1,58 @@
+.style1	{
+	FONT-SIZE: 12px; COLOR: green; FONT-FAMILY: Verdana,Geneva,Arial,Helvetica,sans-serif; BACKGROUND-COLOR: white
+	}
+
+.style2	{
+	FONT-WEIGHT: bold; FONT-SIZE: 30px; COLOR: blue; FONT-FAMILY: DejaVu Serif Condensed,Geneva,Arial,Helvetica,sans-serif; BACKGROUND-COLOR: white
+	}
+
+.style3	{
+	FONT-SIZE: 11px; COLOR: black; FONT-FAMILY: BatangChe,Geneva,Arial,Helvetica,sans-serif; BACKGROUND-COLOR: white
+	}
+
+.style4	{
+	FONT-SIZE: 12px; COLOR: blue; COLOR: yellow; FONT-FAMILY: Verdana,Geneva,Arial,Helvetica,sans-serif; BACKGROUND-COLOR: #409999
+	}
+
+.style5
+{
+   font-size:12px;
+   font-family:Tahoma,sans-serif;
+   font-weight:bold;
+   color:#FF9999;
+   background-color:#33FF66;
+   border-style:outset;
+   border-color:#CCFFCC;
+   border-width:2px;
+}
+
+.style6
+{
+    font-size:12px;
+   font-weight:bold;
+   color:#FFFF66;
+   background-color:#FF9966;
+   border-style:ridge;
+   border-color:#CCCCCC;
+   border-width:1px;
+}
+
+.style7
+{
+   font-size:12px;
+   font-weight:bold;
+   font-family:Tahoma,sans-serif;
+   color:#DDDDDD;
+   background-color:#FF0099;
+   border-style:ridge;
+   border-color:#CCCC66;
+   border-width:2px;
+}
+
+.header{
+	FONT-SIZE: 24px;
+	FONT-WEIGHT: bold;
+	COLOR: white; 
+	FONT-FAMILY: times new roman; 
+	BACKGROUND-COLOR: #409999;
+}

@@ -1,0 +1,3598 @@
+<cftry>
+<cfquery name="insertat" datasource="#dts#">
+INSERT INTO calpayat
+(
+empno,payweek,paydate,cal_by,cal_on,placementno
+)
+VALUES
+(
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#"> ,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.emppaymenttype#">,
+<cfqueryparam cfsqltype="cf_sql_varchar" value="#url.paydate#">,
+ <cfqueryparam cfsqltype="cf_sql_varchar" value="#getauthuser()#">,
+ now(),
+ <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.placement#">
+)
+</cfquery>
+<cfcatch type="any">
+</cfcatch>
+</cftry>
+<cfset HcomID=replace(HcomID,'_i','','all')>
+<cfset paydts=replace(dts,'_i','_p','all')>
+<cfquery name="gqry" datasource="payroll_main">
+SELECT mmonth,myear from gsetup where comp_id = '#HcomID#'
+</cfquery>
+
+<cfif val(url.backpay) neq 0>
+<cfset url.basicpay = val(url.basicpay)+val(backpay)>
+</cfif> 
+
+<cfquery name="updatepmast" datasource="#paydts#">
+Update pmast 
+SET brate = "#val(url.selfusualpay)#",
+payrtype = <cfif url.paytype eq "">"M"<cfelse>"#left(url.paytype,1)#"</cfif>
+WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#"> 
+</cfquery>
+<cfquery name="setOTFixed" datasource="#paydts#">
+UPDATE #url.emppaymenttype# SET fixoesp = "O" where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#"> 
+</cfquery>
+
+<cfquery name="updatepaytran" datasource="#paydts#">
+UPDATE #url.emppaymenttype#
+SET brate = "#val(url.selfusualpay)#",
+<cfif url.paytype eq "" or url.paytype eq "day" or url.paytype eq "mth">
+DW = "#val(url.selfsalaryday)#",
+WDAY = "#val(url.selfsalaryday)#",
+WORKHR = "0",
+<cfelse>
+WORKHR = "#val(url.selfsalaryhrs)#",
+DW = "0",
+WDAY = "0",
+</cfif>
+basicpay = "#val(url.basicpay)+val(url.selfphnlsalary)#",
+<!--- AL = "#val(url.AL)#",
+MC = "#val(url.MC)#", --->
+RATE1 = "#val(url.selfotrate1)#",
+HR1 = "#val(url.selfothour1)#",
+RATE2 = "#val(url.selfotrate2)#",
+HR2 = "#val(url.selfothour2)#",
+RATE3 = "#val(url.selfotrate3)#",
+HR3 = "#val(url.selfothour3)#",
+RATE4 = "#val(url.selfotrate4)#",
+HR4 = "#val(url.selfothour4)#",
+RATE5 = "#val(url.selfexceptionrate)#",
+HR5 = "#val(url.selfexceptionhrs)#",
+RATE6 = "#val(url.selfotrate5)#",
+HR6 = "#val(url.selfothour5)#",
+AW104 = "#val(url.awee4)#",
+AW105 = "#val(url.awee5)#",
+AW106 = "#val(url.awee6)#",
+AW107 = "#val(url.awee7)#",
+AW108 = "#val(url.awee8)#",
+AW109 = "#val(url.awee9)#",
+AW110 = "#val(url.awee10)#",
+AW111 = "#val(url.awee11)#",
+AW112 = "#val(url.awee12)#",
+AW113 = "#val(url.awee13)#",
+AW114 = "#val(url.awee14)#",
+AW115 = "#val(url.awee15)#",
+AW116 = "#val(pbee)#",
+AW117 = "#val(awsee)#",
+backpay = "#val(url.backpay)#"<!--- ,
+ded101 = "#val(url.dedpay)#" --->
+WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#"> 
+</cfquery>
+
+<!---Updated by Nieo 20171116 1358--->
+<cfquery name="getplacement" datasource="#dts#">
+SELECT * FROM placement WHERE placementno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.placement#">
+</cfquery>
+<!---Updated by Nieo 20171116 1358--->
+
+<!--- Update Bonus (added by Nieo, 20170109)--->
+
+<cfquery name="getawbonus" datasource="#dts#">
+SELECT 
+<cfloop index="a" from="1" to="18">
+allowance#a#,
+awee#a#
+<cfif a neq 18>,</cfif>
+</cfloop>
+FROM assignmentslip 
+WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#">
+and payrollperiod = <cfqueryparam cfsqltype="cf_sql_varchar" value="#gqry.mmonth#"> 
+AND created_on > #createdate(gqry.myear,1,7)#
+AND refno <>"#url.invoiceno#" 
+</cfquery>
+
+<cfquery name="getfixawbonus" datasource="#dts#">
+SELECT 
+<cfloop index="a" from="1" to="6">
+fixawcode#a#,
+fixawee#a#
+<cfif a neq 6>,</cfif>
+</cfloop>
+FROM assignmentslip 
+WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.empno#">
+and payrollperiod = <cfqueryparam cfsqltype="cf_sql_varchar" value="#gqry.mmonth#"> 
+AND created_on > #createdate(gqry.myear,1,7)#
+AND refno <>"#url.invoiceno#" 
+</cfquery>
+
+<cfset bonuspay = 0.00>
+
+<cfloop query="getawbonus">
+    <cfloop index='a' from='1' to='18'>
+      <cfif trim(evaluate('getawbonus.allowance#a#')) eq 9>
+         <cfset bonuspay += val(evaluate('getawbonus.awee#a#'))>
+      </cfif>
+    </cfloop>
+</cfloop>
+
+<cfloop query="getfixawbonus">
+    <cfloop index='a' from='1' to='6'>
+      <cfif trim((evaluate('getfixawbonus.fixawcode#a#')) eq 9)>
+        <cfset bonuspay += val(evaluate('getfixawbonus.fixawee#a#'))>
+      </cfif>
+    </cfloop>
+</cfloop>
+    
+<cfloop index="a" from="1" to="18">
+  <cfif trim(evaluate('url.allowance#a#')) eq 9 >
+     <cfset bonuspay += val(trim(evaluate('url.aweetax#a#')))>
+  </cfif>
+</cfloop>
+
+<cfloop index="a" from="1" to="6">
+  <cfif trim(evaluate('url.fixawcode#a#')) eq 9 >
+    <cfset bonuspay += val(trim(evaluate('url.fixawee#a#')))>
+  </cfif>
+</cfloop>
+
+<cfquery name="update_bonus" datasource="#paydts#">
+	UPDATE bonus
+	SET basicpay = <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(bonuspay,'.__')#">,
+    payyes=<cfif bonuspay gt 0>'Y'<cfelse>'N'</cfif> 
+	WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+</cfquery>
+
+<cfquery name="update_bonuspay" datasource="#paydts#">
+	UPDATE pay_tm
+	SET bonus = <cfqueryparam cfsqltype="cf_sql_double" value="#numberformat(bonuspay,'.__')#"> 
+	WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+</cfquery>
+<!--- End Update Bonus --->
+
+   
+<cffunction name="roundno" returntype="numeric">
+ <cfargument name="nocal" type="numeric" required="yes">
+ <cfargument name="typeround" type="string" required="yes">
+ <cfargument name="control" type="numeric" required="yes">
+ 
+ <cfset lencontrol = len(control)>
+ <cfif lencontrol eq "1">
+ <cfset lencontrol = 100>
+ <cfelseif lencontrol eq "2">
+ <cfset lencontrol = 10>
+ <cfelseif lencontrol eq "3">
+ <cfset lencontrol = 1>
+ </cfif>
+ <cfset nocal = nocal * lencontrol>
+ 
+ <cfif typeround eq "O">
+ <cfset nocal = round(nocal)>
+ </cfif>
+ <cfif typeround eq "D">
+ <cfset nocal = int(nocal+0.1)>
+ </cfif>
+ <cfif typeround eq "U">
+ <cfif nocal gt int(nocal)>
+ <cfset nocal = int(nocal)+1>
+ <cfelse>
+ <cfset nocal = int(nocal)>
+ </cfif>
+ </cfif>
+ 
+ <cfif left(control,1) neq "1">
+		<cfset roundto = left(control,1)>
+        <cfset rightno = right(nocal,1)>
+        <cfif rightno eq "0">
+		<cfelseif rightno mod roundto eq 0>
+        
+		 <cfelse>
+        <cfset rightno = 10 + rightno>
+        <cfset totaladdon = rightno mod roundto>
+        <cfset totaldeduct = roundto - totaladdon>        
+         <cfif typeround eq "O">
+			<cfif roundto/2 lte  totaladdon>
+				<cfset nocal = nocal + totaldeduct>
+            <cfelse>
+            	<cfset nocal = nocal - totaladdon>
+            </cfif>
+		 </cfif>  
+         
+         <cfif typeround eq "D">			
+            	<cfset nocal = nocal - totaladdon>
+		 </cfif> 
+         
+         <cfif typeround eq "U">		
+				<cfset nocal = nocal + totaldeduct>
+		 </cfif>  
+         
+        </cfif>
+	</cfif>
+ 
+ <cfreturn nocal/lencontrol>
+</cffunction>
+	
+	     <cffunction name="BETWEEN" returntype="boolean">
+	        <cfargument name="grosspay1" type="numeric" required="yes">
+	        <cfargument name="value1" type="numeric" required="yes">
+	        <cfargument name="value2" type="numeric" required="yes">
+	        <cfif grosspay1 lte value2 and grosspay1 gte value1>
+	        <cfset total = true>
+	        <cfelse>
+	        <cfset total = false>
+			</cfif>
+			<cfreturn total>
+	    </cffunction>
+	        
+            
+            <cfset db = paydts>
+            <cfset empno = trim(url.empno)>
+            <cfset db1 = "payroll_main">
+            <cfset compid = HcomID>
+            <cfset compccode = "MY">
+            <cfset weekpay = trim(url.emppaymenttype)>
+	 		
+	 		
+	        <cfquery name="select_data" datasource="#db#">
+	        SELECT * FROM #weekpay#
+	        WHERE empno = "#empno#"
+	        </cfquery>
+	        
+	        <cfquery name="select_empdata" datasource="#db#">
+	        SELECT * FROM pmast
+	        WHERE empno = "#empno#"
+	        </cfquery>
+	        
+            <cfquery name="bonus_qry" datasource="#db#">
+                    SELECT basicpay,netpay,empno,fixoesp,epfcc,epfww,ded115 FROM bonus 
+                    where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                </cfquery>
+                <cfquery name="comm_qry" datasource="#db#">
+                    SELECT basicpay,epfww,epfcc FROM comm
+                    where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                </cfquery>
+			<!--- <cfquery name="prj_rcd_qry" datasource ="#db#">
+			SELECT sum(coalesce(dw_p,0)) as DW_P, sum(coalesce(MC_P,0)) as mc_p, sum(coalesce(npl_p,0)) as npl_p,
+					sum(coalesce(ot1_p,0)) as ot_1, sum(coalesce(ot2_P)) as ot_2,
+					sum(coalesce(ot3_p,0)) as ot_3, sum(coalesce(ot4_P)) as ot_4,
+					sum(coalesce(ot5_p,0)) as ot_5, sum(coalesce(ot6_P)) as ot_6
+	 		FROM proj_rcd WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+			</cfquery> --->
+			
+	        <cfset salarypaytype =  select_empdata.payrtype >
+	        
+	        <!--- get monthg for oob calculation --->
+	        <cfquery name="get_now_month" datasource="#db1#">
+	        	SELECT * FROM gsetup WHERE comp_id = "#compid#"
+	        </cfquery>
+	                
+	       	<cfset Date_OOB = Createdate(get_now_month.MYEAR,get_now_month.MMONTH,1)>
+	       	<cfset bRate=select_data.BRATE>
+	        <cfset OOB = select_data.OOB>
+	        <cfif OOB gt 0>
+		        <cfset days_OOB =DaysInMonth(Date_OOB) >
+		        <cfset bRate = (bRate * (days_OOB - OOB)) / days_OOB >
+	        </cfif>
+	        <cfset wDay = select_data.WDAY>
+	        <cfif wDay eq 0 Or Wday eq "">
+		        <cfif salarypaytype neq "H">
+		        <cfset wDay = 26>
+		        </cfif>
+	        </cfif>
+			<cfset paytype = 2 >
+	        <cfset dW = select_data.DW>
+	        <cfset AL = select_data.AL>
+	        <cfset pH = select_data.PH>
+	        <cfset mC = select_data.MC>
+	        <cfset mT = select_data.MT>
+	        <cfset cC = select_data.CC>
+	        <cfset mR = select_data.MR>
+	        <cfset cL = select_data.CL>
+	        <cfset hL = select_data.HL>
+	        <cfset eX = select_data.EX>
+	        <cfset pT = select_data.PT>
+	        <cfset aD = select_data.AD>
+	        <cfset oPL = select_data.OPL>
+	        <cfset lS = select_data.LS>
+	        <cfset nPL = select_data.NPL>
+	        <cfset aB = select_data.AB>
+            <cfset NS = select_data.NS>
+	        <cfset oNPL = select_data.ONPL>
+	<!---   <cfset rate1= select_data.RATE1>
+	        <cfset rate2= select_data.RATE2>
+	        <cfset rate3= select_data.RATE3>
+	        <cfset rate4= select_data.RATE4>
+	        <cfset rate5= select_data.RATE5>
+	        <cfset rate6= select_data.RATE6> --->
+	        <cfset hR1= select_data.HR1>
+	        <cfset hR2= select_data.HR2>
+	        <cfset hR3= select_data.HR3>
+	        <cfset hR4= select_data.HR4>
+	        <cfset hR5= select_data.HR5>
+	        <cfset hR6= select_data.HR6>
+	        <cfset epftbl = select_empdata.epftbl>
+            <!---Added by Nieo for EPF Voluntary of EE and ER--->
+            <cfset epf_fyee = select_empdata.epf_fyee>
+            <cfset epf_fyer = select_empdata.epf_fyer>
+            <!---Added by Nieo for EPF Voluntary of EE and ER--->
+	        <cfset oTtbl = select_empdata.ottbl>
+	        <cfset whtbl = select_empdata.whtbl>
+	        <cfset epfcat = select_empdata.epfcat>
+	        <cfset epfno = select_empdata.epfno>
+            <cfif select_empdata.national eq "MY">
+				<cfset epfno = 1>
+            </cfif>
+			<cfset dresign = select_empdata.dresign>
+	        <cfset dirFee = select_data.dirfee>
+	        <cfset workHR = select_data.WORKHR>
+	        <cfset lateHR = select_data.LATEHR>
+	        <cfset earlyHR = select_data.EARLYHR>
+	        <cfset noPayHR = select_data.NOPAYHR>
+	        <cfset whtbl = select_empdata.WHTBL>
+	        <cfset piecepay = select_data.piecepay>
+	        <cfset cltipoint = select_data.cltipoint>
+	        <cfset tiprate = select_data.tiprate>
+	        <cfset additional_CPF = 0>
+	        <cfset backpay = select_data.backpay>
+	        <cfset comp_Auto_cpf = get_now_month.Auto_cpf>
+			<cfset sys_date = Createdate(get_now_month.MYEAR,get_now_month.MMONTH,1)>
+	        <cfset sys_lastday = createdate(get_now_month.Myear,get_now_month.Mmonth,daysinmonth(sys_date))>
+			<cfset epf1hd = select_empdata.epf1hd>
+            <cfset bonus = val(bonus_qry.basicpay)>
+            <cfset comm = val(comm_qry.basicpay)>
+            <cfset total_late_h = 0>
+            <cfset total_earlyD_h = 0>
+            <cfset total_noP_h = 0>
+            <cfset total_work_h = 0>
+            <cfset hourrate = 0>
+	        <!--- for cpf table automation choose --->
+	       <!---  <cfset national = select_empdata.national>
+	        <cfset r_status = select_empdata.r_statu>
+			
+	        <cfset thisDate = Createdate(get_now_month.MYEAR,get_now_month.MMONTH,1)>
+	       <!---  <cfset num_day = DaysInMonth(thisDate)>
+			<cfset thisDate = Createdate(get_now_month.MYEAR,get_now_month.MMONTH,num_day)> --->
+			<cfif select_empdata.dbirth neq "">
+				<cfset birthdate = Createdate(year(select_empdata.dbirth), month(select_empdata.dbirth), day(select_empdata.dbirth))>
+				<cfif thisDate gte birthdate>
+					<cfset age = datediff("yyyy",birthdate,thisDate)>	
+				<cfelse>
+					<cfset age = datediff("yyyy",birthdate,thisDate)-1>
+				</cfif>
+					
+			<cfelse>
+				<cfset age=0>
+			</cfif>
+	        
+	        <cfif select_empdata.pr_from neq "">
+				<cfset pr_year = Createdate(year(select_empdata.pr_from), month(select_empdata.pr_from), day(select_empdata.pr_from))>
+				<cfset pryear = datediff('yyyy',pr_year,thisDate)+1>
+			<cfelse>
+				<cfset pryear=0>
+			</cfif>
+	        <cfset epf_table_array = ArrayNew(2)>
+	        <cfset epf_table_array[1][1] = "1">
+	        <cfset epf_table_array[1][2] = "2">
+	        <cfset epf_table_array[1][3] = "3">
+	        <cfset epf_table_array[1][4] = "4">
+	        <cfset epf_table_array[1][5] = "5">
+	        <cfset epf_table_array[1][6] = "6">
+	        <cfset epf_table_array[2][1] = "7">
+	        <cfset epf_table_array[2][2] = "8">
+	        <cfset epf_table_array[2][3] = "9">
+	        <cfset epf_table_array[2][4] = "10">
+	        <cfset epf_table_array[2][5] = "11">
+	        <cfset epf_table_array[2][6] = "12">
+	        <cfset epf_table_array[3][1] = "13">
+	        <cfset epf_table_array[3][2] = "14">
+	        <cfset epf_table_array[3][3] = "15">
+	        <cfset epf_table_array[3][4] = "16">
+	        <cfset epf_table_array[3][5] = "17">
+	        <cfset epf_table_array[3][6] = "18">
+	        
+			<cfset x =1 >
+			
+	        <cfif pryear lt 2 and r_status eq "PR">
+	        <cfset x = 2>
+	        <cfelseif pryear lt 3 and r_status eq "PR">
+	        <cfset x = 3>
+	        <cfelseif national eq "SG" or pryear gte 3>
+	        <cfset x = 1>
+	        </cfif>
+	        
+	  		<cfset y = 1>
+	  		<cfif age lt 35>
+	        <cfset y = 1>
+	        <cfelseif age lt 50>
+			<cfset y = 2>
+	        <cfelseif age lt 55>
+			<cfset y = 3>
+	        <cfelseif age lt 60>
+			<cfset y = 4>
+	        <cfelseif age lt 65>
+			<cfset y = 5>
+	        <cfelse>
+			<cfset y = 6>
+			</cfif>
+	        
+	        <cfset epf_selected = #evaluate(epf_table_array[#x#][#y#])#> --->
+		     <cfif compccode eq "SG" or compccode eq 'MY' or compccode eq 'ID'>  
+		        <cfif comp_Auto_cpf eq "Y">
+					
+					<cfquery name="con_qry" datasource="#db#">
+						SELECT 	entryno, epfcon1, epfcon2, epfcon3, epfcon4, epfcon5, epfcon6, epfcon7, epfcon8, epfcon9, epfcon10,
+								epfcon11, epfcon12, epfcon13, epfcon14, epfcon15, epfcon16, epfcon17, epfcon18, epfcon19, epfcon20,
+								epfcon21, epfcon22, epfcon23, epfcon24, epfcon25, epfcon26, epfcon27, epfcon28, epfcon29, epfcon30
+						FROM rngtable where entryno = "1"
+					</cfquery>
+					
+					<cfset epf_selected = 0>
+					<cfloop from="1" to="30" index="i">
+<!---                        <!---enhanced for new optional EPF rate, 20160218 by Max Tan--->
+                        <cfif compccode eq "MY" and i eq 11>
+                            <cfbreak>
+                        </cfif>
+                        <!---end--->--->
+						<cfset con = "epfcon"&i>
+						<cfset con = con_qry[#con#]>
+						<cfset con = replace(con,"YY_PR()","pryear" ,"all")>
+						<cfset con = replace(con,"NO_AGE()","age" ,"all")>
+						<cfset con = replace(con,"NATIONAL","national" ,"all")>
+						<cfset con = replace(con,"R_STATU","R_STATU" ,"all")>
+						<cfset con = Replace(con,"<="," lte ","all") >
+				        <cfset con = Replace(con,">="," gte ","all") >
+				        <cfset con = Replace(con,">"," gt ","all") >
+				        <cfset con = Replace(con,"<"," lt ","all") >
+						<cfset con = Replace(con,"!="," neq ","all") >
+				        <cfset con = Replace(con,"="," eq ","all") >
+                        
+						
+						<cfset R_STATU = select_empdata.r_statu>
+						<cfset national = select_empdata.national>
+						<cfset PR_RATE = select_empdata.pr_rate>
+						
+						<cfif select_empdata.dbirth neq "">
+							<cfset birthdate = select_empdata.dbirth>
+							<!--- <cfif sys_date gte birthdate>
+								<cfset age = datediff("yyyy",birthdate,sys_date)>	
+							<cfelse>
+								<cfset age = datediff("yyyy",birthdate,sys_date)-1>
+							</cfif> --->
+							<cfset age_m = datediff("m",birthdate,sys_date)>
+							<cfset age = age_m/12>
+						<cfelse>
+							<cfset age = 0>
+						</cfif>
+				       
+				        <cfif select_empdata.pr_from neq "">
+							<cfset pr_year = Createdate(year(select_empdata.pr_from), month(select_empdata.pr_from), day(select_empdata.pr_from))>
+							<cfset pryear = datediff('yyyy',pr_year,sys_date)+1>
+						<cfelse>
+							<cfset pryear = 0>
+						</cfif>
+                        
+                        <cfset newrate = 0>
+                        <!---<cfif select_empdata.epftbl2 eq "Y">
+                            <cfset newrate = 1>
+                        </cfif>--->
+						
+						<cfset condition = evaluate("#con#")>
+						<cfif condition eq "YES" >
+							<cfset epf_selected = i>
+						</cfif>
+					</cfloop>
+					
+				<cfelse>
+					<cfset epf_selected = select_empdata.epftbl >
+				</cfif>
+							
+				<!--- <cfoutput>#empno# #epf_selected#<br></cfoutput> --->
+		        <cfquery name="update_epf_table" datasource="#db#">
+		        	UPDATE pmast SET epftbl = #epf_selected# WHERE empno = "#empno#" 
+<!---                    <cfif compccode eq 'MY'> <!---enhance for extra % epf submission--->
+                    AND epftbl < 5
+                    </cfif>--->
+		        </cfquery>
+                
+                <cfif compccode eq 'MY'>
+                    <cfquery name="getepftable" datasource="#db#">
+                    SELECT epftbl from pmast WHERE empno = '#empno#'
+                    </cfquery>
+                    <cfset epf_selected = getepftable.epftbl >
+                </cfif>
+                
+		  	<cfelse>
+		  		<cfset epf_selected = select_empdata.epftbl >
+	        </cfif>
+                
+            <cfif epf_fyer neq '' and epf_fyer neq '0'>
+                <cfset epf_selected = 1>
+            </cfif>
+	        
+	        <!--- check pay one or twice --->
+	        <cfquery name="check_pay" datasource="#db1#">
+	        	SELECT bp_payment FROM gsetup WHERE comp_id = "#compid#"
+	        </cfquery>
+	     <!---    <cfset bRate = #val(brate)# / #val(check_pay.bp_payment)#> --->
+	        
+	        <!--- working hour data --->
+	        <cfquery name="get_wh_qry" datasource="#db#">
+	        	SELECT xhrpday_m FROM ottable where OT_COU = #val(whtbl)#
+	        </cfquery>
+	        <cfset work_h = get_wh_qry.xhrpday_m>
+			
+			<!--- check daily or hourly pay --->
+	        <cfset salarypaytype =  select_empdata.payrtype >
+	        <cfif salarypaytype eq "D">
+	    
+	        	<cfset brate = #val(brate)# * #val(wDay)# >
+	        
+	        <cfelseif salarypaytype eq "H">    
+				<cfset total_work_amt = #val(brate)# * (#val(workHR)# - #val(lateHR)# - #val(earlyHR)# - #val(noPayHR)#) >
+		        <cfset brate = #val(brate)# * #val(wDay)# * #val(work_h)#+ #val(total_work_amt)#>
+			</cfif>
+         <!---    <cfoutput>
+            #workHR#<br/>
+            #brate#
+            </cfoutput> --->
+		
+	        <!--- Work hours process --->
+	       
+	        <cfif salarypaytype neq "H" >
+            <cfif get_now_month.hpy eq "Y">
+            <cfquery name="getottablenew" datasource="#db#">
+            SELECT xpaymthpy,xhrpyear,daysperweek FROM ottable
+            </cfquery>
+            
+            <cfif val(evaluate('getottablenew.xhrpyear[#whtbl#]')) neq 0>
+            <cfset hour_r = (val(brate) *  val(evaluate('getottablenew.xpaymthpy[#whtbl#]')))/val(evaluate('getottablenew.xhrpyear[#whtbl#]'))> 
+            <cfelse>
+            <cfset hour_r = 1 / (#val(wDay)# * #val(work_h)#) * #val(brate)#> 
+			</cfif>
+     
+            <cfelse>
+	        <cfset hour_r = 1 / (#val(wDay)# * #val(work_h)#) * #val(brate)#> 
+            </cfif>
+            <cfif get_now_month.payhourrate eq "Y">
+            <cfset hour_r = numberformat(hour_r,'.__')>
+			</cfif>
+			<cfset hourrate = hour_r>
+            
+	        <cfset total_work_h = #val(workHR)# * hour_r>
+	      
+	        
+	        <!--- Lateness Hours Process --->
+	        <cfquery name="get_lateness_ratio" datasource="#db1#">
+	        SELECT bp_dedratio FROM gsetup WHERE comp_id = "#compid#"
+	        </cfquery>
+	        <cfset total_late_h = #val(lateHR)# * hour_r * #val(get_lateness_ratio.bp_dedratio)# >
+	        
+	        <!--- Early Depart Hours--->
+	        <cfset total_earlyD_h = #val(earlyHR)# * hour_r>
+	        
+	        <!--- No Pay Hours --->
+	        <cfset total_noP_h = #val(noPayHR)# * hour_r>
+	
+	        <!--- working day process --->
+	     	<cfset dplustemp = #val(pH)# + #val(AL)# + #val(mC)# + #val(mT)# + #val(cC)# + #val(mR)# + #val(cL)# + #val(hL)# + #val(eX)# + #val(pT)# + #val(aD)# + #val(oPL)#>
+	        <cfset dminustemp =  #val(lS)# +  #val(nPL)# +  #val(aB)# +  #val(oNPL)# +  #val(NS)#>
+	        <cfset totalspecialday = dplustemp + dminustemp>
+	        <cfset outstandingday = #val(wDay)# - #val(dW)# - totalspecialday>
+	        <cfif outstandingday neq 0>
+				<cfif get_now_month.pay_to_nopay neq "">
+				<cfset dW=#val(dW)#>	
+				<cfelse>	
+	        	<cfset dW=#val(dW)#+outstandingday>
+				</cfif>
+	        </cfif>
+	        <cfset payday = #val(WDay)# - dminustemp>
+	        
+	        <cfset totalNPL = dminustemp / #val(wDay)# * #val(bRate)#> 
+	        <!--- Basic Pay Process --->
+	      	<cfset basicpay = (#val(payday)# / #val(wDay)# * #val(bRate)#) + #val(total_work_h)# - #val(total_late_h)# - #val(total_noP_h)# - #val(total_earlyD_h)# + #val(piecepay)# + #val(backpay)#>
+	        
+			
+			<cfelse>
+				<cfset totalNPL = 0.00 >
+		        <cfset basicpay = #val(brate)#  + #val(piecepay)# + #val(backpay)# >
+		        
+			</cfif>
+<cfset basicpay = val(url.basicpay)+val(url.selfphnlsalary) >
+	 
+	 		<cfquery name="aw_qry" datasource="#db#">
+				SELECT aw_cou,aw_desp,aw_epf,aw_dbase,aw_type,aw_for,aw_rattn,aw_npl,aw_hrd,aw_addw,aw_npl FROM awtable
+				where aw_cou < 18
+			</cfquery>
+			<cfquery name="get_now_month" datasource="#db1#">
+	        	SELECT * FROM gsetup WHERE comp_id = "#compid#"
+	        </cfquery>        
+	       	<cfset Date_NDOM = Createdate(get_now_month.MYEAR,get_now_month.MMONTH,1)>
+			
+			
+	        <cfset taw = 0>
+	        <cfset aw_count = 1>
+	        <cfset wdlist = "DW,PH,AL,MC,MT,CC,MR,CL,HL,OPL,DW2,EX,PT,AD" >
+			
+			<cfset wdArray = ArrayNew(1) >
+	        <cfloop list="#wdlist#" index="k">
+	        	<cfset ArrayAppend(wdArray, "#k#")> 
+			</cfloop>
+	        
+	        <cfset nPL = #val(select_data.NPL)#>
+	        <cfset aB = #val(select_data.AB)#>
+	        <cfset ADJ = 1 >
+	        <!--- <cfset NDOM = 1> --->
+	        <cfset latehr = #val(select_data.latehr)#>
+	        <cfset tippoint = #val(select_data.tippoint)#>
+	        <cfset tiprate = #val(select_data.tippoint)#>
+			<cfset Nmonth = #get_now_month.mmonth#>
+			<cfset add_hrd = 0>
+            <cfset additionalwages = 0>
+            <cfset awnplamount = 0>
+			
+			    	<!------------------Shift Process -------->
+		<cfquery name="getshiftbl" datasource="#db#">
+			SELECT * FROM shftable where shf_cou ="#select_empdata.shifttbl#"
+		</cfquery> 
+		
+		<cfset sumshift = 0>
+			
+		<cfloop from="1" to="20" index="i">
+					<cfset rateno = chr(96+i)>
+					<cfset shiftday = evaluate('select_data.shift#rateno#')>
+					<cfset shiftrate = evaluate('getshiftbl.shift#i#')>
+					<cfset totalshift = val(shiftday) * val(shiftrate)>
+					<cfset sumshift = sumshift + val(totalshift)>
+			</cfloop>	
+			
+			
+	        <cfloop query="aw_qry">
+				
+				<cfset nPL = #val(select_data.NPL)#>
+	            <cfset aB = #val(select_data.AB)#>
+				<cfset RATTN = evaluate("#aw_qry.aw_rattn#")>
+	            
+	        	<cfset total_aw_days = 0>
+				
+	        	<cfset AW =  #val(select_empdata['dbaw1#numberformat(aw_qry.currentrow,"00")#'][1])#>
+	        	<cfset AW2 =  #val(select_data['aw1#numberformat(aw_qry.currentrow,"00")#'][1])#>	
+				
+	           	<cfif AW neq 0 and aw_qry.aw_type neq "V">
+		            	<cfif aw_qry.aw_for neq "">
+				            <cfset aw_formula = #aw_qry.aw_for# >
+				            <cfset aw_formula = Replace(aw_formula,"<="," lte ") >
+				            <cfset aw_formula = Replace(aw_formula,">="," gte ") >
+				            <cfset aw_formula = Replace(aw_formula,">"," gt ") >
+				            <cfset aw_formula = Replace(aw_formula,"<"," lt ") >
+				            <cfset aw_formula = Replace(aw_formula,"="," eq ") >
+							<cfset aw_formula = Replace(aw_formula,"NDOM","#DaysInMonth(Date_NDOM)#")>
+				            <cfset aw_data = #evaluate('#aw_formula#')#>
+				        <cfelse>
+			            	<cfset aw_data = AW >
+						</cfif>
+		            	<cfif aw_qry.aw_type eq "D">
+				            <cfloop from="1" to="13" index="i">            
+							
+								<cfset check_base = #findoneof("1",aw_qry.aw_dbase,i)#>
+					            <cfset aw_data_var = wdArray[i]>
+			           
+								<cfif check_base eq #i#>
+				            
+				            		<cfset total_aw_days = total_aw_days + #val(select_data['#aw_data_var#'][1])#>
+					            
+								</cfif>
+							</cfloop>
+		            	<cfset aw_data = aw_data * total_aw_days>
+					</cfif>
+	           <cfelseif AW2 neq 0 and aw_qry.aw_type eq "V">
+					<cfif aw_qry.aw_for neq "">
+						<cfset AW = val(AW2)>
+			            <cfset aw_formula = #aw_qry.aw_for# >
+			            <cfset aw_formula = Replace(aw_formula,"<="," lte ") >
+			            <cfset aw_formula = Replace(aw_formula,">="," gte ") >
+			            <cfset aw_formula = Replace(aw_formula,">"," gt ") >
+			            <cfset aw_formula = Replace(aw_formula,"<"," lt ") >
+			            <cfset aw_formula = Replace(aw_formula,"="," eq ") >
+						<cfset aw_formula = Replace(aw_formula,"NDOM","#DaysInMonth(Date_NDOM)#")>
+			            <cfset aw_data = #evaluate('#aw_formula#')#>
+		            <cfelse>
+		            	<cfset aw_data = val(AW2) >
+					</cfif>
+				
+				<cfelseif #sumshift# gt 0 and aw_qry.aw_type eq "S" >
+					<cfset AW = #sumshift#>
+		            <cfset aw_data = #sumshift# >
+					
+				<cfelse>
+		            	<cfset aw_data = 0 >
+				</cfif>
+				
+	            <cfset aw_variable = 'aw1'&#numberformat(aw_qry.currentrow,"00")# >
+	            <cfquery name="updata_aw_back" datasource="#db#">
+	            	UPDATE #weekpay# SET #aw_variable# = #aw_data# WHERE empno = "#empno#"
+	            </cfquery>
+	            
+				<cfset taw= taw + aw_data>
+	            <cfset aw_var = #aw_data#>
+				<cfif aw_qry.aw_epf gt 0>
+	            	<cfset additional_CPF = additional_CPF + aw_var >
+                <cfif aw_qry.aw_addw gt 0>
+                <cfset additionalwages = additionalwages + aw_var >
+				</cfif>
+	            </cfif>
+                <cfif aw_qry.aw_npl gt 0>
+                <cfset awnplamount =awnplamount + aw_var >
+	            </cfif>
+	            <cfif aw_qry.aw_hrd gt 0>
+		            <cfset add_hrd = val(add_hrd) + val(aw_var)>
+	            </cfif>
+                
+                
+	        </cfloop>
+            
+			<cfif salarypaytype neq "H" >
+            <cfif get_now_month.allowancenpl eq "Y">
+            <cfset totalNPL = (dminustemp / #val(wDay)#) * (val(bRate)+val(awnplamount))>
+	        </cfif>
+			<!--- Basic Pay Process --->
+            <cfif get_now_month.allowancenpl eq "Y">
+	      	<cfset basicpay = (#val(payday)# / #val(wDay)# * (val(bRate)+val(awnplamount)))-val(awnplamount) + #val(total_work_h)# - #val(total_late_h)# - #val(total_noP_h)# - #val(total_earlyD_h)# + #val(piecepay)# + #val(backpay)#>
+            </cfif>
+            </cfif>
+            
+<cfset basicpay = val(url.basicpay)+val(url.selfphnlsalary) >
+            
+            <cfif salarypaytype neq "H" and get_now_month.NPLHPY eq "Y" >
+                
+                <cfquery name="getottablenew" datasource="#db#">
+                SELECT xpaymthpy,xhrpyear,XHRPDAY_M,daysperweek FROM ottable
+                 </cfquery>
+                 
+                 <cfquery name="getallownpl" datasource="#db#">
+                 select aw_cou from awtable where aw_npl > 0 and aw_cou < 18
+                 </cfquery>
+                 <cfset allowancerate = 0>
+                 
+				 <cfif getallownpl.recordcount neq 0>
+					 <cfset allowancevar= "">
+                         <cfloop query="getallownpl">
+                         <cfset allowancevar = allowancevar&"coalesce(dbaw"&100+val(getallownpl.aw_cou)&",0)">
+                             <cfif getallownpl.recordcount neq getallownpl.currentrow>
+                             <cfset allowancevar = allowancevar&" + ">
+                             </cfif>
+                         </cfloop>
+                     <cfif allowancevar neq "">
+                     <cfquery name="getallowancesum" datasource="#db#">
+                     SELECT sum(#allowancevar#) as sumnplaw FROM pmast where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                     </cfquery>
+                     <cfset allowancerate = val(getallowancesum.sumnplaw)>
+				 	</cfif>
+                  </cfif>
+                 
+                 <cfset npldayrate = (((val(select_empdata.brate)+val(allowancerate)) *  val(evaluate('getottablenew.xpaymthpy[#whtbl#]')))/val(evaluate('getottablenew.xhrpyear[#whtbl#]')))*val(evaluate('getottablenew.XHRPDAY_M[#whtbl#]'))>
+                 
+            <cfset totalNPL = val(dminustemp) * numberformat(val(npldayrate),'.__')>
+            <cfset totalNPL = numberformat(val(totalNPL),'.__')>
+	      	<cfset basicpay = val(brate)-val(totalNPL) + #val(total_work_h)# - #val(total_late_h)# - #val(total_noP_h)# - #val(total_earlyD_h)# + #val(piecepay)# + #val(backpay)#>
+            </cfif>
+           
+<cfset basicpay = val(url.basicpay)+val(url.selfphnlsalary) >
+
+
+            <cfif salarypaytype neq "H" and get_now_month.NPLDED eq "Y" >
+            <cfquery name="getottablenew" datasource="#db#">
+                SELECT xpaymthpy,xhrpyear,XHRPDAY_M,xdaypmth,daysperweek FROM ottable
+                 </cfquery>
+                 <cfset allowancerate = 0>
+                 <cfif get_now_month.allowancenpl eq "Y">
+                 <cfquery name="getallownpl" datasource="#db#">
+                 select aw_cou from awtable where aw_npl > 0 and aw_cou < 18
+                 </cfquery>
+                 
+                 
+				 <cfif getallownpl.recordcount neq 0>
+					 <cfset allowancevar= "">
+                         <cfloop query="getallownpl">
+                         <cfset allowancevar = allowancevar&"coalesce(dbaw"&100+val(getallownpl.aw_cou)&",0)">
+                             <cfif getallownpl.recordcount neq getallownpl.currentrow>
+                             <cfset allowancevar = allowancevar&" + ">
+                             </cfif>
+                         </cfloop>
+                     <cfif allowancevar neq "">
+                     <cfquery name="getallowancesum" datasource="#db#">
+                     SELECT sum(#allowancevar#) as sumnplaw FROM pmast where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                     </cfquery>
+                     <cfset allowancerate = val(getallowancesum.sumnplaw)>
+				 	</cfif>
+                  </cfif>
+                 </cfif>
+                 
+                 <cfif get_now_month.bp_dedmnpl eq "" or get_now_month.bp_dedmnpl eq "WD">
+                 <cfset npldayrate = (val(brate)+val(allowancerate)) /val(wDay)>
+				 <cfelseif get_now_month.bp_dedmnpl eq "FD">
+                 <cfset npldayrate = (val(select_empdata.brate)+val(allowancerate)) /val(evaluate('getottablenew.xdaypmth[#whtbl#]'))>
+				 <cfelseif get_now_month.bp_dedmnpl eq "DW">
+                 <cfset npldayrate = (val(select_empdata.brate)+val(allowancerate)) /daysinmonth(createdate(get_now_month.myear,get_now_month.mmonth,'1')) >                 
+                  <cfelseif get_now_month.bp_dedmnpl eq "WW">
+                 <cfset npldayrate = ((val(select_empdata.brate)+val(allowancerate)) *  val(evaluate('getottablenew.xpaymthpy[#whtbl#]'))) / (52 * val(evaluate('getottablenew.daysperweek[#whtbl#]'))) >                 
+                 <cfelse>
+                 <cfset npldayrate = (((val(select_empdata.brate)+val(allowancerate)) *  val(evaluate('getottablenew.xpaymthpy[#whtbl#]')))/val(evaluate('getottablenew.xhrpyear[#whtbl#]')))*val(evaluate('getottablenew.XHRPDAY_M[#whtbl#]'))>
+                 </cfif>
+                 
+                 
+                 
+            <cfset totalNPL = val(dminustemp) * numberformat(val(npldayrate),'.__')>
+			<cfif salarypaytype eq "D">
+            <cfset totalNPL = val(dminustemp) * numberformat(val(select_data.BRATE),'.__')>
+            </cfif>
+            <cfset totalNPL = numberformat(val(totalNPL),'.__')>
+	      	<cfset basicpay = val(brate)-val(totalNPL) + #val(total_work_h)# - #val(total_late_h)# - #val(total_noP_h)# - #val(total_earlyD_h)# + #val(piecepay)# + #val(backpay)#>
+            </cfif>
+            
+<cfset basicpay = val(url.basicpay)+val(url.selfphnlsalary) >
+
+
+	        
+	        <!--- Deduction Process --->
+	        <!--- <cfquery name="new_select_data" datasource="#db#">
+		        SELECT * FROM #weekpay#
+		        WHERE empno = "#empno#"
+	        </cfquery>
+	        
+	        <cfset advance_value=#val(new_select_data.advance)#>
+	        <cfquery name="ded_qry" datasource="#db#">
+				SELECT * FROM dedtable
+			</cfquery>
+			<cfset tded=0>
+			<cfset ded_CPF = 0 >
+	        <cfloop query="ded_qry">
+			 	<cfset ggross_ded_for= #find("GROSSPAY",ded_qry.ded_for)#>
+				<cfif ggross_ded_for eq 0>
+					<cfset ded_var = val(new_select_data['ded1#numberformat(ded_qry.currentrow,"00")#'][1])>
+					
+					<cfset tded = #tded# + ded_var> 
+					
+					<cfif ded_qry.ded_epf gt 0>
+			            <cfset ded_CPF = ded_CPF + ded_var >
+			        </cfif>
+				</cfif>
+			</cfloop>
+			 --->
+			 <cfquery name="ded_qry" datasource="#db#">
+				SELECT ded_for,ded_type,ded_hrd,ded_epf,ded_hrd FROM dedtable d where ded_cou < 13
+			</cfquery>
+		
+			<cfquery name="pay_ded" datasource="#db#">
+	        	SELECT * FROM #weekpay#
+	        	where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+	        </cfquery>
+			
+			<cfquery name="emp_ded" datasource="#db#">
+	        	SELECT * FROM pmast
+	        	where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+	        </cfquery>
+			
+			<cfset advance_value = val(pay_ded.advance)>
+			
+			<cfset ded_array = ArrayNew(1)>
+	      	<cfset ded_CPF = 0>
+			
+			<cfset tded=0>
+			<!--- <cfloop query="ded_qry">
+				<cfset ded_data = 0>	
+				<cfif ded_qry.ded_type eq "F">
+					<cfif ded_qry.ded_for eq "" >
+						<cfset ded_data =  val(emp_ded['dbded1#numberformat(ded_qry.currentrow,"00")#'][1])>
+						<cfset tded = tded + ded_data>
+						
+					<cfelse>
+						<cfset DED = val(emp_ded['dbded1#numberformat(ded_qry.currentrow,"00")#'][1])>
+						<cfset ggross_ded_for= #find("GROSSPAY",ded_qry.ded_for)#>
+                        <cfset ggross_ded_for2= #find("GROSS1PAY",ded_qry.ded_for)#>
+						<cfif ggross_ded_for eq 0 and ggross_ded_for2 eq 0>
+							<cfset ded_formula = ded_qry.ded_for >
+			            	<cfset ded_formula = Replace(ded_formula,"<="," lte ") >
+				            <cfset ded_formula = Replace(ded_formula,">="," gte ") >
+				            <cfset ded_formula = Replace(ded_formula,">"," gt ") >
+				            <cfset ded_formula = Replace(ded_formula,"<"," lt ") >
+				            <cfset ded_formula = Replace(ded_formula,"="," eq ") >
+							<cfset ded_data = #evaluate('#ded_formula#')#>
+							<cfset tded = tded + ded_data>
+						
+						</cfif>
+					</cfif>
+				<cfelse>
+					<cfset ded_data =  val(pay_ded['ded1#numberformat(ded_qry.currentrow,"00")#'][1])>
+					<cfset tded = tded + ded_data>
+					
+				</cfif>
+				
+				<cfset ded_variable = 'ded1'&#numberformat(ded_qry.currentrow,"00")# >
+	            <cfquery name="updata_ded_back" datasource="#db#">
+	            	UPDATE #weekpay# SET #ded_variable# = #ded_data# WHERE empno = "#empno#"
+	            </cfquery>
+			</cfloop> --->
+			<!--- <cfset tded = val(url.dedpay)> --->	
+	        <cfset tded = tded + advance_value>
+		
+			
+	 		<!--- Overtime ratio--->
+	        <cfset ratio_list = ArrayNew(1)>
+	        <cfset constant_list = ArrayNew(1)>
+	        <cfset rate_list = ArrayNew(1)>
+	        <cfset ot_unit1 = ArrayNew(1)>
+	        
+			<cfloop from="1" to="6" index="i">
+				<cfif oTtbl eq 1>
+		        	<cfset ot_table = "">
+		        <cfelse>
+		        	<cfset ot_table = oTtbl>
+		        </cfif>
+		       
+				<cfset OTtblname = "OT_RATIO"&#ot_table# >
+		        <cfset OTconname = "OT_CONST"&#ot_table# >
+		        <cfquery name="select_otRatio_qry" datasource="#db#">
+					SELECT #OTtblname#, #OTconname#,ot_mrate,OT_UNIT FROM ottable WHERE ot_cou = #i#
+				</cfquery>
+		        <cfset otValue = select_otRatio_qry['#OTtblname#'][1] >
+		        <cfset otConstant = select_otRatio_qry['#OTconname#'][1] >
+		        <cfset otRate = select_otRatio_qry.ot_mrate >
+		        <cfset otUnit = select_otRatio_qry.ot_unit >
+		        
+		        <cfset ArrayAppend(ratio_list, "#otValue#")>
+		        <cfset ArrayAppend(constant_list, "#otConstant#")>
+		        <cfset ArrayAppend(rate_list, "#otRate#") >
+		        <cfset ArrayAppend(ot_unit1, "#otUnit#")>
+	
+	        </cfloop>
+	        
+	        <!--- <cfif oTtbl eq 1>
+	        <cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio#")>
+	        </cfloop>
+	      
+	        
+	        <cfelseif oTtbl eq 2>
+	      	<cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO2 FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio2#")>
+	        </cfloop>
+	        
+	        <cfelseif oTtbl eq 3>
+	        <cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO3 FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio3#")>
+	        </cfloop>
+	        
+	        <cfelseif oTtbl eq 4>
+	     	<cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO4 FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio4#")>
+	        </cfloop>
+	        
+	        <cfelseif oTtbl eq 5>
+	        <cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO5 FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio5#")>
+	        </cfloop>
+	        
+	        <cfelseif oTtbl eq 6>
+	      	<cfset ratio_list = ArrayNew(1)>
+	        <cfloop from="1" to="6" index="i">
+	        <cfquery name="select_otRatio_qry" datasource="#db#">
+			SELECT ot_RATIO6 FROM ottable WHERE ot_cou = #i#
+			</cfquery>
+	        <cfset ArrayAppend(ratio_list, "#select_otRatio_qry.ot_Ratio6#")>
+	        </cfloop>
+	        
+	        </cfif> --->
+	        
+			<cfquery name="ot_table" datasource="#db#">
+	        SELECT * from ottable
+	        </cfquery>
+	        
+	        <cfset OTRATETYPE = #select_empdata.otraterc# >
+	        <cfset OT_maxpay =  #select_empdata.ot_maxpay# >
+	        
+	        <cfset ot_var = "OD_MAXPAY"&#OT_maxpay# >
+	        <cfquery name="ot_maxpay_rate" datasource="#db1#">
+	       	SELECT #ot_var# FROM gsetup WHERE comp_id = "#compid#"
+	        </cfquery>
+	        
+			<cfset OTMAXPAY = ot_maxpay_rate['#ot_var#'][1] >
+	       	<cfset workingh = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+			
+			<cfif salarypaytype neq "D">
+	        	<cfset workingd = #evaluate('ot_table.xdaypmtha[#whtbl#]')# >
+	        <cfelse>
+				<cfset workingd = wDay >
+			</cfif>
+			<!--- Start Calculate OT for Allowance --->
+			<cfset awot = 0 >
+			<cfset dedot = 0 >
+			<cfset dedarray = 0>
+		
+			<cfif OTRATETYPE neq  "C">
+				<cfset awarray = ArrayNew(1)>
+				<cfloop from="1" to="6" index="i">
+					
+					<cfset workingh = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+					<cfif ot_unit1[i] eq "DAYS">
+			        	<cfset workingh = 1 >
+			        </cfif>
+					<cfset OTAW = "AW_OT"&#i# >
+				
+					<cfquery name="select_aw_OT" datasource="#db#">
+						SELECT #OTAW#,aw_cou FROM awtable where aw_cou <=17 and #OTAW# = 1
+					</cfquery>
+					
+					<cfset awot = 0>
+					<cfloop query="select_aw_OT">
+						<cfset tempawvar = 100 + select_aw_OT.aw_cou >
+						<cfquery name="getAwFromweekpay" datasource="#db#">
+							SELECT AW#tempawvar# as AW from #weekpay# where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+						</cfquery>
+						
+						<cfif val(getAwFromweekpay.AW) neq 0 >
+							<cfset awot = awot + val(getAwFromweekpay.AW)>
+						</cfif>
+					</cfloop>
+					<cfset awarray[i] = awot>
+					
+				</cfloop>
+		
+			<!--- END Calculate OT for Allowance --->
+			
+			<!--- Start Calculate OT for Deduction --->
+				<cfquery name="select_ded_OT" datasource="#db#">
+					SELECT DED_OT,ded_cou,ded_for FROM dedtable where ded_cou <=12 and DED_OT = 1
+				</cfquery>
+				
+				<cfloop query="select_ded_OT">
+					<cfset tempdedvar = 100 + select_ded_OT.ded_cou >
+					<cfquery name="getDedFromweekpay" datasource="#db#">
+						SELECT ded#tempdedvar# as DED from #weekpay# where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+					</cfquery>
+					<cfset ggrosspay = find("GROSSPAY",select_ded_OT.ded_for)>
+					<cfif getDedFromweekpay.DED neq 0 and ggrosspay eq 0>
+						<cfset dedot = dedot + getDedFromweekpay.DED>
+						<cfset dedarray = dedot>
+					</cfif>
+				</cfloop>
+			<cfelse>
+				<cfset awot = 0>
+				<cfset awarray = ArrayNew(1)>
+					<cfloop from="1" to="6" index="i">
+						<cfset awarray[i] = 0>
+					</cfloop>
+		
+			</cfif>
+			
+			<!--- END Calculate OT for Deduction --->
+			
+			<cfquery name="getPayBaseOption" datasource="#db1#">
+				SELECT paybase FROM gsetup WHERE comp_id = "#compid#"
+			</cfquery>
+			<cfquery name="getBasic" datasource="#db#">
+				SELECT basicpay, bRate FROM #weekpay# WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">;
+			</cfquery>
+			<cfquery name="aw2_qry" datasource="#db#">
+				SELECT aw_cou,abcd_desp,abcdrepf,abcdrot FROM awtable where aw_cou='2'
+			</cfquery>	
+			
+			<cfset workingh = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+			<cfset getBasic.brate = select_empdata.brate>
+			<cfif aw2_qry.abcdrot eq "Y">
+				<cfset cal_aw_bRate = getBasic.brate>
+				
+				<cfif salarypaytype eq  "D">
+					<cfset workingd = 1 >
+				</cfif>
+				<cfif salarypaytype eq "H">
+		        	<cfset workingd = 1 >
+		        	<cfset workingh = 1 >
+			    </cfif>
+			    
+			<cfelseif getPayBaseOption.paybase eq "BR">
+				<cfset cal_aw_bRate = getBasic.brate>
+				
+				<cfif salarypaytype eq "D">
+					<cfset workingd = 1 >
+				</cfif>
+				<cfif salarypaytype eq "H">
+		        	<cfset workingd = 1 >
+		        	<cfset workingh = 1 >
+			    </cfif>
+			
+			<cfelse>
+				<cfset cal_aw_bRate = #basicpay#>
+				<cfif salarypaytype eq "H">
+		        	<cfset cal_aw_bRate = getBasic.brate>
+		        	<cfset workingd = 1 >
+		        	<cfset workingh = 1 >
+		        </cfif>
+			</cfif>
+			
+			<cfquery name="testqry" datasource="#db#">
+            SELECT empno FROM pmast where "#basicpay#" = "#basicpay#"
+            </cfquery>		
+			<cfif get_now_month.od_inclad neq 0 >
+				<cfset BASICAW = val(cal_aw_bRate) + val(taw)- val(tded) >
+	        <cfelse>
+	        	<cfset BASICAW = val(cal_aw_bRate) >
+	        </cfif>
+			
+		
+			<cfset OT_VALUE = val(cal_aw_bRate) - val(dedot)  >
+			
+	        <cfset OT_RATE_LIST = ArrayNew(1) >
+	   		
+	        <cfset fix_ot = find("O", ucase(select_data.FIXOESP))>
+	        <cfif fix_ot gt 0>
+				<cfset OT_RATE_LIST[1] = select_data.RATE1>
+				<cfset OT_RATE_LIST[2] = select_data.RATE2>
+				<cfset OT_RATE_LIST[3] = select_data.RATE3>
+				<cfset OT_RATE_LIST[4] = select_data.RATE4>
+				<cfset OT_RATE_LIST[5] = select_data.RATE5>
+				<cfset OT_RATE_LIST[6] = select_data.RATE6>
+					
+			<cfelseif #BASICAW# gt #OTMAXPAY#>
+	        	<cfset OT_VALUE = #OTMAXPAY#>      
+		        <cfloop from="1" to="6" index="i">
+			        
+					<cfif ot_unit1[i] eq "DAYS">
+			        	<cfset workingh = 1 >
+			        </cfif>
+			       	<cfif salarypaytype eq "H">
+			        	<cfset workingd = 1 >
+			        	<cfset workingh = 1 >
+			        </cfif>
+			        <cfif OTRATETYPE eq "C" and constant_list[i] gt 0>
+			        
+			        	<cfset ArrayAppend(OT_RATE_LIST, "#constant_list[i]#")>
+			        
+			        <cfelseif OTRATETYPE eq "C" and constant_list[i] lte 0 >
+                    
+                    <cfif get_now_month.hpy eq "Y" and salarypaytype neq "H" and salarypaytype neq "D">
+					<cfset hourspy = #evaluate('ot_table.xhrpyear[#whtbl#]')# >
+                    <cfset monthspy = #evaluate('ot_table.xpaymthpy[#whtbl#]')# >
+                    <cfif ot_unit1[i] eq "DAYS">
+                    <cfset hourspd = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+                    <cfelse>
+                    <cfset hourspd = 1 >
+                    </cfif>
+                    <cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) * val(monthspy)) / val(hourspy) * val(hourspd) ) * ratio_list[i] >
+					<cfelse>
+					<cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) / workingd) / workingh ) * ratio_list[i] >                    </cfif>
+                    
+				        <cfset ArrayAppend(OT_RATE_LIST, "#OT_RATE_CALCULATE#")>
+				        <cfset value111 = OT_VALUE / workingd >
+			        
+			        <cfelseif OTRATETYPE eq "R" and rate_list[i] gt 0 >
+			        	<cfset ArrayAppend(OT_RATE_LIST, "#rate_list[i]#")>
+			        
+			        <cfelseif OTRATETYPE eq "R" and rate_list[i] lte 0 >
+				    
+					<cfif get_now_month.hpy eq "Y" and salarypaytype neq "H" and salarypaytype neq "D">
+					<cfset hourspy = #evaluate('ot_table.xhrpyear[#whtbl#]')# >
+                    <cfset monthspy = #evaluate('ot_table.xpaymthpy[#whtbl#]')# >
+                    <cfif ot_unit1[i] eq "DAYS">
+                    <cfset hourspd = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+                    <cfelse>
+                    <cfset hourspd = 1 >
+                    </cfif>
+                    <cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) * val(monthspy)) / val(hourspy) * val(hourspd) ) * ratio_list[i] >
+					<cfelse>
+					<cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) / workingd) / workingh ) * ratio_list[i] >                    </cfif>
+                    
+				    <cfset ArrayAppend(OT_RATE_LIST, "#OT_RATE_CALCULATE#")>
+			       
+			        </cfif>
+		        
+		        </cfloop>     
+		         
+	        <cfelse>
+	        
+		        <cfloop from="1" to="6" index="i">
+					
+				
+					<cfif ot_unit1[i] eq "DAYS">
+			        	<cfset workingh = 1 >
+			        </cfif>
+			      
+			        <cfif salarypaytype eq "H">
+			        	<cfset workingd = 1 >
+			        	<cfset workingh = 1 >
+			        </cfif>
+			       
+			        <cfif OTRATETYPE eq "C" and constant_list[i] gt 0>
+			        	<cfset ArrayAppend(OT_RATE_LIST, "#constant_list[i]#")>
+			        
+			        <cfelseif OTRATETYPE eq "C" and constant_list[i] lte 0 >
+				    
+					<cfif get_now_month.hpy eq "Y" and salarypaytype neq "H" and salarypaytype neq "D">
+					<cfset hourspy = #evaluate('ot_table.xhrpyear[#whtbl#]')# >
+                    <cfset monthspy = #evaluate('ot_table.xpaymthpy[#whtbl#]')# >
+                    <cfif ot_unit1[i] eq "DAYS">
+                    <cfset hourspd = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+                    <cfelse>
+                    <cfset hourspd = 1 >
+                    </cfif>
+                    <cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) * val(monthspy)) / val(hourspy) * val(hourspd) ) * ratio_list[i] >
+					<cfelse>
+					<cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) / workingd) / workingh ) * ratio_list[i] >                    </cfif>
+                    
+				        <cfset ArrayAppend(OT_RATE_LIST, "#OT_RATE_CALCULATE#")>
+			        
+			        <cfelseif OTRATETYPE eq "R">
+				    
+					<cfif get_now_month.hpy eq "Y" and salarypaytype neq "H" and salarypaytype neq "D">
+					<cfset hourspy = #evaluate('ot_table.xhrpyear[#whtbl#]')# >
+                    <cfset monthspy = #evaluate('ot_table.xpaymthpy[#whtbl#]')# >
+                    <cfif ot_unit1[i] eq "DAYS">
+                    <cfset hourspd = #evaluate('ot_table.xhrpday_h[#whtbl#]')# >
+                    <cfelse>
+                    <cfset hourspd = 1 >
+                    </cfif>
+                    <cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) * val(monthspy)) / val(hourspy) * val(hourspd) ) * ratio_list[i] >
+					<cfelse>
+					<cfset OT_RATE_CALCULATE = (((OT_VALUE+awarray[i]) / workingd) / workingh ) * ratio_list[i] >                    </cfif>
+                    
+				        <cfset ArrayAppend(OT_RATE_LIST, "#OT_RATE_CALCULATE#")>
+			        </cfif>
+			             
+		        </cfloop>
+	        
+			</cfif>
+	    
+	        <cfquery name="update_rate" datasource="#db#">
+	        UPDATE #weekpay# SET 
+	        RATE1 = #numberformat(OT_RATE_LIST[1],'.__')#,
+	        RATE2 = #numberformat(OT_RATE_LIST[2],'.__')#,
+	        RATE3 = #numberformat(OT_RATE_LIST[3],'.__')#,
+	        RATE4 = #numberformat(OT_RATE_LIST[4],'.__')#,
+	        RATE5 = #numberformat(val(url.selfexceptionrate),'.__')#,
+	        RATE6 = #numberformat(OT_RATE_LIST[6],'.__')#
+	        WHERE empno = "#empno#"
+	        </cfquery>
+	        
+	        
+	        <cfquery name="select_new_rate" datasource="#db#">
+	        SELECT RATE1, RATE2, RATE3, RATE4, RATE5, RATE6 from #weekpay# where empno = "#empno#"
+	        </cfquery>
+			
+	  		<cfset OT1 = #val(select_new_rate.rate1)# * #val(hr1)#+0.000001>
+	  		<cfset OT2 = #val(select_new_rate.rate2)# * #val(hr2)#+0.000001>
+	        <cfset OT3 = #val(select_new_rate.rate3)# * #val(hr3)#+0.000001>
+	        <cfset OT4 = #val(select_new_rate.rate4)# * #val(hr4)#+0.000001>
+	        <cfset OT5 = #val(select_new_rate.rate5)# * #val(hr5)#+0.000001>
+	        <cfset OT6 = #val(select_new_rate.rate6)# * #val(hr6)#+0.000001>
+	        <cfset add_hrd_ot = 0>
+	        <cfset OT1 = roundno(OT1,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+	       <cfset OT2 = roundno(OT2,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+           <cfset OT3 = roundno(OT3,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+           <cfset OT4 = roundno(OT4,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+           <cfset OT5 = roundno(OT5,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+           <cfset OT6 = roundno(OT6,'#get_now_month.sud_otrnd#','#get_now_month.sud_otpsu#')>
+	        <cfloop from="1" to="6" index="ii">
+		        <cfquery name="check_cpf_addtional" datasource="#db#">
+		        	SELECT * FROM ottable where ot_cou = #ii#
+		        </cfquery>
+		        <cfset ot_var = #evaluate("OT"&#ii#)# >
+	        	
+	        	<cfif ot_var gt 0 and check_cpf_addtional.OT_EPF gt 0>
+	        		<cfset additional_CPF =  additional_CPF + ot_var>
+	        	</cfif>
+		        
+		        <cfif ot_var neq 0 and check_cpf_addtional.OT_HRD gt 0>
+	        		<cfset add_hrd_ot =  add_hrd_ot + ot_var>
+	        	</cfif>	
+	        </cfloop>
+	        
+           
+	        <cfset OTtotal = OT1 + OT2 + OT3 + OT4 + OT5 +OT6>
+	        
+	      	 
+	        <!--- calculate HRD  for SDL--->
+	 		<cfset hrd_pay =  #val(basicpay)# + #val(Ottotal)# + #val(taw)#>
+	        
+	        <!--- Calculate Gross Pay --->
+	        <cfset grosspay = #val(basicpay)# + #val(Ottotal)# + #val(taw)# + #val(dirfee)#>   
+			
+					
+			<!--- calculate MBMF --->
+	        <cfset tot_new_value= 0>
+	        <cfset dedt_hrd = 0>
+			<cfquery name="pay_ded" datasource="#db#">
+	        	SELECT * FROM #weekpay#
+	        	where empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+	        </cfquery>
+			<!--- <cfquery name="pay_gs_1" datasource="#db#">
+	        	SELECT grosspay FROM paytra1
+	        	where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+	        </cfquery> --->
+			<cfset grosspay1 = 0>
+	  		<cfset gross1pay = 0>
+	  		
+	  		<!--- <cfloop from="1" to="15" index="i">
+		        <cfquery name="select_ded_formula" datasource="#db#">
+		        	SELECT * FROM dedtable WHERE DED_COU = #i# 
+		        </cfquery>
+		        
+		        <cfset dedvar = 100 + #i# >
+		        <cfset dedvar1 = "DBDED"&#dedvar# >
+		        <cfset dedvar_update = "DED"&#dedvar# >
+		       <!---  <cfset deddata = #evaluate("select_empdata.#dedvar1#")#> --->
+				<cfset DED = #evaluate("select_empdata.#dedvar1#")#>
+				<cfset new_ded_formula = select_ded_formula.DED_FOR>
+		        <cfset use_ded_formula = select_ded_formula.DED_FOR_USE>
+				<cfset ded_type = select_ded_formula.ded_type>
+		        <cfset ggrosspay = #find("GROSSPAY",select_ded_formula.ded_for)#>
+				<cfset PAY_TIMES = 2>
+				
+				<cfif DED gt 0 and new_ded_formula neq "" and ggrosspay gt 0 and ded_type eq "F">
+	        		<cfif use_ded_formula neq 0 >
+						
+			            <cfset result = Replace(new_ded_formula,"<="," lte ") >
+			            <cfset result = Replace(result,">="," gte ") >
+			            <cfset result = Replace(result,">"," gt ") >
+			            <cfset result = Replace(result,"<"," lt ") >
+			            <cfset result = Replace(result,"="," eq ") >
+			            
+				        <cfset new_value = #evaluate(result)#>
+				        <cfset new_value = #numberformat(new_value,'.__')# >
+				        
+		        	<cfelse>
+		        		<cfset new_value = DED>
+		        	</cfif>
+		           				
+			    	<cfquery name="update_ded_to_weekpay" datasource="#db#">
+		        		UPDATE #weekpay# SET #dedvar_update# = #new_value# WHERE empno = "#empno#"
+		     		</cfquery>
+		     		<cfset tot_new_value = tot_new_value + new_value>
+						
+					<cfif select_ded_formula.ded_epf gt 0>
+			            <cfset ded_CPF = ded_CPF + new_value >
+			        </cfif>
+				</cfif>
+				
+				<cfif DED eq 0 AND ggrosspay gt 0>
+			    	<cfset new_value = 0>
+				    <cfquery name="update_ded_to_weekpay" datasource="#db#">
+			        	UPDATE #weekpay# SET #dedvar_update# = #new_value# WHERE empno = "#empno#"
+			     	</cfquery>
+			     	<cfif select_ded_formula.ded_epf gt 0>
+			            <cfset ded_CPF = ded_CPF + new_value >
+			        </cfif>
+			     	<cfset tot_new_value = tot_new_value + new_value>
+				</cfif>	
+				
+				<cfset ded_var = #evaluate("pay_ded.#dedvar_update#")#>
+				
+				<cfif select_ded_formula.ded_epf gt 0>
+		            <cfset ded_CPF = ded_CPF + ded_var >
+		        </cfif>
+		     	
+		     	<cfif ded_qry.ded_hrd gt 0>
+		            <cfset dedt_hrd = dedt_hrd + ded_var>
+	            </cfif>
+		     </cfloop> --->
+	  		<cfset tded = tded + tot_new_value>
+			
+				
+			<!--- EPF Process --->
+			
+            <!---Updated on 20170925 1632 by Nieo to get fix allowances from previous assignmentslips--->
+			<cfquery name="getcurrentassign" datasource="#dts#">
+            SELECT refno,emppaymenttype,
+            <cfloop index="a" from="1" to="6">
+            fixawee#a#,
+            fixawcode#a#,
+            </cfloop>
+            custtotalgross 
+            FROM assignmentslip
+            WHERE empno="#empno#"
+            AND refno <>"#url.invoiceno#" 
+            AND payrollperiod = "#gqry.mmonth#"
+            AND created_on > #createdate(gqry.myear,1,7)#
+            ORDER BY emppaymenttype DESC
+            </cfquery>
+            <!---Updated on 20170925 1632 by Nieo to get fix allowances from previous assignmentslips--->
+			
+			<!---<cfif salarypaytype eq "M">
+				<cfset selct_range_RATE = select_empdata.brate>
+			<cfelse>
+				<cfset selct_range_RATE = brate>
+			</cfif>--->
+			
+			<cfset fix_cpf = find("E", ucase(select_data.FIXOESP))>
+			
+	        <cfif epfno neq "" and epfcat neq "X" and fix_cpf eq 0 and epf_selected neq 0>
+	        
+	   			<!---Cal.CPF Using Basic Rate Instead Of Basic Pay--->
+		        <cfset pay_to = select_empdata.epfbrinsbp>
+		        
+                <cfset nspay = 0>
+				<cfif val(ns) neq 0>
+                <cfif val(wDay) neq 0>
+                <cfset nspay = val(ns)/ val(wDay) * brate >
+                </cfif>
+                </cfif>
+                
+		        <!---Updated by Nieo 20171116 1358--->
+		        <!---<cfif aw2_qry.abcdrepf eq "Y">
+					<cfset PAYIN = #brate# + #val(dirfee)# + #additional_CPF# - #ded_cpf# >
+		        <cfelseif pay_to eq "Y">
+		        	<cfset PAYIN = #brate# + #val(dirfee)# + #additional_CPF# - #ded_cpf#>
+		        <cfelse>--->
+		        	<cfset PAYIN = #val(basicpay)#>
+				<!---</cfif> --->
+                <!---Updated by Nieo 20171116 1358--->
+				
+				<cfset payin_2nd = val(PAYIN) + #val(additional_CPF)#><!---payin_2nd: EPF_PAY_A, EPF Wage--->
+				<cfquery name="paytra1_qry" datasource="#db#">
+					SELECT 0 as cpf_amt,0 as EPFWW, 0 as EPFCC from paytra1 
+					where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+				</cfquery>
+                    
+                <cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+				
+                PAYIN before totalfixaw:#PAYIN#<br>
+                
+                </cfoutput>
+				</cfif>
+                
+				
+				<!---<cfset PAYIN = val(PAYIN) + val(paytra1_qry.cpf_amt)>--->
+				
+				<!--- Added by Nieo 20170824 1412, EPF Wage calculation include fix allowance, fixed EPF ER percentage issue raised by Nabila--->
+                    
+                <!---Updated by Nieo 20171116 1358--->
+                <cfquery name="awqry" datasource="#db#">
+                    SELECT shelf as aw_cou FROM #dts#.icshelf a 
+                    LEFT JOIN awtable b on a.allowance = b.aw_cou 
+                    WHERE b.aw_cou > 3 and b.aw_cou < 18 and aw_epf = 1 
+                    ORDER BY shelf
+                </cfquery>
+                    
+                <cfset totalfixaw=0>
+                <cfloop index="a" from="1" to="6">
+                    <cfif evaluate('url.fixawee#a#') neq 0>
+                        <cfif listFindNoCase(valuelist(awqry.aw_cou),evaluate('url.fixawcode#a#'))>
+                            <cfset totalfixaw+=val(evaluate('url.fixawee#a#'))/>
+                        </cfif>
+                    </cfif>
+                </cfloop>
+                <!---Updated by Nieo 20171116 1358--->
+                
+                <cfset PAYIN = val(PAYIN) + val(totalfixaw)>
+                    
+                <!---Updated by Nieo 20171116 1358--->
+                <cfset totalvaraw=0>
+                <cfloop index="aa" from="1" to="18">
+                    <cfif evaluate('url.aweetax#aa#') neq 0>
+                        <cfif listFindNoCase(valuelist(awqry.aw_cou),evaluate('url.allowance#aa#'))>
+                            <cfset totalvaraw+=val(evaluate('url.aweetax#aa#'))/>
+                        </cfif>
+                    </cfif>
+                </cfloop>
+                <!---Updated by Nieo 20171116 1358--->
+                
+                <!---Added on 20170918 1632 by Nieo to get fix allowances from previous assignmentslips--->
+                <cfloop query="getcurrentassign">
+                    <cfloop index="a" from="1" to="6">
+                        <cfif evaluate('getcurrentassign.fixawee#a#') neq 0>
+                            <cfif listFindNoCase(valuelist(awqry.aw_cou),evaluate('getcurrentassign.fixawcode#a#'))>
+                                <cfset totalfixaw+=val(evaluate('getcurrentassign.fixawee#a#'))/>
+                            </cfif>
+                        </cfif>
+                    </cfloop>
+                </cfloop>    
+                <!---Added on 20170918 1632 by Nieo to get fix allowances from previous assignmentslips--->  
+                <!--- End Added by Nieo 20170824 1412, EPF Wage calculation include fix allowance, fixed EPF ER percentage issue raised by Nabila--->
+                    
+                <!---Added on 20171127 1139 by Nieo to fix EPF bracket rounding bug--->  
+                <cfset PAYIN = val(PAYIN) + val(totalvaraw)>
+                <!---Added on 20171127 1139 by Nieo to fix EPF bracket rounding bug--->  
+                    
+				<!---EPF of Multiple Assignments--->
+
+				<cfloop query="getcurrentassign">
+
+					<cfif right(trim(getcurrentassign.emppaymenttype),1) lt right(weekpay,1)>
+                        <cfquery name="getepfwageother" datasource="#db#">
+                        SELECT epf_pay_a FROM #getcurrentassign.emppaymenttype#
+                        WHERE empno = "#empno#"
+                        </cfquery>
+                        
+                        <cfif getepfwageother.epf_pay_a neq ''>
+                            <cfset PAYIN += val(getepfwageother.epf_pay_a)>
+                        </cfif>
+                    </cfif>
+
+                </cfloop>
+				<!---EPF of Multiple Assignments--->
+                    
+                <cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+                    
+                1.1 PAYIN b:#PAYIN#<br>
+                </cfoutput>
+				</cfif>
+				
+                <!---Updated by Nieo 20171127 1127--->
+				<!---Updated by Nieo 20171116 1505--->
+				<!---<cfset choosepayin = 0>
+                
+                <cfif url.paytype eq 'hr' or url.paytype eq 'day'>--->
+                    <cfset choosepayin = #val(PAYIN)#>                    
+                <!---<cfelse>
+                    <cfif val(getplacement.employee_rate_1) neq 0>
+                        <cfset choosepayin = val(getplacement.employee_rate_1)>
+                    </cfif>		
+
+                    <cfloop from="1" to="6" index="i">
+                        <cfif evaluate('getplacement.aw#i#') neq "">
+                            <cfif evaluate('getplacement.allowanceamt#i#') neq 0>
+                                <cfif listFindNoCase(valuelist(awqry.aw_cou),evaluate('getplacement.aw#i#'))>
+                                    <cfset choosepayin+=val(evaluate('getplacement.allowanceamt#i#'))/>
+                                </cfif>
+                            </cfif>
+                        </cfif>
+                    </cfloop>
+                </cfif>--->
+				<!---Updated by Nieo 20171116 1505--->		
+                <!---Updated by Nieo 20171127 1127--->
+                        
+                <cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+                    
+                1. choosepayin:#choosepayin#<br>
+                0. PAYIN: #PAYIN#<br>
+                comm_qry.basicpay: #comm_qry.basicpay#<br>
+                bonus_qry.basicpay: #bonus_qry.basicpay#<br>
+                </cfoutput>
+				</cfif>
+				
+		        <cfquery name="get_epf_fml" datasource="#db#">
+		        	SELECT entryno FROM rngtable WHERE EPFPAYF <= #replace(choosepayin,'-','')# AND EPFPAYT >= #replace(choosepayin,'-','')# 
+		        </cfquery>
+		        
+		        <cfset epf_entryno = get_epf_fml.entryno>    
+		        <cfquery name="get_epf" datasource="#db#">
+		        	SELECT * FROM rngtable WHERE entryno = "#epf_entryno#"
+		        </cfquery>
+		        
+		        <cfquery name="get_epf1" datasource="#db#">
+		        	SELECT cpf_ceili FROM rngtable where entryno="1"
+		        </cfquery>
+		       
+                <cfset oldpayin = PAYIN>
+                <cfif PAYIN lte #get_epf1.cpf_ceili#>
+				<cfelse>
+                    <cfif val(additionalwages) neq 0>
+                    <cfset newpayin = payin - val(additionalwages)>
+                    
+                        <cfif newpayin lte #get_epf1.cpf_ceili#>
+                        <cfset PAYIN = newpayin>
+                        <cfelse>
+                        <cfset PAYIN = #get_epf1.cpf_ceili#>
+                        </cfif>
+                    
+                    <cfelse>
+                    <cfset PAYIN = #get_epf1.cpf_ceili#>
+                    </cfif>
+                
+                </cfif>
+								
+				<cfset PAYIN = val(PAYIN) - val(bonuspay)>
+				<cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+				bonuspay: #bonuspay#<br>
+                    
+                1. PAYIN b:#PAYIN#<br>
+                    
+                oldpayin: #oldpayin#<br>
+                
+                </cfoutput>
+				</cfif>
+				
+				<!---EPF of Multiple Assignments, total basic wage of previous assignmentslips--->
+                <cfset prebasic = 0>
+                
+				<cfloop query="getcurrentassign">
+
+					<cfif right(trim(getcurrentassign.emppaymenttype),1) lt right(weekpay,1)>
+                        <cfquery name="getepfwageother" datasource="#db#">
+                        SELECT basicpay FROM #getcurrentassign.emppaymenttype#
+                        WHERE empno = "#empno#"
+                        </cfquery>
+                        
+                        <cfif getepfwageother.basicpay neq ''>
+                            <cfset prebasic += val(getepfwageother.basicpay)>
+                        </cfif>
+                    </cfif>
+
+                </cfloop>
+				<!---EPF of Multiple Assignments, total basic wage of previous assignmentslips--->
+                    
+				<cfset oldpayin1 = val(basicpay)+ val(prebasic)+ val(totalfixaw)>
+                <!---Updated by Nieo 20171116 1358--->
+                <cfset PAYIN = PAYIN + val(bonus_qry.basicpay) + val(comm_qry.basicpay)>
+                <!---Updated by Nieo 20171116 1358--->
+                <cfif oldpayin gt #get_epf1.cpf_ceili# and val(additionalwages) neq 0>
+                <cfset PAYIN = PAYIN + val(additionalwages)>
+				</cfif>
+				
+				<cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+				
+                payin bonus added:#PAYIN#<br>
+                
+                </cfoutput>
+				</cfif>
+                
+                <!---Commented on 20170918 1416 by Nieo--->
+				<!---<cfif payin gt 5000>
+					<cfquery name="get_epf_fml" datasource="#db#">
+						SELECT entryno FROM rngtable WHERE EPFPAYF <= #replace(PAYIN,'-','')# AND EPFPAYT >= #replace(PAYIN,'-','')# 
+					</cfquery>
+					
+					<cfset epf_entryno = get_epf_fml.entryno>    
+					<cfquery name="get_epf" datasource="#db#">
+						SELECT * FROM rngtable WHERE entryno = "#epf_entryno#"
+					</cfquery>
+                </cfif>--->
+				
+				
+		        <cfset epf_yee = #get_epf['epfyee#epf_selected#'][1]#>
+		        <cfset epf_yer = #get_epf['epfyer#epf_selected#'][1]#>
+				
+                <!---Updated by Nieo 20171116 1358--->
+                <!---Added by Nieo 20171127 1127--->
+                <cfset fixwage = 0>
+                <cfif val(getplacement.employee_rate_1) neq 0>
+                    <cfset fixwage = val(getplacement.employee_rate_1)>
+                </cfif>	
+                
+                <!---Added by Nieo 20180205 1659 fix issue with part time pay--->
+                <!---<cfif val(url.paymenttype) neq 'mth'>
+                    <cfset fixwage = val(basicpay)>
+                </cfif>	--->
+                <!---Added by Nieo 20180205 1659 fix issue with part time pay--->
+                    
+                <cfloop from="1" to="6" index="i">
+                    <cfif evaluate('getplacement.aw#i#') neq "">
+                        <cfif evaluate('getplacement.allowanceamt#i#') neq 0>
+                            <cfif listFindNoCase(valuelist(awqry.aw_cou),evaluate('getplacement.aw#i#'))>
+                                <cfset fixwage+=val(evaluate('getplacement.allowanceamt#i#'))/>
+                            </cfif>
+                        </cfif>
+                    </cfif>
+                </cfloop>
+                <!---Added by Nieo 20171127 1127--->
+                    
+				<cfif fixwage lte 5000>
+					<!---<cfset epf_yer = replace(replace(epf_yer,'0.12','0.13'),'0.06)','0.065)')>--->
+                    <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+					<cfset epf_yer = replace(epf_yer,'0.12','0.13')>
+                    <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+				</cfif>	
+                <!---Updated by Nieo 20171116 1358--->
+		        
+		        <cfset EPFW = #val(evaluate(#epf_yee#))#>
+				
+				<cfif left(HUserID,5) eq 'ultra'>
+					<cfoutput>
+                    <br>
+                    fixwage: #fixwage#
+					<br>
+					epf_yer:#epf_yer#<br>
+					<br>
+					epf_yee:#epf_yee#<br>
+					</cfoutput>
+				</cfif>
+
+		        <cfset result= #Replace(epf_yer,"ROUND","NumberFormat")#>
+		        <cfset EPFY = #val(evaluate(#result#))#>
+		        
+		      <!---   cpf amount not round --->
+		        
+		        <cfset result1= #REReplace(epf_yee,"INT"," ", "all")#>
+				<cfset EPFW_nt_round = #val(evaluate(#result1#))#>
+				
+		        <cfset result=#Replace(epf_yer,"ROUND"," ","all")#>
+		        <cfset epf_yer_result=#Replace(result,",0"," ","all")#>
+		        <cfif val(payin) eq 0>
+                <cfset payin = 1>
+				</cfif>
+		        <cfset epf_yer_nt_round=#val(evaluate(#epf_yer_result#))#>
+                <cfset EPFWORI = EPFW>
+			     <cfset EPFYORI = EPFY>
+                 <cfset EPFW_nt_roundORI = EPFW_nt_round>
+                 <cfset epf_yer_nt_roundORI =epf_yer_nt_round>
+                 
+                <!---  <cfif get_now_month.balanceepf eq "1" and (val(bonus_qry.epfww) neq 0 or val(bonus_qry.epfcc) neq 0)>
+                <cfset EPFW = EPFW - int(val(bonus_qry.epfww))>
+                <cfset EPFY = EPFY - round(val(bonus_qry.EPFCC)+val(bonus_qry.EPFWW)-int(val(bonus_qry.EPFWW)))>
+                <cfset EPFW_nt_round = EPFW_nt_round - int(val(bonus_qry.epfww))>
+                <cfset epf_yer_nt_round = epf_yer_nt_round - round(val(bonus_qry.EPFCC)+val(bonus_qry.EPFWW)-int(val(bonus_qry.EPFWW)))>
+                 
+				 <cfelse>		
+							 
+                <cfset EPFW = EPFW * val(oldpayin1) / val(PAYIN)>
+                <cfset EPFY = EPFY * val(oldpayin1) / val(PAYIN)>
+				
+                <cfset EPFW_nt_round = EPFW_nt_round * val(oldpayin1) / val(PAYIN)>
+                <cfset epf_yer_nt_round = epf_yer_nt_round * val(oldpayin1) / val(PAYIN)>
+                </cfif>--->
+		         
+				 <cfif val(additionalwages) neq 0 and oldpayin gt #get_epf1.cpf_ceili#>
+                    <cfset EPFW1 = EPFWORI * val(additionalwages) / val(PAYIN)>
+					<cfset EPFY1 = EPFYORI * val(additionalwages) / val(PAYIN)>
+                    <cfset EPFW_nt_round1 = EPFW_nt_roundORI * val(additionalwages) / val(PAYIN)>
+                    <cfset epf_yer_nt_round1 = epf_yer_nt_roundORI * val(additionalwages) / val(PAYIN)>
+                    <cfset EPFW = EPFW + EPFW1>
+       			    <cfset EPFY = EPFY + EPFY1>
+                    <cfset EPFW_nt_round = EPFW_nt_round + EPFW_nt_round1>
+                    <cfset epf_yer_nt_round= epf_yer_nt_round + epf_yer_nt_round1>
+                 <!--- <cfelse>
+                 <cfset additionalwages = 0> --->
+				  </cfif>
+                <cfset EPFW = round(EPFW)>
+                <cfset EPFY = round(EPFY)>
+				
+				<cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+				<br>
+					epf_yer:#epf_yer#<br>
+					<br>
+					epf_yee:#epf_yee#<br>
+				<br>
+                2. PAYIN:#PAYIN#<br>
+                <br>
+                EPFY:#EPFY#<br>
+				<br>
+                EPFW:#EPFW#<br>
+                </cfoutput>
+				</cfif>
+				
+                <!---Added by Nieo 20170912 1558, voluntary EPF calculation for EPF EE and ER--->
+                <cfset epf_fyee = trim(epf_fyee)>
+                <cfset epf_fyer = trim(epf_fyer)>  
+                
+                <cfif epf_fyee neq '' and epf_fyee neq '0' and epf_yee neq 0>
+                    <cfif findnocase('%',epf_fyee)>
+                        <!---Updated by Nieo 20171110 1621--->
+                        <!---<cfif findnocase('0.08',epf_yee)>
+                            <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)-0.08>
+                        <cfelseif findnocase('0.11',epf_yee)>
+                            <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)-0.11>
+                        <cfelseif findnocase('0.04',epf_yee)>
+                            <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)-0.04>
+                        <cfelseif findnocase('0.055',epf_yee)>
+                            <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)-0.055>
+                        </cfif>--->
+
+                        <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)>
+                        <!---Updated by Nieo 20171110 1621--->
+
+                        <cfif isdefined('volpercee')>
+                            <!---<cfset epf_yee = replace(replace(replace(replace(epf_yee,'0.08','#volpercee#'),'0.11','#volpercee#'),'0.04','#volpercee#'),'0.055','#volpercee#')>--->
+                            <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+                            <!---<cfset epf_yee = replace(replace(epf_yee,'0.08','#volpercee#'),'0.11','#volpercee#')>--->
+                            <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+                            <!---Updated by Nieo 20200601, on KWSP update 7% to voluntary percentage--->
+                            <cfset epf_yee = replace(replace(epf_yee,'0.07','#volpercee#'),'0.11','#volpercee#')>
+                            <!---Updated by Nieo 20200601, on KWSP update 7% to voluntary percentage--->
+                        </cfif>
+                    <cfelse>
+                        <cfset epf_yee = val(epf_fyee)>
+                    </cfif>
+                <!---Updated by Nieo 20190327 1159, on KWSP update on aged 60 above--->
+                <cfelseif epf_yee eq 0 and PAYIN gt 10>
+                    <cfset volpercee= (val(replace(epf_fyee,'%',''))/100)>
+                            
+                        <cfif isdefined('volpercee')>
+                            <cfset epf_yee = replace(epf_yer,'0.04','#volpercee#')>
+                        </cfif>
+                    <!---Updated by Nieo 20190327 1159, on KWSP update on aged 60 above--->
+                </cfif>
+
+                <cfif epf_fyer neq '' and epf_fyer neq '0' and epf_yer neq 0>
+                    <cfif findnocase('%',epf_fyer)>
+                        <!---<cfif findnocase('0.12',epf_yer)>
+                            <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)-0.12>
+                        <cfelseif findnocase('0.13',epf_yer)>
+                            <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)-0.13>
+                        <cfelseif findnocase('0.06',epf_yer)>
+                            <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)-0.06>
+                        <cfelseif findnocase('0.065',epf_yer)>
+                            <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)-0.065>
+                        Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local
+                        <cfelseif findnocase('0.04',epf_yer)>
+                            <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)-0.04>
+                        Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local
+                        </cfif>--->
+                           
+                        <!---Updated by Nieo 20190402 1518--->
+                        <cfset volpercer= (val(replace(epf_fyer,'%',''))/100)>
+                        <!---Updated by Nieo 20190402 1518--->
+
+                        <cfif isdefined('volpercer')>
+                            <!---<cfset epf_yer = replace(replace(replace(replace(epf_yer,'0.12','#volpercer#'),'0.13','#volpercer#'),'0.06)','#volpercer#'),'0.065)','#volpercer#')>--->
+                            <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+                            <cfset epf_yer = replace(replace(epf_yer,'0.12','#volpercer#'),'0.13','#volpercer#')>
+                            <!---Updated by Nieo 20190218, on KWSP update on aged 60 above to 4% only for local--->
+                        </cfif>
+                    <cfelse>
+                        <cfset epf_yer = val(epf_fyer)>
+                    </cfif>
+                </cfif>
+                            
+                <cfset EPFW_vol = #val(evaluate(#epf_yee#))#>
+                            
+                <cfset result= #Replace(epf_yer,"ROUND","NumberFormat")#>
+		        <cfset EPFY_vol = #val(evaluate(#result#))#>
+		        
+		      <!---   cpf amount not round --->
+		        
+		        <cfset result1= #REReplace(epf_yee,"INT"," ", "all")#>
+				<cfset EPFW_nt_round = #val(evaluate(#result1#))#>
+				
+		        <cfset result=#Replace(epf_yer,"ROUND"," ","all")#>
+		        <cfset epf_yer_result=#Replace(result,",0"," ","all")#>
+                
+                <cfif epf_fyee neq '' and epf_fyee neq '0'>
+                    <cfset EPFW_vol = round(EPFW_vol)>
+                    <!---Updated by Nieo 20171110 1621--->
+                    <!---<cfset EPFW = val(EPFW_vol)+val(EPFW)>--->
+                    <cfset EPFW = val(EPFW_vol)>
+                    <!---Updated by Nieo 20171110 1621--->
+                </cfif>
+                <cfif epf_fyer neq '' and epf_fyer neq '0'>
+                    <cfset EPFY_vol = round(EPFY_vol)>
+                    <cfset EPFY = val(EPFY_vol)>
+                </cfif>
+                <!---Added by Nieo 20170912 1558, voluntary EPF calculation for EPF EE and ER--->
+				
+				<cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+                    <br>
+				    Final + Voluntary<br>
+                    <cfif isdefined('volpercee')>
+                    volpercee: #volpercee#<br>
+                    </cfif>
+                    <cfif isdefined('volpercer')>
+                    volpercer: #volpercer#<br>
+                    </cfif>
+					epf_yer:#epf_yer#<br>
+					<br>
+					epf_yee:#epf_yee#<br>
+				<br>
+                2. PAYIN:#PAYIN#<br>
+                <br>
+                EPFY:#EPFY#<br>
+				<br>
+                EPFW:#EPFW#<br>
+                </cfoutput>
+				</cfif>
+		       
+		    <!---     <cfquery name="update_round_cpf_pay_tm" datasource="#db#">
+					UPDATE pay_tm 
+					SET p_epfww = #val(EPFW_nt_round)#,
+						p_epfcc = #val(epf_yer_nt_round)#
+      
+					WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+				</cfquery> --->
+		        
+		      <!---  select cpf 1st half  as full month pay  --->
+<!--- 		        <cfif epf1hd eq "Y">
+			        <cfset EPFW = numberformat(val(EPFW),'.__') - numberformat(val(paytra1_qry.EPFWW),'.__') > 
+			       	<cfset EPFY = numberformat(val(EPFY),'.__') - numberformat(val(paytra1_qry.EPFCC),'.__') > 
+		        </cfif> --->
+				
+				<!---EPF of Multiple Assignments--->
+
+				<!---<cfquery name="gettotalEPF" datasource="#dts#">
+                SELECT sum(selfcpf) as selfcpf,sum(custcpf) as custcpf 
+                FROM assignmentslip
+                WHERE empno="#empno#"
+                AND payrollperiod = "#gqry.mmonth#"
+				and right(emppaymenttype,1) < right("#weekpay#",1)
+                </cfquery>
+				
+                <cfif gettotalEPF.selfcpf neq 0>
+                	<cfset EPFW -= val(gettotalEPF.selfcpf)>
+                </cfif>
+				
+                <cfif gettotalEPF.custcpf neq 0>
+                	<cfset EPFY -= val(gettotalEPF.custcpf)>                
+                </cfif>--->
+                
+                <cfloop query="getcurrentassign">
+
+					<cfif right(trim(getcurrentassign.emppaymenttype),1) lt right(weekpay,1)>
+                        <cfquery name="getepfbefore" datasource="#db#">
+                        SELECT epfww,epfcc FROM #getcurrentassign.emppaymenttype#
+                        WHERE empno = "#empno#"
+                        </cfquery>
+                        
+                        <cfif getepfbefore.epfww neq 0>
+                            <cfset EPFW -= val(getepfbefore.epfww)>
+                        </cfif>
+
+                        <cfif getepfbefore.epfcc neq 0>
+                            <cfset EPFY -= val(getepfbefore.epfcc)>                
+                        </cfif>
+                    </cfif>
+
+                </cfloop>
+				
+				<cfif left(HUserID,5) eq 'ultra'>
+				<cfoutput>
+                final EPFY:#EPFY#<br>
+				<br>
+                final EPFW:#EPFW#<br>
+                </cfoutput>
+				</cfif>
+				
+				
+
+                <!---End EPF of Multiple Assignments--->
+				
+		        <!--- check epf pay all by employer --->
+		     
+				<cfset pay_by = select_empdata.epfbyer>
+		        <cfif pay_by eq "Y">
+		        	 <cfset EPFY=#val(EPFY)# + #val(EPFW)#>
+		        	 <cfset EPFW = 0>
+				</cfif>
+				
+				<cfset pay_by_yee = select_empdata.epfbyee>
+				<cfif pay_by_yee eq "Y">
+		        	<cfset EPFW = #val(EPFY)# + #val(EPFW)#>
+		        	<cfset EPFY = 0 >
+		        </cfif>	
+		    <cfelseif fix_cpf gte 1>
+		    		<cfset EPFW = select_data.EPFWW >
+		        	<cfset EPFY = select_data.EPFCC >
+		        	<!--- <cfquery name="update_round_cpf_pay_tm" datasource="#db#">
+					UPDATE pay_tm 
+					SET p_epfww = #val(EPFW)#,
+						p_epfcc = #val(EPFY)#
+					WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+				</cfquery> --->
+		    		
+				<cfif get_now_month.comp_id neq "zoenissi">
+					
+					<cfset payin_2nd = 0>
+                    <cfset additionalwages= 0>
+					
+				<cfelse>
+					
+					<cfset pay_to = select_empdata.epfbrinsbp>
+					<cfset nspay = 0>
+					<cfif val(ns) neq 0>
+               		 <cfif val(wDay) neq 0>
+              			  <cfset nspay = val(ns)/ val(wDay) * brate >
+             	  	 </cfif>
+              	 	</cfif>
+					 <cfif aw2_qry.abcdrepf eq "Y">
+						<cfset PAYIN = #brate# + #val(dirfee)# + #additional_CPF# - #ded_cpf# >
+		       		 <cfelseif pay_to eq "Y">
+		        		<cfset PAYIN = #brate# + #val(dirfee)# + #additional_CPF# - #ded_cpf#>
+		       		 <cfelse>
+		        		<cfset PAYIN = #val(basicpay)# + #val(dirfee)# + #additional_CPF# - #ded_cpf# + val(nspay) >
+					</cfif> 
+					<cfset payin_2nd = val(PAYIN)>	
+					
+				</cfif>	
+				
+		    <cfelse>
+			        <cfset EPFY = 0>
+			        <cfset EPFW = 0>
+			        <cfset payin_2nd = 0>
+                    <cfset additionalwages= 0>
+                   <!---  <cfquery name="update_round_cpf_pay_tm" datasource="#db#">
+					UPDATE pay_tm 
+					SET p_epfww = 0,
+						p_epfcc = 0
+					WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+				</cfquery> --->
+	        </cfif>
+	        
+	        
+	        <cfif compccode eq "MY">
+		       	 <cfset fix_ss = find("S", ucase(select_data.FIXOESP))>
+            
+            <cfif fix_ss gte 1>
+            
+                <cfquery name="getssfixed" datasource="#db#">
+                SELECT socsoww,socsocc FROM #weekpay# WHERE empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                </cfquery>
+                
+            	<cfset socso_yee = getssfixed.socsoww>
+	        	<cfset socso_yer = getssfixed.socsocc>
+                
+            <cfelse>
+            	<cfset socso_rate = val(basicpay) >	 
+            	<cfset socso_rate = val(socso_rate) + val(add_hrd_ot)>	
+            	<cfset socso_rate = val(socso_rate) + val(add_hrd)>	 
+            	<cfset socso_rate = val(socso_rate) - val(dedt_hrd)>	
+
+                <!--- Socso calculation for Multiple Assignments--->	
+                <cfquery name="socaw" datasource="#db#">
+                SELECT * FROM awtable where AW_HRD = 1 AND AW_COU<18 ORDER BY AW_cou 
+                </cfquery>
+                <cfquery name="socded" datasource="#db#">
+                SELECT * FROM dedtable where DED_HRD = 1 and ded_cou <=12  ORDER BY ded_cou 
+                </cfquery>	
+                
+                <cfset totalsocsowage= 0.00>
+                <cfloop query="getcurrentassign">
+					<cfif right(trim(getcurrentassign.emppaymenttype),1) lt right(weekpay,1)>
+						<cfquery name="totalsocso" datasource="#db#">
+							SELECT (coalesce(basicpay,0)+coalesce(otpay,0)
+							<cfloop query="socaw">
+							+coalesce(aw#100+socaw.aw_cou#,0)
+							</cfloop>
+							<cfloop query="socded">
+							-coalesce(ded#100+socded.ded_cou#,0)
+							</cfloop>) as socsowage
+							FROM #getcurrentassign.emppaymenttype#
+							WHERE empno = "#empno#"
+						</cfquery>
+											
+						
+						<cfset totalsocsowage = val(totalsocsowage) + val(totalsocso.socsowage)>
+						
+						<cfif left(Huserid,5) eq 'ultra'>
+							<cfoutput>
+							<br>
+							totalsocsowage:#val(totalsocsowage)#<br>
+							</cfoutput>
+						</cfif>
+					</cfif>
+                </cfloop>
+                <cfset socso_rate = val(socso_rate) + val(totalsocsowage)>
+                <!--- Socso calculation for Multiple Assignments--->
+				
+				<cfif left(Huserid,5) eq 'ultra'>
+					<cfoutput>
+					<br>
+					socso_rate:#val(socso_rate)#*<br>
+                    <br>
+                        val(basicpay):#val(basicpay)#<br> 
+                        val(add_hrd_ot):#val(add_hrd_ot)#<br>
+                        val(add_hrd):#val(add_hrd)#<br>
+					</cfoutput>
+				</cfif>
+
+				
+		       	<cfinvoke component="cfc.socsoprocess" method="calsocso" empno="#empno#" db="#db#" returnvariable="socso_array" payrate="#replace(socso_rate,'-','')#"/>
+	        	<cfif left(socso_rate,1) eq '-'>
+	        		<cfset socso_yee = val('-'&socso_array[1])>
+                <cfelse>
+	        		<cfset socso_yee = socso_array[1]>
+                </cfif>
+                <cfif left(socso_rate,1) eq '-'>
+                	<cfset socso_yer = val('-'&socso_array[2])>
+                <cfelse>
+	        		<cfset socso_yer = socso_array[2]>
+                </cfif>
+                    
+                <cfif left(Huserid,5) eq 'ultra'>
+					<cfoutput>
+                    socso_array[1]: #socso_array[1]#<br>
+                    socso_array[2]: #socso_array[2]#<br>
+					<br>
+					socso_yee:#socso_yee#<br>
+                    socso_yer:#socso_yer#<br>
+					</cfoutput>
+				</cfif>
+				
+				
+				 <!--- Socso calculation for Multiple Assignments--->		
+                <cfset socsowwamt= 0.00>
+                <cfset socsoccamt= 0.00>
+                <cfloop query="getcurrentassign">
+					<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+						<cfquery name="totalsocsoamt" datasource="#db#">
+							SELECT socsoww,socsocc
+							FROM #getcurrentassign.emppaymenttype#
+							WHERE empno = "#empno#"
+						</cfquery>
+						
+						<cfset socso_yee = val(socso_yee) - val(totalsocsoamt.socsoww)>
+						<cfset socso_yer = val(socso_yer) - val(totalsocsoamt.socsocc)>
+                            
+                        <cfif left(Huserid,5) eq 'ultra'>
+                            <cfoutput>
+                            <br>
+                            val(totalsocsoamt.socsoww): #val(totalsocsoamt.socsoww)#
+                            <br>
+                            val(totalsocsoamt.socsocc): #val(totalsocsoamt.socsocc)#
+                            <br>
+                            2. socso_yee:#socso_yee#<br>
+                            2. socso_yer:#socso_yer#<br>
+                            </cfoutput>
+                        </cfif>
+					</cfif>
+                </cfloop>
+                <!--- Socso calculation for Multiple Assignments--->
+                       
+            </cfif>
+         	
+            <cfif left(Huserid,5) eq 'ultra'>
+					<cfoutput>
+					<br>
+					3. socso_yee:#socso_yee#<br>
+                    3. socso_yer:#socso_yer#<br>
+					</cfoutput>
+				</cfif>
+
+			<!--- Socso calculation fix--->			
+
+			<cfquery name="update_socso_qry" datasource="#db#">
+                UPDATE #weekpay# 
+                SET  socsoww = #val(socso_yee)#,
+                socsocc = #val(socso_yer)#  
+                WHERE empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+            </cfquery>
+
+            <!---updated by Nieo 20171109 1751, Moved to bottom due to inaccuracy when recalculated--->
+			<!---<cfset socsowwtotal = 0.00>
+			<cfset socsocctotal = 0.00>
+
+			<cfloop query="getcurrentassign">
+
+				<cfquery name="gettotalsocsoweek" datasource="#db#">
+                    SELECT socsoww,socsocc FROM #getcurrentassign.emppaymenttype#
+                    WHERE empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                    and paydate = "#url.paydate#"
+				</cfquery>
+
+				<cfset socsowwtotal += val(gettotalsocsoweek.socsoww)>
+				<cfset socsocctotal += val(gettotalsocsoweek.socsocc)>
+
+			</cfloop>
+
+			<cfquery name="update_socso_qry" datasource="#db#">
+                UPDATE #url.paydate# 
+                set socsoww = 
+                IF(#(val(socsowwtotal)+val(socso_yee))#>=19.75, 19.75,#(val(socsowwtotal)+val(socso_yee))#),
+                socsocc = 
+                IF(#(val(socsocctotal)+val(socso_yer))#>=69.05, 69.05,#(val(socsocctotal)+val(socso_yer))#) 
+                where empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+            </cfquery>--->
+            <!---updated by Nieo 20171109 1751, Moved to bottom due to inaccuracy when recalculated--->
+             
+            <!--- Added by Nieo 20180108 1553, add EIS calculation --->
+            <!---EIS Calculation--->
+            	<cfinvoke component="cfc.eisprocess" method="caleis" empno="#empno#" db="#db#" returnvariable="eis_array" payrate="#replace(socso_rate,'-','')#"/>
+	        	<cfif left(socso_rate,1) eq '-'>
+	        		<cfset eis_yee = val('-'&eis_array[1])>
+                <cfelse>
+	        		<cfset eis_yee = eis_array[1]>
+                </cfif>
+                <cfif left(socso_rate,1) eq '-'>
+                	<cfset eis_yer = val('-'&eis_array[2])>
+                <cfelse>
+	        		<cfset eis_yer = eis_array[2]>
+                </cfif>
+                    
+                <cfif left(Huserid,5) eq 'ultra'>
+					<cfoutput>
+                    eis_array[1]: #eis_array[1]#<br>
+                    eis_array[2]: #eis_array[2]#<br>
+					<br>
+					eis_yee:#eis_yee#<br>
+                    eis_yer:#eis_yer#<br>
+					</cfoutput>
+				</cfif>
+                    
+                 <!--- EIS calculation for Multiple Assignments--->		
+                <cfset eiswwamt= 0.00>
+                <cfset eisccamt= 0.00>
+                <cfloop query="getcurrentassign">
+					<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+						<cfquery name="totaleisamt" datasource="#db#">
+							SELECT eisww,eiscc
+							FROM #getcurrentassign.emppaymenttype#
+							WHERE empno = "#empno#"
+						</cfquery>
+						
+						<cfset eis_yee = val(eis_yee) - val(totaleisamt.eisww)>
+						<cfset eis_yer = val(eis_yer) - val(totaleisamt.eiscc)>
+                            
+                        <cfif left(Huserid,5) eq 'ultra'>
+                            <cfoutput>
+                            <br>
+                            val(totaleisamt.eisww): #val(totaleisamt.eisww)#
+                            <br>
+                            val(totaleisamt.eiscc): #val(totaleisamt.eiscc)#
+                            <br>
+                            2. eis_yee:#eis_yee#<br>
+                            2. eis_yer:#eis_yer#<br>
+                            </cfoutput>
+                        </cfif>
+					</cfif>
+                </cfloop>
+                <!--- EIS calculation for Multiple Assignments--->
+                
+                <cfquery name="update_eis_qry" datasource="#db#">
+                    UPDATE #weekpay# 
+                    SET  eisww = #val(eis_yee)#,
+                    eiscc = #val(eis_yer)#  
+                    WHERE empno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                </cfquery>
+			<!--- Added by Nieo 20180108 1553, add EIS calculation --->
+
+            <!---PCB Calculation--->
+			
+			<cfquery name="getcurrentassign" datasource="#dts#">
+            SELECT emppaymenttype,custtotalgross FROM assignmentslip
+            WHERE empno="#empno#"
+            AND payrollperiod = "#gqry.mmonth#"
+            AND created_on > #createdate(gqry.myear,1,7)#
+            </cfquery>
+            
+            <cfquery name="getdeduc" datasource="#db#">
+            SELECT ded101, ded102, ded103, ded104, ded105, ded106, ded107, ded108, ded109, ded110, ded111, ded112, ded113,AW101, AW102, AW103, AW104, AW105, AW106, AW107, AW108, AW109, AW110, AW111, AW112, AW113, AW114, AW115, AW116, AW117 FROM #weekpay#
+            WHERE empno = "#empno#"
+            </cfquery>
+            
+            <cfquery name="pcbfields" datasource="#db#">
+            SELECT * FROM pcbtable
+            </cfquery>
+            
+            <cfquery name="checkbonus" datasource="#db#">
+                SELECT bonus,b_epfww,ded115 from pay_tm where empno="#empno#"
+            </cfquery> 
+               
+            <cfset deduc = val(tded)>
+            
+<!---            <cfif select_empdata.itaxno neq "" and select_empdata.itaxcat neq "X">--->
+            <cfif select_empdata.itaxcat neq "X">
+            <cfif findnocase('T',select_data.fixoesp) gt 0>
+                <cfset currentpcb = select_data.ded115>
+								
+
+            <cfelse>
+			
+			
+
+		   	   <!---PCB Deduction--->
+				<cfset M = 0>
+				<cfset Mb = 0>
+                <cfset R = 0>
+                <cfset Rb = 0>
+                <cfset B = 0>
+                <cfset Bb = 0>
+                <cfset cate = 0>
+                <cfset net = 0>
+                <cfset netb = 0>
+                <cfset tzakat = 0>
+                <cfset currentpcb = 0>
+                <cfset pded = 0>
+  		
+        		<!--- if employee disable --->
+                <cfif select_empdata.disble eq "Y">
+					<cfset pded += val(pcbfields.disab)> 	<!---6000--->
+                </cfif>
+        		<!--- if spouse disable --->
+                <cfif select_empdata.sdisble eq "Y">
+					<cfset pded += val(pcbfields.sdisab)>	<!---3500--->
+                </cfif>
+                
+                <!---check deductable allowances for pcb--->
+                <cfquery name="awqry" datasource="#db#">
+                    SELECT aw_cou,aw_tax FROM awtable
+                    where aw_cou < 18 and aw_cou <> 9 and aw_tax = 0
+				</cfquery>
+                
+                <cfquery name="dedqry" datasource="#db#">
+                    SELECT ded_cou,ded_tax FROM dedtable
+                    where ded_cou < 13 and ded_tax = 0 
+				</cfquery> 
+                
+                <cfquery name="getawceil" datasource="#db#">
+                    SELECT aw_cou,aw_ceil FROM awtable
+                    where aw_cou < 18 and aw_ceil > 0 and aw_tax = 1
+				</cfquery>
+                
+				<!---<!---Fix deduction in employee details --->
+                <cfquery name="dbdedqry" datasource="#db#">
+                SELECT 
+                <cfloop index="a" from="101" to="112">
+                dbded#a#<cfif a neq 112>,</cfif>
+                </cfloop> 
+                FROM pmast
+                WHERE empno="#empno#"
+                </cfquery>      
+                <!---end fix deduction in employee details --->--->
+                
+                <cfquery name="getytd" datasource="#db#">
+                    SELECT itaxpcb,epfww,ded115,
+                    AW101, AW102, AW103, AW104, AW105, AW106, AW107, AW108, AW109, AW110, AW111, AW112, AW113, AW114, AW115, AW116, AW117 
+                    FROM pay_ytd WHERE empno="#empno#"
+                </cfquery>
+                
+                <cfset sumoverceil = 0>
+                <cfloop query="getawceil">
+                    <cfset ytdaw = evaluate("val(getytd.AW#(100 + getawceil.aw_cou)#)")>
+                    <cfset mtdaw = evaluate("val(getdeduc.AW#(100 + getawceil.aw_cou)#)")>
+                    <cfset sumaw = ytdaw + mtdaw>
+    
+                    <cfif sumaw gt getawceil.aw_ceil>
+                        <cfif ytdaw lt getawceil.aw_ceil>
+                            <cfif mtdaw gt val(getawceil.aw_ceil) - val(ytdaw)>
+                                <cfset sumoverceil += val(getawceil.aw_ceil) - val(ytdaw)>                            
+                            </cfif>
+                        </cfif>
+                    <cfelse>
+                        <cfset sumoverceil += val(mtdaw)>
+                    </cfif>            
+                </cfloop>
+					<!---Added by Nieo to handle multiple assignment--->
+					<cfset totalpcbgross = 0>
+					<cfloop query="getcurrentassign">
+						<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+						<cfquery name="gettotalpcbgross" datasource="#db#">
+						SELECT itaxpcb FROM #getcurrentassign.emppaymenttype#
+						WHERE empno = "#empno#"
+						</cfquery>
+          
+						<cfset totalpcbgross += val(gettotalpcbgross.itaxpcb)>
+						
+						
+						</cfif>
+					</cfloop>                    
+      
+					<cfset pcbgrosspay = grosspay+totalpcbgross>
+					<cfset weekpcbgross = grosspay>
+					
+      
+				<!---End Added by Nieo handle multiple assignment --->
+
+                <cfset pcbgrosspay = evaluate("#pcbgrosspay# - val(bonuspay)")>
+                <cfset weekpcbgross = evaluate("#weekpcbgross# - val(bonuspay)")>
+                
+                <cfloop query="awqry">
+                <cfset pcbgrosspay = evaluate("#pcbgrosspay# - val(getdeduc.AW#(100 + awqry.aw_cou)#)")>
+                <cfset weekpcbgross = evaluate("#weekpcbgross# - val(getdeduc.AW#(100 + awqry.aw_cou)#)")>
+              </cfloop>
+              
+              <cfloop query="dedqry">
+                <cfset pcbgrosspay = evaluate("#pcbgrosspay# - val(getdeduc.ded#(100 + dedqry.ded_cou)#)")>
+                <cfset weekpcbgross = evaluate("#weekpcbgross# - val(getdeduc.ded#(100 + dedqry.ded_cou)#)")>
+              </cfloop>
+	  
+	  <cfquery name="awqry" datasource="#db#">
+                SELECT shelf as aw_cou FROM #dts#.icshelf a 
+                LEFT JOIN awtable b on a.allowance = b.aw_cou 
+                WHERE b.aw_cou < 18 and aw_tax = 1 
+                ORDER BY shelf
+            </cfquery>
+			
+            <!--- Added by Nieo 20171227, add bik vola into itaxpcb--->
+            <cfquery name="getbik" datasource="#db#">
+                SELECT vola, totalbik FROM bik WHERE empno="#empno#" AND tmonth = '#get_now_month.mmonth#'
+            </cfquery>
+            <cfset pcbgrosspay = val(pcbgrosspay) + val(getbik.vola) + val(getbik.totalbik)>              
+            <cfset weekpcbgross = val(weekpcbgross) + val(getbik.vola) + val(getbik.totalbik)>  
+            <!---end--->
+                        
+          	<cfset pcbgrosspay = numberformat(pcbgrosspay-val(sumoverceil),'.__')>
+			<cfset weekpcbgross = numberformat(weekpcbgross-val(sumoverceil),'.__')>
+
+                              
+ 					<!--- enhance to variable type, 01/12/2015 by Max Tan --->
+                    <cfset pded += val(select_empdata.child_edu_m) * val(pcbfields.childstdy)>		<!--- 1000, if kid study after 18 --->
+                    <cfset pded += val(select_empdata.child_edu_f)  * val(pcbfields.childhedu)> 	<!--- 6000, if kid study diploma++ --->
+                    <cfset pded += val(select_empdata.child_disable) * val(pcbfields.cdisab)> 	<!--- 6000, if kid disable --->
+                    <cfset pded += val(select_empdata.child_edu_disable) * val(pcbfields.cdisabstdy)> <!---12000, if kid study + disable --->
+                    <cfset pded += val(select_empdata.num_child)  * val(pcbfields.child18)> 	<!---1000,kid below 18yrs old--->
+                    
+			<cfif select_empdata.mstatus eq "S"> 			<!--- single --->
+                    <cfset cate = "1">
+                    <cfset pded += val(pcbfields.cate1)> 	<!---9000>		--->
+  
+			<cfelseif select_empdata.mstatus eq "M">		<!--- married --->
+				<cfif select_empdata.sname neq "" and select_empdata.snric neq ""> 		<!--- spouse not working --->
+                    <cfset cate = "2">
+                    <cfset pded += val(pcbfields.cate2)>	<!---3000+9000> spouse not working deduction + personal deduction--->                    
+                <cfelseif select_empdata.sname eq "" or select_empdata.snric eq ""> 		<!--- spouse working--->
+                    <cfset cate = "3">
+                    <cfset pded += val(pcbfields.cate3)>	<!--- 9000>    --->
+                </cfif>
+
+			<cfelseif select_empdata.mstatus eq "O"> 		<!--- other,divorced, widow --->
+            		<cfset cate = "3">
+            		<cfset pded += val(pcbfields.cate3)>	<!--- 9000>    --->
+			</cfif>
+      		
+            <cfset capepf = val(pcbfields.epfcap)>
+            <cfset epfnow = epfw>
+                
+            <!--- tp3 amount, [27072016 by Max Tan] --->
+			<!--- Updated by Nieo 20170905 1427 --->
+			<cfquery name="gettp3" datasource="#db#">
+				SELECT c1_amount,c3_amount,c5_amount,d1a_amount,d1b_amount, 
+                <!---Updated By Nieo 20190402 1139, government tax relief updated for 2019--->
+                d8a_amount,d8b_amount,
+                <!---Updated By Nieo 20190402 1139, government tax relief updated for 2019--->
+                <cfloop index="a" from="1" to="15">
+                    <cfif a neq 15>
+                        d#a#_amount,
+                    <cfelse>
+                       d#a#_amount 
+                    </cfif>
+                </cfloop>
+                FROM tp3 WHERE empno ="#empno#"
+			</cfquery>
+            <!--- Updated by Nieo 20170905 1427 --->
+	
+            <cfif val(gettp3.c1_amount) gt 0>
+                <cfset pregrosspay = val(getytd.itaxpcb)+val(gettp3.c1_amount)>
+                <cfset preepfww = val(getytd.epfww)+val(gettp3.c3_amount)>
+                
+                <cfif val(getytd.epfww)+val(gettp3.c3_amount) gt capepf>
+                    <cfset preepfww = capepf>            
+                <cfelse>
+                    <cfset preepfww = val(getytd.epfww)+val(gettp3.c3_amount)>
+                </cfif>
+                
+                <cfset preded115 = val(getytd.ded115)+val(gettp3.c5_amount)>
+            <cfelse>
+                <cfset pregrosspay = val(getytd.itaxpcb)>
+                <cfset preepfww = val(getytd.epfww)>
+                
+                <cfif val(getytd.epfww) gt capepf>
+                    <cfset preepfww = capepf>            
+                <cfelse>
+                    <cfset preepfww = val(getytd.epfww)>
+                </cfif>
+                
+                <cfset preded115 = val(getytd.ded115)>
+            </cfif>
+            <!---end--->
+                    
+            <!--- Added by Nieo, tp3 deduction amount --->
+            <cfset otherdeduction = 0.00>
+            <cfloop index="a" from="1" to="15">
+                <cfif evaluate('gettp3.d#a#_amount') gt 0>
+                    <cfset otherdeduction += val(evaluate('gettp3.d#a#_amount'))>
+                </cfif>
+            </cfloop>
+            <cfif evaluate('gettp3.d1a_amount') gt 0>
+                <cfset otherdeduction += val(evaluate('gettp3.d1a_amount'))>
+            </cfif>
+            <cfif evaluate('gettp3.d1b_amount') gt 0>
+                <cfset otherdeduction += val(evaluate('gettp3.d1b_amount'))>
+            </cfif>
+            <!---Updated By Nieo 20190402 1148, government tax relief updated for 2019--->
+            <cfif evaluate('gettp3.d8a_amount') gt 0>
+                <cfset otherdeduction += val(evaluate('gettp3.d8a_amount'))>
+            </cfif>
+            <cfif evaluate('gettp3.d8b_amount') gt 0>
+                <cfset otherdeduction += val(evaluate('gettp3.d8b_amount'))>
+            </cfif>
+            <!---Updated By Nieo 20190402 1148, government tax relief updated for 2019--->
+            <cfset pded += val(otherdeduction)>
+            <!--- End ddded by Nieo, tp3 deduction amount --->
+            
+            <!---EPF of Multiple Assignments by Nieo--->
+			<cfloop query="getcurrentassign">
+				<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+					<cfquery name="getepfother" datasource="#db#">
+					SELECT epfww FROM #getcurrentassign.emppaymenttype#
+					WHERE empno = "#empno#"
+					</cfquery>
+				
+					<cfif getepfother.epfww neq ''>
+						<cfset epfnow += val(getepfother.epfww)>
+					</cfif>
+				</cfif>
+			</cfloop>				
+			<!---END EPF of Multiple Assignments--->
+            
+            
+            <!--- epf cap 6000 and average of remaing months --->
+            <cfset divby = 12 - val(get_now_month.mmonth)>
+            <cfif divby lte 0>
+				<cfset divby = 1>
+            </cfif>
+            <cfset avgepf = int((capepf-val(epfnow)-val(preepfww))/(divby)*100)/100>
+			<cfif avgepf gt epfnow>
+            	<cfset avgepf = epfnow>
+            </cfif>
+            <cfif avgepf lt 0>
+            	<cfset avgepf = 0>
+            </cfif>
+
+            <cfif val(preepfww) gte capepf>
+            	<cfset epfnow = 0>
+            <cfelseif val(preepfww) + val(epfnow) gte capepf>
+            	<cfset epfnow = val(capepf) - val(preepfww)>
+            </cfif>
+            <!--- calculate net formula p --->
+            <cfset net = ((val(pregrosspay)-val(preepfww))+(val(pcbgrosspay)-val(epfnow))+ 
+			(val(pcbgrosspay)-avgepf)*(12-val(get_now_month.mmonth))-pded)>
+              
+                <!--- Deductions/PCB Calculation Table (Refer Schedule 1 of PCB Document 2014) --->
+				<!--- START TABLE --->
+                <!--- enhance to variable table, 01/12/2015 by Max Tan--->
+                
+				<cfloop query="pcbfields">
+                	<cfif net gte pcbfields.pfrom and net lte pcbfields.pto>
+                    	<cfset M = pcbfields.mamount>
+                        <cfset R = pcbfields.ramount/100>
+                    	<cfloop from="1" to="3" index="j">
+                        	<cfif cate eq j>
+                            	<cfset B = evaluate("pcbfields.category#j#")>
+                                <cfbreak>
+                            </cfif>
+                        </cfloop>
+                    </cfif>
+                </cfloop>
+
+			<cfset currentpcb =  int((((net-m)*r+b-tzakat-val(preded115))
+				/(12-val(get_now_month.mmonth)+1)*100))/100>
+                
+            <!--- pcb rebate less than rm10 --->
+			<cfif currentpcb lt 10>
+				<cfset currentpcb = 0>
+            </cfif>
+            
+            <cfset temppcb = currentpcb>
+            
+            <!---   check bonus --->   
+            <cfset pbonus = 0>
+            <cfif val(checkbonus.bonus) gt 0 >
+            	<cfset pbonus = val(checkbonus.bonus)>
+                <cfset pbonusepf = val(checkbonus.b_epfww)>
+            
+				<!--- epf cap 6000 and average of remaing months --->
+                <cfset bavgepf = int((capepf-val(pbonusepf)-val(epfnow)-val(preepfww))/(divby)*100)/100>
+    
+                <cfif bavgepf gt val(epfnow)>
+                    <cfset bavgepf = val(epfnow)>
+                </cfif>
+                <cfif bavgepf lt 0>
+                    <cfset bavgepf = 0>
+                </cfif>
+                
+                <cfif val(preepfww) + val(epfnow) gte capepf>
+                    <cfset pbonusepf = 0>
+                <cfelseif val(preepfww) + val(epfnow) + val(pbonusepf) gte capepf>
+                    <cfset pbonusepf = capepf - val(preepfww) - val(epfnow)>
+                </cfif>
+                 
+                <cfset NETb = val(pregrosspay)-val(preepfww)+val(pcbgrosspay)-val(epfnow)+ 
+                ((val(pcbgrosspay)-bavgepf)*(12-val(get_now_month.mmonth)))+val(pbonus)-val(pbonusepf)-pded>
+            
+				<!--- START TABLE --->
+                <!--- enhance to variable table, 01/12/2015 by Max Tan--->
+				<cfloop query="pcbfields">
+                	<cfif NETb gte pcbfields.pfrom and NETb lte pcbfields.pto>
+                    	<cfset Mb = pcbfields.mamount>
+                        <cfset Rb = pcbfields.ramount/100>
+                    	<cfloop from="1" to="3" index="j">
+                        	<cfif cate eq j>
+                            	<cfset Bb = evaluate("pcbfields.category#j#")>
+                                <cfbreak>
+                            </cfif>
+                        </cfloop>
+                    </cfif>
+                </cfloop>
+                
+
+				<cfset pcbbonus =  int(((NETb-Mb)*Rb+Bb)*100)/100>
+    
+                <cfset currentpcb12 = numberformat(val(preded115) + val(currentpcb)*(val(12-val(get_now_month.mmonth))+1),'.__')>
+                    
+<!---      <cfoutput>
+#currentpcb#, #net#, #pcbbonus#, #currentpcb12#, #int((pcbbonus - currentpcb12 + currentpcb)*100)/100#, #bavgepf#
+<cfabort>   
+</cfoutput> --->      
+            	<cfset addmtd = val(pcbbonus) - val(currentpcb12)>
+                    
+                <cfif addmtd lt 10>
+                    <cfset addmtd = 0>
+                </cfif>
+                    
+            	<cfset currentpcb = ((val(addmtd) + currentpcb)*100)/100>
+            </cfif>            
+            
+            <!--- round final result --->
+                        
+			<cfif right("#currentpcb#",1) eq 5>
+            <cfelseif right("#currentpcb#",1) eq 0>
+            <cfelse>
+                <cfset currentpcb = ceiling(currentpcb*20)/20>
+            </cfif>
+                    
+            <!--- pcb rebate less than rm10 --->
+			<cfif currentpcb lt 10>
+				<cfset currentpcb = 0>
+            </cfif>
+            
+            <!---   deduct bonus pcb into paytran   --->
+            <cfif val(checkbonus.bonus) gt 0>
+                <cfset currentpcb = val(currentpcb) - val(bonus_qry.ded115)>
+            </cfif>
+			
+			
+			<!---<cfquery name="gettaxpaid" datasource="#dts#">
+			SELECT sum(funddd) as funddd FROM icgiro
+			WHERE uuid IN (SELECT uuid FROM argiro WHERE appstatus="approved")
+			AND batchno IN (SELECT batches FROM assignmentslip WHERE payrollperiod="#get_now_month.mmonth#" )
+			AND empno = "#empno#"
+			AND invoiceno< "#url.invoiceno#"
+			GROUP BY empno
+			</cfquery>--->
+            <cfset prepcbdeducted  = 0>    
+            <cfloop query="getcurrentassign">
+				<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+					<cfquery name="getpcbother" datasource="#db#">
+					SELECT ded114,ded115 FROM #getcurrentassign.emppaymenttype#
+					WHERE empno = "#empno#"
+					</cfquery>
+				
+					<cfif getpcbother.recordcount neq 0>
+						<cfset currentpcb -= val(getpcbother.ded115)>
+                        <cfset prepcbdeducted += val(getpcbother.ded115)>
+					</cfif>
+				</cfif>
+			</cfloop>
+			
+			<!---<cfif gettaxpaid.recordcount neq 0>
+				<cfset currentpcb -= gettaxpaid.funddd>
+			</cfif>--->
+   
+<!--- pcb result, enter employee no to compare PCB with ecalculator: http://calcpcb.hasil.gov.my/index.php?&lang=may, 01/12/2015 by Max Tan--->  
+<cfif  left(GetAuthUser(),5) eq 'ultra' or left(Huserid,6) eq 'mptest'>
+   <!---<cfif empno eq '001'> --->
+    <cfoutput>
+    currentpcb = #currentpcb#  <br>
+    pcbgrosspay = #pcbgrosspay# <br>
+    grosspay = #grosspay# <br>
+    <br>
+    
+    P = (#pregrosspay# - #preepfww#)  + (#pcbgrosspay# - #epfnow#) + (#pcbgrosspay# - #avgepf#) * #(12-val(get_now_month.mmonth))# - #pded#<br>
+    PCB = #net# - #m# * #r# +#B# - #tzakat# - #preded115# / #(12-val(get_now_month.mmonth)+1)#<br>
+    currentpcb = #temppcb#<br>
+    cate=#cate# <br><br>
+    <!---<cfdump var="#getytd#"><br>--->
+    m:#m#<br>
+    r:#r#<br>
+    b:#b#<br>
+    
+	
+    <cfif isdefined("bavgepf")>
+    Bonus p = #pregrosspay# - #preepfww#  + #pcbgrosspay# - #epfnow# + (#pcbgrosspay# - #bavgepf#)* #(12-val(get_now_month.mmonth))# - #pbonus# -#pbonusepf#  - #pded# <br>
+    
+    ((NETb-Mb)*Rb+Bb-tzakat-val(getytd.ded115))/(12-val(get_now_month.mmonth)+1 <br><br>
+    net = ((val(pregrosspay)-val(preepfww))+(val(pcbgrosspay)-val(epfnow))+ 
+                (val(pcbgrosspay)-avgepf)*(12-val(get_now_month.mmonth))-pded)<br>
+    PCB bonus = #NETb#-#Mb#*#Rb#+#Bb#<br>
+    
+    SUM PCB =(#pcbbonus# - #currentpcb12# + #temppcb#)*100)/100
+    
+       </cfif>                  
+    <!---<cfabort>--->
+    </cfoutput> 
+<!--- </cfif> --->
+</cfif>
+
+            </cfif>
+            
+            <cfset expatded = 0>
+            <!---   enhance for manpower expatriate tax [18/3/16, by Max Tan]  --->
+            <cfif select_empdata.expattbl neq "" and select_empdata.expatdate neq "" and select_empdata.itaxcat neq "X">
+                <cfset expatdate1 = createdate(dateformat(select_empdata.expatdate,'yyyy'),dateformat(select_empdata.expatdate,'mm'),1)>
+				<cfset dcomm =  dateformat(createdate(year(select_empdata.dcomm),month(select_empdata.dcomm),day(select_empdata.dcomm)),'YYYY-MM-DD')>
+                <cfif datediff('m',expatdate1,sys_date) lte 0>
+                <cfset currentpcb = 0>
+                <cfset expatgross = val(pcbgrosspay) + val(pbonus)>
+                           
+                
+                <cfif select_empdata.expattbl eq 3>
+                    <cfset expatperc = 0.10>
+                <cfelseif select_empdata.expattbl eq 2>
+                    <cfset expatperc = 0.15>
+                <cfelseif select_empdata.expattbl eq 4>
+                    <cfset expatperc = 0.3>
+                <cfelse>
+                    <cfset expatperc = 0.28>
+                </cfif>
+				
+				
+                <!---<cfif isdate(dcomm) and get_now_month.mmonth eq dateformat(dcomm,'m') and get_now_month.myear eq dateformat(dcomm,'y')>
+                    <cfset expatdays = datediff('d',dcomm,sys_lastday)+1>
+                    <cfset expatded = numberformat(expatgross*expatperc,'.__')>
+					
+                <cfelseif isdate(select_empdata.expatdate) and get_now_month.mmonth eq dateformat(select_empdata.expatdate,'m')
+				and get_now_month.myear eq dateformat(select_empdata.expatdate,'y')>
+                    <cfset expatdays = datediff('d',sys_date,select_empdata.expatdate)+1>
+                    <cfset expatded = numberformat(expatgross*expatperc,'.__')>
+                    <cfif isdate(dresign) and get_now_month.mmonth eq dateformat(dresign,'m')>
+                        <cfset expatdays = datediff('d',sys_date,dresign)+1>
+                        <cfset expatded = numberformat(expatgross*expatperc,'.__')>
+                    </cfif>
+                <cfelse>--->
+                    <cfset expatded = numberformat(expatgross*expatperc,'.__')>
+                <cfelse>
+                	<cfset expatded=0.00>
+				</cfif>
+                <!---</cfif>--->
+                <cfif right("#expatded#",1) eq 5>
+                <cfelseif right("#expatded#",1) eq 0>
+                <cfelse>
+                    <cfset expatded = ceiling(expatded*20)/20>
+                </cfif>
+            </cfif>
+            <!---   end --->  
+			            
+            <!---   end --->
+
+            <!--- update to deduction 15 for pcb records ---> 
+            
+            <!---<cfif select_empdata.expattbl neq "" and select_empdata.expatdate neq "" and select_empdata.expatdate neq ''>
+				<cfif gettaxpaid.recordcount neq 0>
+					<cfset expatded -= gettaxpaid.funddd>
+				</cfif>
+			</cfif>
+			
+			<cfif expatded lt 0>
+				<cfset expatded =0.00>
+			</cfif>--->
+            
+            <cfoutput>	
+            <br><br>
+            <cfif select_empdata.expattbl neq "" and select_empdata.expatdate neq "">
+                <cfif datediff('m',expatdate1,sys_date) lte 0>
+                Taxable Gross = #numberformat(expatgross,'_.__')#<br>
+                </cfif>
+            <cfelse>
+                Taxable Gross = #numberformat(pcbgrosspay,'_.__')#<br>
+            </cfif>
+            Bonus Taxable Gross: #numberformat(pbonus,'_.__')#<br>
+            Previous Assignmentslip Deducted Tax Amount (Current Month): #numberformat(prepcbdeducted,'_.__')#<br> 
+            Current Assignmentslip Resident Tax Amount = #numberformat(currentpcb,'_.__')#<br> 
+            Current Assignmentslip Non - Resident Tax Amount = #numberformat(expatded,'_.__')#            
+            <br>
+            </cfoutput>
+            
+            <!---<cfquery name="update_pcb_to_paytran" datasource="#db#">
+            UPDATE #url.paydate# 
+            SET 
+            DED115 = #currentpcb#, 
+            itaxpcb = #pcbgrosspay#,
+            DED114 =  #numberformat(numberformat(expatded,'._'),'.__')# 
+            WHERE empno = "#empno#"
+            </cfquery>--->
+            
+			<cfloop query="getcurrentassign">
+				<cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+					<cfquery name="getpcbother" datasource="#db#">
+					SELECT ded114,ded115 FROM #getcurrentassign.emppaymenttype#
+					WHERE empno = "#empno#"
+					</cfquery>
+				
+					<cfif getpcbother.recordcount neq 0>
+						<!---<cfset currentpcb -= val(getpcbother.ded115)>--->
+                        <cfset expatded -= val(getpcbother.ded115)>
+					</cfif>
+				</cfif>
+			</cfloop>	
+			
+			<!---<cfif select_empdata.expattbl neq "" and select_empdata.expatdate neq "">
+                <cfif datediff('m',expatdate1,sys_date) lte 0>
+                    <cfif gettaxpaid.recordcount neq 0>
+                        <cfset expatded -= gettaxpaid.funddd>
+                    </cfif>
+                </cfif>
+			</cfif>--->
+			
+			<cfset pcbgrosspay = evaluate("#pcbgrosspay# + val(bonuspay)")>
+            		<cfset weekpcbgross = evaluate("#weekpcbgross# + val(bonuspay)")>
+			
+			<cfquery name="update_pcb_to_payweek" datasource="#db#">
+			UPDATE #weekpay# 
+			SET DED115 = <cfif select_empdata.expattbl neq "" and select_empdata.expatdate neq "">
+                <cfif datediff('m',expatdate1,sys_date) lte 0>'#numberformat(expatded,'.__')#'<cfelse>
+				'#currentpcb#'</cfif><cfelse>
+				'#currentpcb#'</cfif>, 
+			itaxpcb = #weekpcbgross# 
+			WHERE empno = "#empno#"
+			</cfquery>
+			                
+                <cfset tded = #deduc# + #currentpcb# + expatded>
+                    
+            <cfelse>
+                <cfquery name="update_pcb_to_payweek" datasource="#db#">
+                UPDATE #weekpay# 
+                SET DED115 = 0.00, 
+                itaxpcb = 0.00
+                WHERE empno = "#empno#"
+                </cfquery>
+            </cfif>
+    
+            <!---End PCB Calculation--->
+                            
+            <!---Netpay Calculation--->  
+                
+            <cfset netpay = #val(grosspay)# - #val(EPFW)# - #val(tded)# - #val(socso_yee)# - #val(eis_yee)# + val(url.dedpay)>
+            <!---End Netpay Calculation---> 
+            
+            <!---Added by Nieo 20170927 1700, CP38, Tax Clearance and PTPTN deduction to netpay--->  
+            <cfquery name="getdbded" datasource="#paydts#">
+            SELECT dbded109,dbded113,dbded114 FROM pmast WHERE empno = "#empno#"
+            </cfquery>
+                
+            <cfset currentded109 = 0>
+            <cfset currentded113 = 0>
+            <cfset currentded114 = 0>
+                
+            <cfif val(netpay) neq 0>
+                
+                <cfloop query="getcurrentassign">
+                    <cfif right('#getcurrentassign.emppaymenttype#',1) lt right(weekpay,1)>
+                        <cfquery name="checkded" datasource="#db#">
+                            SELECT ded109,ded113,ded114 
+                            FROM #getcurrentassign.emppaymenttype#
+                            WHERE empno = "#empno#"
+                            AND payyes="Y"
+                        </cfquery>
+
+                        <cfif checkded.recordcount neq 0>
+                            <cfif checkded.ded109 neq 0>
+                                <cfset currentded109 += val(checkded.ded109)>
+                            </cfif>
+                            <cfif checkded.ded113 neq 0>
+                                <cfset currentded113 += val(checkded.ded113)>
+                            </cfif>
+                            <cfif checkded.ded114 neq 0>
+                                <cfset currentded114 += val(checkded.ded114)>
+                            </cfif>
+                        </cfif>
+                    </cfif>
+                </cfloop>
+                
+                <cfset currentded109 = val(getdbded.dbded109)-val(currentded109)>
+                <cfset currentded113 = val(getdbded.dbded113)-val(currentded113)>
+                <cfset currentded114 = val(getdbded.dbded114)-val(currentded114)>
+                    
+                <cfif currentded109 lt 0>
+                    <cfset currentded109 = 0>
+                </cfif>
+                    
+                <cfif currentded113 lt 0>
+                    <cfset currentded113 = 0>
+                </cfif>
+                    
+                <cfif currentded114 lt 0>
+                    <cfset currentded114 = 0>
+                </cfif>
+                    
+                <!---Moved to here by Nieo 20181105 1529--->
+                <cfset netpay = val(netpay) - val(currentded109) - val(currentded113) - val(currentded114)>      
+                <!---Moved to here by Nieo 20181105 1529--->
+            </cfif>
+            
+            <!---End Added by Nieo 20170927 1700, CP38, Tax Clearance and PTPTN deduction to netpay--->
+
+			</cfif>
+            <cfif db eq "mcjim_p">
+            	<cfset netpay =roundno(netpay,'#get_now_month.sud_rnd#','#get_now_month.sud_psu#')>
+			</cfif>
+	       	<!--- calculate epf a --->
+	        <cfset epf_a = val(payin_2nd)>
+	        <cfset epf_pay = #val(epfw)# + #val(epfy)# >
+			
+			<!---Added by Nieo 20180504 1505, to remove overpayment amount--->
+            <cfset overpayment = 0.00>
+
+            <cfloop index="a" from="1" to="18">
+              <cfif trim(evaluate('url.allowance#a#')) eq 1004 >
+                 <cfset overpayment += val(trim(evaluate('url.aweetax#a#')))>
+              </cfif>
+            </cfloop>
+
+            <cfloop index="a" from="1" to="6">
+              <cfif trim(evaluate('url.fixawcode#a#')) eq 1004 >
+                <cfset overpayment += val(trim(evaluate('url.fixawee#a#')))>
+              </cfif>
+            </cfloop>
+                
+            <cfif overpayment lt 0>
+                <cfset grosspay = val(grosspay) - val(overpayment)>
+            </cfif>
+            <!---Added by Nieo 20180504 1505, to remove overpayment amount--->
+	       
+            <!---Added by Nieo 20180516 1430, to remove tax refund amount in gross--->
+            <cfset taxrefund = 0.00>
+
+            <cfloop index="a" from="1" to="18">
+                <cfif trim(evaluate('url.allowance#a#')) eq 1003 or trim(evaluate('url.allowance#a#')) eq 1005 or trim(evaluate('url.allowance#a#')) eq 1006>
+                    <cfset taxrefund += val(trim(evaluate('url.aweetax#a#')))>
+                </cfif>
+            </cfloop>
+
+            <cfloop index="a" from="1" to="6">
+                <cfif trim(evaluate('url.fixawcode#a#')) eq 1003 or trim(evaluate('url.fixawcode#a#')) eq 1005 or trim(evaluate('url.fixawcode#a#')) eq 1006>
+                    <cfset taxrefund += val(trim(evaluate('url.fixawee#a#')))>
+                </cfif>
+            </cfloop>
+                
+            <cfif taxrefund gt 0>
+                <cfset grosspay = val(grosspay) - val(taxrefund)>
+                <cfset netpay = val(netpay) - val(taxrefund)>
+            </cfif>
+            <!---Added by Nieo 20180516 1430, to remove tax refund amount in gross--->             
+                
+	        <!--- Process All Query --->
+	        <cfquery name="updatedw" datasource="#db#">
+		        UPDATE #weekpay# SET DW = #val(dW)# , 
+				BASICPAY = #basicpay#, 
+				NPLPAY = #totalNPL#, 
+				OT1 = #OT1#, 
+				OT2 = #OT2# , OT3 = #OT3# , OT4 = #OT4# , OT5 = #OT5# , OT6 = #OT6# , 
+				OTPay = #OTtotal# , TAW = #taw# , grosspay=#grosspay#, EPFWW=#EPFW#, 
+				EPFCC=#EPFY#, 
+				epf_pay = #epf_pay#, TDED=#tded# , 
+				TDEDU = #numberformat(url.dedpay,'.__')#, NETPAY = #netpay#, 
+				epf_pay_a = #epf_a# , cpf_amt="#payin_2nd#"
+                <cfif isdefined('additionalwages')>
+                ,additionalwages="#val(additionalwages)#"
+				</cfif>
+                <cfif isdefined('hourrate')>
+                ,total_late_h="#val(total_late_h)#"
+                ,total_earlyD_h="#val(total_earlyD_h)#"
+                ,total_noP_h="#val(total_noP_h)#"
+                ,total_work_h="#val(total_work_h)#"
+                ,hourrate="#val(hourrate)#"
+				</cfif>
+                , ded109 = #currentded109#
+                , ded113 = #currentded113#
+                , ded114 = #currentded114#
+                ,payyes = "Y"
+                ,paydate = "#url.paydate#"
+                ,nsded = "#numberformat(url.nsded,'.__')#"
+                ,otherded = "#numberformat(numberformat(url.dedpay,'.__')-numberformat(url.nsded,'.__'),'.__')#"
+				WHERE empno = "#empno#"
+	        </cfquery>
+			
+            <!---Clear mistake paydate, Added Nieo 20170816--->
+            <!---Updated Nieo 20171010 1532--->
+            <cfset grosscheckpaytra1 = 0>
+            <cfset grosscheckpaytran = 0>
+            <cfloop query="getcurrentassign">
+                <cfquery name="checkpayweek" datasource="#db#">
+                    SELECT grosspay,paydate FROM #getcurrentassign.emppaymenttype#
+                    WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+                    AND payyes="Y"
+                </cfquery>
+
+                <cfif checkpayweek.grosspay neq '' and isNumeric(checkpayweek.grosspay)>
+                    <cfif checkpayweek.paydate eq "paytran">
+                        <cfset grosscheckpaytran += val(checkpayweek.grosspay)>
+                    <cfelse>
+                        <cfset grosscheckpaytra1 += val(checkpayweek.grosspay)>
+                    </cfif>
+
+                </cfif>                    
+            </cfloop>
+                        
+            <cfif url.paydate eq "paytran">
+                <cfset grosscheckpaytran += val(grosspay)>
+            <cfelse>
+                <cfset grosscheckpaytra1 += val(grosspay)>
+            </cfif>
+            
+            <cfif grosscheckpaytran eq 0>
+                <cfquery name="clearpaydate" datasource="#db#">
+                    UPDATE paytran SET DW = 0.00 , 
+                    BASICPAY = 0.00, 
+                    NPLPAY = 0.00, 
+                    itaxpcb = 0.00, 
+                    ded115 = 0.00, 
+                    ded114 = 0.00, 
+                    OT1 = 0.00, 
+                    OT2 = 0.00 , OT3 = 0.00 , OT4 = 0.00 , OT5 = 0.00 , OT6 = 0.00 , 
+                    OTPay = 0.00 , TAW = 0.00 , grosspay=0.00, EPFWW=0.00, 
+                    EPFCC=0.00, socsoww=0.00, 
+                    socsocc=0.00, eisww=0.00, 
+                    eiscc=0.00,
+                    epf_pay = 0.00, TDED=0.00 , 
+                    TDEDU = 0.00, NETPAY = 0.00, 
+                    epf_pay_a = 0.00 , cpf_amt=0.00
+                    <cfif isdefined('additionalwages')>
+                    ,additionalwages=0.00
+                    </cfif>
+                    <cfif isdefined('hourrate')>
+                    ,total_late_h=0.00
+                    ,total_earlyD_h=0.00
+                    ,total_noP_h=0.00
+                    ,total_work_h=0.00
+                    ,hourrate=0.00
+                    </cfif>
+                    ,payyes = "N"
+                    WHERE empno = "#empno#"
+                </cfquery>    
+            <cfelseif grosscheckpaytra1 eq 0>
+                <cfquery name="clearpaydate" datasource="#db#">
+                    UPDATE paytra1 SET DW = 0.00 , 
+                    BASICPAY = 0.00, 
+                    NPLPAY = 0.00, 
+                    itaxpcb = 0.00, 
+                    ded115 = 0.00, 
+                    ded114 = 0.00, 
+                    OT1 = 0.00, 
+                    OT2 = 0.00 , OT3 = 0.00 , OT4 = 0.00 , OT5 = 0.00 , OT6 = 0.00 , 
+                    OTPay = 0.00 , TAW = 0.00 , grosspay=0.00, EPFWW=0.00, 
+                    EPFCC=0.00, socsoww=0.00, 
+                    socsocc=0.00, eisww=0.00, 
+                    eiscc=0.00,
+                    epf_pay = 0.00, TDED=0.00 , 
+                    TDEDU = 0.00, NETPAY = 0.00, 
+                    epf_pay_a = 0.00 , cpf_amt=0.00
+                    <cfif isdefined('additionalwages')>
+                    ,additionalwages=0.00
+                    </cfif>
+                    <cfif isdefined('hourrate')>
+                    ,total_late_h=0.00
+                    ,total_earlyD_h=0.00
+                    ,total_noP_h=0.00
+                    ,total_work_h=0.00
+                    ,hourrate=0.00
+                    </cfif>
+                    ,payyes = "N"
+                    WHERE empno = "#empno#"
+                </cfquery>
+            </cfif>
+            <!---Updated Nieo 20171010 1532--->
+            <!---End clear mistake paydate, Added Nieo 20170816--->
+			
+			<!---added for multiple assignments by Nieo--->
+			<!---added for multiple assignments by Nieo, updated 20171010 1531--->
+			<cfloop list="paytra1,paytran" index="a">
+                <cfset tDW =0>
+                <cfset tBASICPAY =0>
+                <cfset ttotalNPL=0>
+                <cfset tOT1=0> 
+                <cfset tOT2=0>
+                <cfset tOT3=0>
+                <cfset tOT4=0>
+                <cfset tOT5=0>
+                <cfset tOT6=0>
+                <cfset tOTtotal=0>
+                <cfset tTAW=0>
+                <cfset tgrosspay=0>
+                <cfset tEPFEE=0>
+                <cfset tEPFER=0>
+                <cfset tSOCSOEE=0>
+                <cfset tSOCSOER=0>
+                <cfset tEISEE=0>
+                <cfset tEISER=0>
+                <cfset tepf_pay =0>
+                <cfset tTDED =0>
+                <cfset tTDEDU=0>
+                <cfset tNETPAY=0>
+                <cfset tepf_pay_a=0> 
+                <cfset tcpf_amt=0>
+                <cfset tadditionalwages=0>
+                <cfset ttotal_late_h=0>
+                <cfset ttotal_earlyD_h=0>
+                <cfset ttotal_noP_h=0>
+                <cfset ttotal_work_h=0>
+                <cfset thourrate=0>
+                <cfset tpayyes ='Y'>
+                <cfset tpaydate =''>
+                <cfset tnsded =0>
+                <cfset totherded=0>
+                <cfset titaxpcb =0>
+                <cfset tded115=0>
+                <cfset tded114 =0>
+                <cfset tded113 =0>
+                <cfset tded109 =0>
+
+                <cfloop query="getcurrentassign">
+                <cfquery name="selectdw" datasource="#db#">
+                    SELECT DW ,
+                    BASICPAY , 
+                    NPLPAY,
+                    itaxpcb,
+                    ded115,
+                    ded114, 
+                    ded113,
+                    ded109,
+                    OT1 , 
+                    OT2  , OT3  , OT4 , OT5 , OT6  , 
+                    OTPay  , TAW  , grosspay, EPFWW, 
+                    EPFCC, 
+                    SOCSOWW, SOCSOCC,
+                    EISWW, EISCC,
+                    epf_pay , TDED , 
+                    TDEDU , NETPAY, 
+                    epf_pay_a , cpf_amt
+                    ,additionalwages
+                    ,total_late_h
+                    ,total_earlyD_h
+                    ,total_noP_h
+                    ,total_work_h
+                    ,hourrate
+                    ,payyes 
+                    ,paydate 
+                    ,nsded 
+                    ,otherded FROM  #getcurrentassign.emppaymenttype#
+                    WHERE empno = "#empno#"
+                    and paydate = "#a#"
+                    and payyes = "Y"
+                </cfquery>
+
+                <cfif selectdw.DW neq ''>
+                <cfset tDW +=val(selectdw.DW)>
+                </cfif>
+                <cfif selectdw.BASICPAY neq ''>
+                <cfset tBASICPAY +=val(selectdw.BASICPAY)>
+                </cfif>
+                <cfif selectdw.NPLPAY neq ''>
+                <cfset ttotalNPL+=val(selectdw.NPLPAY)>
+                </cfif>
+                <cfif selectdw.itaxpcb neq ''>
+                <cfset titaxpcb+=val(selectdw.itaxpcb)>
+                </cfif>
+                <cfif selectdw.ded115 neq ''>
+                <cfset tded115+=val(selectdw.ded115)>
+                </cfif>
+                <cfif selectdw.ded114 neq ''>
+                <cfset tded114+=val(selectdw.ded114)>
+                </cfif>
+                <cfif selectdw.ded113 neq ''>
+                <cfset tded113+=val(selectdw.ded113)>
+                </cfif>
+                <cfif selectdw.ded109 neq ''>
+                <cfset tded109+=val(selectdw.ded109)>
+                </cfif>
+                <cfif selectdw.OT1 neq ''>
+                <cfset tOT1+=val(selectdw.OT1)>
+                </cfif>
+                <cfif selectdw.OT2 neq ''>
+                <cfset tOT2+=val(selectdw.OT2)>
+                </cfif>
+                <cfif selectdw.OT3 neq ''>
+                <cfset tOT3+=val(selectdw.OT3)>
+                </cfif>
+                <cfif selectdw.OT4 neq ''>
+                <cfset tOT4+=val(selectdw.OT4)>
+                </cfif>
+                <cfif selectdw.OT5 neq ''>
+                <cfset tOT5+=val(selectdw.OT5)>
+                </cfif>
+                <cfif selectdw.OT6 neq ''>
+                <cfset tOT6+=val(selectdw.OT6)>
+                </cfif>
+                <cfif selectdw.OTPay neq ''>
+                <cfset tOTtotal+=val(selectdw.OTPay)>
+                </cfif>
+                <cfif selectdw.TAW neq ''>
+                <cfset tTAW+=val(selectdw.TAW)>
+                </cfif>
+                <cfif selectdw.grosspay neq ''>
+                <cfset tgrosspay+=val(selectdw.grosspay)>
+                </cfif>
+                <cfif selectdw.EPFWW neq ''>
+                <cfset tEPFEE+=val(selectdw.EPFWW)>
+                </cfif>
+                <cfif selectdw.EPFCC neq ''>
+                <cfset tEPFER+=val(selectdw.EPFCC)>
+                </cfif>
+                <cfif selectdw.SOCSOWW neq ''>
+                    <cfset tSOCSOEE+=val(selectdw.SOCSOWW)>
+                </cfif>
+                <cfif selectdw.SOCSOCC neq ''>
+                    <cfset tSOCSOER+=val(selectdw.SOCSOCC)>
+                </cfif>
+                <cfif selectdw.EISWW neq ''>
+                    <cfset tEISEE+=val(selectdw.EISWW)>
+                </cfif>
+                <cfif selectdw.EISCC neq ''>
+                    <cfset tEISER+=val(selectdw.EISCC)>
+                </cfif>
+                <cfif selectdw.epf_pay neq ''>
+                <cfset tepf_pay+=val(selectdw.epf_pay)>
+                </cfif>
+                <cfif selectdw.TDED neq ''>
+                <cfset tTDED +=val(selectdw.TDED)>
+                </cfif>
+                <cfif selectdw.TDEDU neq ''>
+                <cfset tTDEDU+=selectdw.TDEDU>
+                </cfif>
+                <cfif selectdw.NETPAY neq ''>
+                <cfset tNETPAY+=val(selectdw.NETPAY)>
+                </cfif>
+                <cfif selectdw.epf_pay_a neq ''>
+                <cfset tepf_pay_a+=val(selectdw.epf_pay_a)>
+                </cfif> 
+                <cfif selectdw.cpf_amt neq ''>
+                <cfset tcpf_amt+=val(selectdw.cpf_amt)>
+                </cfif>
+                <cfif isdefined('additionalwages')>
+                    <cfif selectdw.additionalwages neq ''>
+                        <cfset tadditionalwages+=val(selectdw.additionalwages)>
+                    </cfif>
+                </cfif>
+                <cfif isdefined('hourrate')>
+                    <cfif selectdw.total_late_h neq ''>
+                        <cfset ttotal_late_h+=val(selectdw.total_late_h)>
+                    </cfif>
+                    <cfif selectdw.total_earlyD_h neq ''>
+                        <cfset ttotal_earlyD_h+=val(selectdw.total_earlyD_h)>
+                    </cfif>
+                    <cfif selectdw.total_noP_h neq ''>
+                        <cfset ttotal_noP_h+=val(selectdw.total_noP_h)>
+                    </cfif>
+                    <cfif selectdw.total_work_h neq ''>
+                        <cfset ttotal_work_h+=val(selectdw.total_work_h)>
+                    </cfif>
+                    <cfif selectdw.hourrate neq ''>
+                    <cfset thourrate+=val(selectdw.hourrate)>
+                    </cfif>
+                </cfif>
+                <cfif selectdw.nsded neq ''>
+                <cfset tnsded +=val(selectdw.nsded)>
+                </cfif>
+                <cfif selectdw.otherded neq ''>
+                <cfset totherded+=val(selectdw.otherded)>
+                </cfif>
+                </cfloop>
+
+                <cfquery name="checkassign" datasource="#dts#">
+                SELECT refno,emppaymenttype,custtotalgross FROM assignmentslip
+                WHERE empno="#empno#"
+                AND refno ="#url.invoiceno#"
+                </cfquery>
+
+                <cfif checkassign.recordcount eq 0>
+                <cfquery name="selectdw" datasource="#db#">
+                    SELECT DW ,
+                    BASICPAY , 
+                    NPLPAY,
+                    itaxpcb,
+                    ded115,
+                    ded114, 
+                    ded113,
+                    ded109,
+                    OT1 , 
+                    OT2  , OT3  , OT4 , OT5 , OT6  , 
+                    OTPay  , TAW  , grosspay, EPFWW, 
+                    EPFCC, 
+                    SOCSOWW, SOCSOCC,
+                    EISWW, EISCC,
+                    epf_pay , TDED , 
+                    TDEDU , NETPAY, 
+                    epf_pay_a , cpf_amt
+                    ,additionalwages
+                    ,total_late_h
+                    ,total_earlyD_h
+                    ,total_noP_h
+                    ,total_work_h
+                    ,hourrate
+                    ,payyes 
+                    ,paydate 
+                    ,nsded 
+                    ,otherded FROM  #weekpay#
+                    WHERE empno = "#empno#"
+                    and paydate = "#a#"
+                    and payyes = "Y"
+                </cfquery>
+
+                <cfif selectdw.DW neq ''>
+                <cfset tDW +=val(selectdw.DW)>
+                </cfif>
+                <cfif selectdw.BASICPAY neq ''>
+                <cfset tBASICPAY +=val(selectdw.BASICPAY)>
+                </cfif>
+                <cfif selectdw.NPLPAY neq ''>
+                <cfset ttotalNPL+=val(selectdw.NPLPAY)>
+                </cfif>
+                <cfif selectdw.itaxpcb neq ''>
+                <cfset titaxpcb+=val(selectdw.itaxpcb)>
+                </cfif>
+                <cfif selectdw.ded115 neq ''>
+                <cfset tded115+=val(selectdw.ded115)>
+                </cfif>
+                <cfif selectdw.ded114 neq ''>
+                <cfset tded114+=val(selectdw.ded114)>
+                </cfif>
+                <cfif selectdw.ded113 neq ''>
+                <cfset tded113+=val(selectdw.ded113)>
+                </cfif>
+                <cfif selectdw.ded109 neq ''>
+                <cfset tded109+=val(selectdw.ded109)>
+                </cfif>
+                <cfif selectdw.OT1 neq ''>
+                <cfset tOT1+=val(selectdw.OT1)>
+                </cfif>
+                <cfif selectdw.OT2 neq ''>
+                <cfset tOT2+=val(selectdw.OT2)>
+                </cfif>
+                <cfif selectdw.OT3 neq ''>
+                <cfset tOT3+=val(selectdw.OT3)>
+                </cfif>
+                <cfif selectdw.OT4 neq ''>
+                <cfset tOT4+=val(selectdw.OT4)>
+                </cfif>
+                <cfif selectdw.OT5 neq ''>
+                <cfset tOT5+=val(selectdw.OT5)>
+                </cfif>
+                <cfif selectdw.OT6 neq ''>
+                <cfset tOT6+=val(selectdw.OT6)>
+                </cfif>
+                <cfif selectdw.OTPay neq ''>
+                <cfset tOTtotal+=val(selectdw.OTPay)>
+                </cfif>
+                <cfif selectdw.TAW neq ''>
+                <cfset tTAW+=val(selectdw.TAW)>
+                </cfif>
+                <cfif selectdw.grosspay neq ''>
+                <cfset tgrosspay+=val(selectdw.grosspay)>
+                </cfif>
+                <cfif selectdw.EPFWW neq ''>
+                <cfset tEPFEE+=val(selectdw.EPFWW)>
+                </cfif>
+                <cfif selectdw.EPFCC neq ''>
+                <cfset tEPFER+=val(selectdw.EPFCC)>
+                </cfif>
+                <cfif selectdw.SOCSOWW neq ''>
+                    <cfset tSOCSOEE+=val(selectdw.SOCSOWW)>
+                </cfif>
+                <cfif selectdw.SOCSOCC neq ''>
+                    <cfset tSOCSOER+=val(selectdw.SOCSOCC)>
+                </cfif>
+                <cfif selectdw.EISWW neq ''>
+                    <cfset tEISEE+=val(selectdw.EISWW)>
+                </cfif>
+                <cfif selectdw.EISCC neq ''>
+                    <cfset tEISER+=val(selectdw.EISCC)>
+                </cfif>
+                <cfif selectdw.epf_pay neq ''>
+                <cfset tepf_pay+=val(selectdw.epf_pay)>
+                </cfif>
+                <cfif selectdw.TDED neq ''>
+                <cfset tTDED +=val(selectdw.TDED)>
+                </cfif>
+                <cfif selectdw.TDEDU neq ''>
+                <cfset tTDEDU+=selectdw.TDEDU>
+                </cfif>
+                <cfif selectdw.NETPAY neq ''>
+                <cfset tNETPAY+=val(selectdw.NETPAY)>
+                </cfif>
+                <cfif selectdw.epf_pay_a neq ''>
+                <cfset tepf_pay_a+=val(selectdw.epf_pay_a)>
+                </cfif> 
+                <cfif selectdw.cpf_amt neq ''>
+                <cfset tcpf_amt+=val(selectdw.cpf_amt)>
+                </cfif>
+                <cfif isdefined('additionalwages')>
+                    <cfif selectdw.additionalwages neq ''>
+                        <cfset tadditionalwages+=val(selectdw.additionalwages)>
+                    </cfif>
+                </cfif>
+                <cfif isdefined('hourrate')>
+                    <cfif selectdw.total_late_h neq ''>
+                        <cfset ttotal_late_h+=val(selectdw.total_late_h)>
+                    </cfif>
+                    <cfif selectdw.total_earlyD_h neq ''>
+                        <cfset ttotal_earlyD_h+=val(selectdw.total_earlyD_h)>
+                    </cfif>
+                    <cfif selectdw.total_noP_h neq ''>
+                        <cfset ttotal_noP_h+=val(selectdw.total_noP_h)>
+                    </cfif>
+                    <cfif selectdw.total_work_h neq ''>
+                        <cfset ttotal_work_h+=val(selectdw.total_work_h)>
+                    </cfif>
+                    <cfif selectdw.hourrate neq ''>
+                    <cfset thourrate+=val(selectdw.hourrate)>
+                    </cfif>
+                </cfif>
+                <cfif selectdw.nsded neq ''>
+                <cfset tnsded +=val(selectdw.nsded)>
+                </cfif>
+                <cfif selectdw.otherded neq ''>
+                <cfset totherded+=val(selectdw.otherded)>
+                </cfif>
+                </cfif>
+
+
+                <cfquery name="updatedwfinal" datasource="#db#">
+                    UPDATE #a# SET DW = #val(tdW)# , 
+                    BASICPAY = #val(tbasicpay)#, 
+                    NPLPAY = #val(ttotalNPL)#, 
+                    itaxpcb = #val(titaxpcb)#, 
+                    ded115 = #val(tded115)#, 
+                    ded114 = #val(tded114)#, 
+                    ded113 = #val(tded113)#, 
+                    ded109 = #val(tded109)#, 
+                    OT1 = #val(tOT1)#, 
+                    OT2 = #val(tOT2)# , OT3 = #tOT3# , OT4 = #tOT4# , OT5 = #tOT5# , OT6 = #tOT6# , 
+                    OTPay = #tOTtotal# , TAW = #ttaw# , grosspay=#val(tgrosspay)#, EPFWW=#val(tEPFEE)#, 
+                    EPFCC=#val(tEPFER)#, 
+                    SOCSOWW = IF(#val(tSOCSOEE)# >= 19.75, 19.75, #val(tSOCSOEE)# ),
+                    SOCSOCC = IF(#val(tSOCSOER)# >= 69.05 or #val(tSOCSOEE)# >= 19.75 , 69.05, #val(tSOCSOER)# ),
+                    EISWW = IF(#val(tEISEE)# >= 7.90, 7.90, #val(tEISEE)# ),
+                    EISCC = IF(#val(tEISER)# >= 7.90, 7.90, #val(tEISER)# ),
+                    epf_pay = #tepf_pay#, TDED=#val(ttded)# , 
+                    TDEDU = #tTDEDU#, NETPAY = #val(tnetpay)#, 
+                    epf_pay_a = #val(tepf_pay_a)# , cpf_amt="#payin_2nd#"
+                    <cfif isdefined('additionalwages')>
+                    ,additionalwages="#val(tadditionalwages)#"
+                    </cfif>
+                    <cfif isdefined('hourrate')>
+                    ,total_late_h="#val(ttotal_late_h)#"
+                    ,total_earlyD_h="#val(ttotal_earlyD_h)#"
+                    ,total_noP_h="#val(ttotal_noP_h)#"
+                    ,total_work_h="#val(ttotal_work_h)#"
+                    ,hourrate="#val(thourrate)#"
+                    </cfif>
+                    ,payyes = "Y"
+                    <!---,nsded = "#numberformat(url.nsded,'.__')#"--->
+                   <!--- ,otherded = "#numberformat(numberformat(url.dedpay,'.__')-numberformat(url.nsded,'.__'),'.__')#"--->
+                    WHERE empno = "#empno#"
+                </cfquery>
+            </cfloop>
+                        
+            <cfset socsobasic = tBASICPAY>
+	        
+	        <!---<cfquery name="getdbded" datasource="#paydts#">
+            SELECT dbded109,dbded113,dbded114 FROM pmast WHERE empno = "#empno#"
+            </cfquery>
+            
+            <cfif getdbded.recordcount neq 0>
+				<cfquery name="updatedwfinal" datasource="#db#">
+					UPDATE paytra1 SET 
+					ded109=<cfqueryparam cfsqltype="CF_SQL_DOUBLE" value="#getdbded.dbded109#">,
+					ded113=<cfqueryparam cfsqltype="CF_SQL_DOUBLE" value="#getdbded.dbded113#">,
+					ded114=<cfqueryparam cfsqltype="CF_SQL_DOUBLE" value="#getdbded.dbded114#">,
+					payyes = "Y"
+					WHERE empno = "#empno#"
+				</cfquery>
+            </cfif>--->
+
+			<!---added for multiple assignments by Nieo, updated 20171010 1531--->
+            
+            <cfoutput>
+            <cfquery name="getpaydata" datasource="#paydts#">
+            SELECT * FROM #weekpay# WHERE empno = "#empno#"
+            </cfquery>
+			<div style="display:none">
+            <input type="text" name="totalded" id="totalded" value="#numberformat(val(getpaydata.tded),'.__')#" />
+            <input type="text" name="totalaw" id="totalaw" value="#numberformat(val(getpaydata.taw),'.__')#" />
+            <input type="text" name="basicpay" id="basicpay" value="#numberformat(val(getpaydata.basicpay)-val(url.selfphnlsalary),'.__')#" />
+            <input type="text" name="employeecpf" id="employeecpf" value="#numberformat(val(getpaydata.epfww),'.__')#" />
+            <input type="text" name="RATE1" id="RATE1" value="#numberformat(val(getpaydata.RATE1),'.__')#" />
+            <input type="text" name="RATE2" id="RATE2" value="#numberformat(val(getpaydata.RATE2),'.__')#" />
+            <input type="text" name="RATE3" id="RATE3" value="#numberformat(val(getpaydata.RATE3),'.__')#" />
+            <input type="text" name="RATE4" id="RATE4" value="#numberformat(val(getpaydata.RATE4),'.__')#" />
+            <input type="text" name="RATE5" id="RATE5" value="#numberformat(val(getpaydata.RATE5),'.__')#" />
+            <input type="text" name="RATE6" id="RATE6" value="#numberformat(val(getpaydata.RATE6),'.__')#" />
+            <input type="text" name="OT1" id="OT1" value="#numberformat(val(getpaydata.OT1),'.__')#" />
+            <input type="text" name="OT2" id="OT2" value="#numberformat(val(getpaydata.OT2),'.__')#" />
+            <input type="text" name="OT3" id="OT3" value="#numberformat(val(getpaydata.OT3),'.__')#" />
+            <input type="text" name="OT4" id="OT4" value="#numberformat(val(getpaydata.OT4),'.__')#" />
+            <input type="text" name="OT5" id="OT5" value="#numberformat(val(getpaydata.OT5),'.__')#" />
+            <input type="text" name="OT6" id="OT6" value="#numberformat(val(getpaydata.OT6),'.__')#" />
+            <input type="text" name="otpay" id="otpay" value="#numberformat(val(getpaydata.otpay),'.__')#" />
+            <input type="text" name="grosspay" id="grosspay" value="#numberformat(val(getpaydata.grosspay)-val(getpaydata.epfww),'.__')#" />
+            <input type="text" name="netpay" id="netpay" value="#numberformat(val(getpaydata.netpay),'.__')#" />
+            <input type="text" name="eesocso" id="eesocso" value="#numberformat(socso_yee,'.__')#" />
+            <input type="text" name="eeeis" id="eeeis" value="#numberformat(eis_yee,'.__')#" />
+            
+            <cfset EPFPB = 0>
+            <cfset EPFAWS = 0>
+            <cfset sdfPB = 0>
+            <cfset sdfAWS = 0> 
+                
+            <cfinclude template="/default/transaction/assignmentslipnewnew/employerpay.cfm">
+             <cfquery name="getpaydata" datasource="#paydts#">
+            SELECT levy_sd FROM #weekpay# WHERE empno = "#empno#"
+            </cfquery>
+           
+            <cfif getplacement.inc_bill_sdf eq "Y">
+            <input type="text" name="employersdl" id="employersdl" value="0.00" />
+            <cfelse>
+            <input type="text" name="employersdl" id="employersdl" value="#numberformat(val(getpaydata.levy_sd),'.__')#" />
+            </cfif>
+             
+			<cfif EPFY eq 0 and getplacement.custno neq '300033162'>
+			<cfquery name="update_epfcc" datasource="#db#">
+				UPDATE #weekpay# 
+				SET epfcc = 0.00
+				WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+			</cfquery>
+			</cfif>
+            <cfif socso_yer eq 0 and getplacement.custno neq '300033162'>
+			<cfquery name="update_epfcc" datasource="#db#">
+				UPDATE #weekpay# 
+				SET socsocc = 0.00
+				WHERE empno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#empno#">
+			</cfquery>
+			</cfif>
+                
+            <!---Added by Nieo 20171211 1011 to remove er amount when lumpsum billing--->
+            <!---Temporary commented by Nieo on 201780105 until further confirmation--->
+            <!---<cfquery name="checklumpsum" datasource="#dts#">
+                SELECT priceid FROM manpowerpricematrix 
+                WHERE pricename LIKE 'ps5%' 
+                AND priceid="#getplacement.pm#"
+            </cfquery>
+
+            <cfif checklumpsum.recordcount neq 0>
+                <cfif isdefined('EPFY')>
+                    <cfset EPFY = 0.00>
+                </cfif>
+            </cfif>
+
+            <cfif checklumpsum.recordcount neq 0>
+                <cfif isdefined('socso_yer')>
+                    <cfset socso_yer = 0.00>
+                </cfif>
+            </cfif>--->
+            <!---Added by Nieo 20171211 1011 to remove er amount when lumpsum billing--->
+            <cfif getplacement.inc_bill_cpf eq "Y">
+				<input type="text" name="employercpf" id="employercpf" value="0.00" />
+             <cfelse>
+				<input type="text" name="employercpf" id="employercpf" value="#numberformat(val(EPFY),'.__')#" />
+            </cfif>
+            <input type="text" name="ersocso" id="ersocso" value="#numberformat(socso_yer,'.__')#" />
+            <input type="text" name="ereis" id="ereis" value="#numberformat(eis_yer,'.__')#" />
+             <input type="text" name="epfpayin" id="epfpayin" value="<cfif isdefined('epfpayin')>#val(epfpayin)#<cfelse>0.00</cfif>">
+            
+            <input type="text" name="socsopayin" id="socsopayin" value="<cfif isdefined('socsopayin')>#val(socsopayin)#<cfelse>0.00</cfif>">
+            
+            <input type="text" name="additionalsocso" id="additionalsocso" value="<cfif isdefined('additionalsocso')>#val(additionalsocso)#<cfelse>0.00</cfif>">
+            
+            <input type="text" name="additionalepf" id="additionalepf" value="<cfif isdefined('additionalcpf')>#val(additionalcpf)#<cfelse>0.00</cfif>">
+            
+             <input type="text" name="pbercpf" id="pbercpf" value="<cfif getplacement.bonuscpfable eq "Y">#numberformat(val(EPFPB),'.__')#<cfelse>0.00</cfif>" />
+             <input type="text" name="awsercpf" id="awsercpf" value="<cfif getplacement.awscpfable eq "Y">#numberformat(val(EPFaws),'.__')#<cfelse>0.00</cfif>" />
+             <input type="text" name="pbersdf" id="pbersdf" value="<cfif getplacement.bonussdfable eq "Y">#numberformat(val(sdfPB),'.__')#<cfelse>0.00</cfif>" />
+             <input type="text" name="awsersdf" id="awsersdf" value="<cfif getplacement.awssdfable eq "Y">#numberformat(val(sdfaws),'.__')#<cfelse>0.00</cfif>" />
+             
+            </div>
+            
+            </cfoutput>

@@ -1,0 +1,154 @@
+RECTYPE,CNTBTCH,CNTITEM,IDCUST,IDINVC,TEXTTRX,INVCDESC,DATEINVC,SWMANRTE,DATEDUE,SWTAXBL,SWMANTX,CODETAXGRP,TAXSTTS1,AMTTAX1,FISCYR,FISCPER,
+RECTYPE,CNTBTCH,CNTITEM,CNTLINE,TEXTDESC,AMTEXTN,SWMANLTX,TAXSTTS1,IDACCTREV,COMMENT,ITEMTAX,,,,,,,
+RECTYPE,CNTBTCH,CNTITEM,CNTPAYM,DATEDUE,AMTDUE,,,,,,,,,,,,
+1,,1,300034801,IN500981,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,24.76,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200171639,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200171639,377.55,0,1,3103-301, /Batch # /Timesheet #,22.65
+2,,1,3,EIS /TS# /Job#200171639,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200171639,614.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200171639,106.45,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,MSP Fee /TS# /Job#200171639,-124.90,0,1,3300-301, /Batch # /Timesheet #,-7.49
+2,,1,7,Normal /TS# /Job#200171639,4612.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200171639,68.98,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,5847.64
+1,,1,300034801,IN500982,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,55.33,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170113,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170113,1120.00,0,1,3103-301, /Batch # /Timesheet #,67.20
+2,,1,3,EIS /TS# /Job#200170113,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170113,1680.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,MSP Fee /TS# /Job#200170113,-357.78,0,1,3300-301, /Batch # /Timesheet #,-21.47
+2,,1,6,Normal /TS# /Job#200170113,14000.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,7,SOCSO /TS# /Job#200170113,69.05,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,16734.50
+1,,1,300034801,IN500983,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,8.14,2021,06
+2,,1,1,Admin Fee /TS# /Job#200171563,160.00,0,1,3102-301, /Batch # /Timesheet #,9.60
+2,,1,2,MSP Fee /TS# /Job#200171563,-24.36,0,1,3300-301, /Batch # /Timesheet #,-1.46
+2,,1,3,Training allowance /TS# /Job#200171563,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1143.78
+1,,1,300034801,IN500984,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,0.79,2021,06
+2,,1,1,Admin Fee /TS# /Job#200171563,15.48,0,1,3102-301, /Batch # /Timesheet #,0.93
+2,,1,2,MSP Fee /TS# /Job#200171563,-2.36,0,1,3300-301, /Batch # /Timesheet #,-0.14
+2,,1,3,Training allowance /TS# /Job#200171563,96.77,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,110.68
+1,,1,300034801,IN500985,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,8.14,2021,06
+2,,1,1,Admin Fee /TS# /Job#200171563,160.00,0,1,3102-301, /Batch # /Timesheet #,9.60
+2,,1,2,MSP Fee /TS# /Job#200171563,-24.36,0,1,3300-301, /Batch # /Timesheet #,-1.46
+2,,1,3,Training allowance /TS# /Job#200171563,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1143.78
+1,,1,300034801,IN500986,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,27.91,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170898,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170898,452.90,0,1,3103-301, /Batch # /Timesheet #,27.17
+2,,1,3,EIS /TS# /Job#200170898,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170898,684.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200170898,145.08,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,MSP Fee /TS# /Job#200170898,-147.74,0,1,3300-301, /Batch # /Timesheet #,-8.86
+2,,1,7,Normal /TS# /Job#200170898,5516.13,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200170898,69.05,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,6915.23
+1,,1,300034801,IN500987,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,25.27,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170747,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170747,390.00,0,1,3103-301, /Batch # /Timesheet #,23.40
+2,,1,3,EIS /TS# /Job#200170747,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170747,635.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,MSP Fee /TS# /Job#200170747,-128.88,0,1,3300-301, /Batch # /Timesheet #,-7.73
+2,,1,6,Normal /TS# /Job#200170747,4875.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,7,SOCSO /TS# /Job#200170747,69.02,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,6033.31
+1,,1,300034801,IN500988,1,AP-MONTH=06,20210524,0,20210723,1,1,GST,3,16.47,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170119,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170119,174.06,0,1,3103-301, /Batch # /Timesheet #,10.44
+2,,1,3,EIS /TS# /Job#200170119,4.30,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170119,284.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200170119,91.95,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,MSP Fee /TS# /Job#200170119,-59.55,0,1,3300-301, /Batch # /Timesheet #,-3.57
+2,,1,7,Normal /TS# /Job#200170119,2083.87,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200170119,37.65,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210723,2792.75
+1,,1,300034801,IN500989,1,AP-MONTH=06,20210524,0,20210723,1,1,GST,3,20.13,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170107,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170107,264.00,0,1,3103-301, /Batch # /Timesheet #,15.84
+2,,1,3,EIS /TS# /Job#200170107,6.50,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170107,429.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200170107,150.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,MSP Fee /TS# /Job#200170107,-88.54,0,1,3300-301, /Batch # /Timesheet #,-5.31
+2,,1,7,Normal /TS# /Job#200170107,3150.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200170107,56.85,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210723,4147.94
+1,,1,300034801,IN500990,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,13.42,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200171549,-44.52,0,1,3103-301, /Batch # /Timesheet #,-2.67
+2,,1,2,Admin Fee /TS# /Job#200171549,120.00,0,1,3103-301, /Batch # /Timesheet #,7.20
+2,,1,3,EIS /TS# /Job#200171549,148.18,0,1,3103-301, /Batch # /Timesheet #,8.89
+2,,1,4,EPF /TS# /Job#200171549,26.89,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200171549,21.77,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,Normal /TS# /Job#200171549,1830.49,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,7,Reward /TS# /Job#200171549,242.25,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200171549,3.07,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,2361.55
+1,,1,300034801,IN500991,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,28.37,2021,06
+2,,1,1,Admin Fee /TS# /Job#200171546,464.00,0,1,3103-301, /Batch # /Timesheet #,27.84
+2,,1,2,EIS /TS# /Job#200171546,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,3,EPF /TS# /Job#200171546,696.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,Fixed Allowance /TS# /Job#200171546,150.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Med Benefit Reimburse /TS# /Job#200171546,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,6,MSP Fee /TS# /Job#200171546,-151.14,0,1,3300-301, /Batch # /Timesheet #,-9.07
+2,,1,7,Normal /TS# /Job#200171546,5650.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200171546,69.05,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,7074.18
+1,,1,300034801,IN500992,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,3.44,2021,06
+2,,1,1,Admin Fee /TS# /Job#200170590,80.00,0,1,3103-301, /Batch # /Timesheet #,4.80
+2,,1,2,MSP Fee /TS# /Job#200170590,-22.68,0,1,3300-301, /Batch # /Timesheet #,-1.36
+2,,1,3,Training allowance /TS# /Job#200170590,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1060.76
+1,,1,300034801,IN500993,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,3.44,2021,06
+2,,1,1,Admin Fee /TS# /Job#200171564,80.00,0,1,3102-301, /Batch # /Timesheet #,4.80
+2,,1,2,MSP Fee /TS# /Job#200171564,-22.68,0,1,3300-301, /Batch # /Timesheet #,-1.36
+2,,1,3,Training allowance /TS# /Job#200171564,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1060.76
+1,,1,300034801,IN500994,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,20.29,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170104,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170104,268.00,0,1,3103-301, /Batch # /Timesheet #,16.08
+2,,1,3,EIS /TS# /Job#200170104,6.70,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170104,437.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,Fixed Allowance /TS# /Job#200170104,150.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,6,MSP Fee /TS# /Job#200170104,-89.89,0,1,3300-301, /Batch # /Timesheet #,-5.39
+2,,1,7,Normal /TS# /Job#200170104,3200.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,8,SOCSO /TS# /Job#200170104,58.65,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,4210.75
+1,,1,300034801,IN500995,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,0.00,2021,06
+2,,1,1,EIS /TS# /Job#200171549,3.80,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,2,MSP Fee /TS# /Job#200171549,2000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+2,,1,3,SOCSO /TS# /Job#200171549,33.20,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,2037.00
+1,,1,300034801,IN500996,1,AP-MONTH=06,20210524,0,20210723,1,1,GST,3,58.62,2021,06
+2,,1,1,+Med Benefit Reimburse /TS# /Job#200170116,160.00,0,1,3103-301, /Batch # /Timesheet #,9.60
+2,,1,2,Admin Fee /TS# /Job#200170116,1200.00,0,1,3103-301, /Batch # /Timesheet #,72.00
+2,,1,3,EIS /TS# /Job#200170116,7.90,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,4,EPF /TS# /Job#200170116,1800.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,5,MSP Fee /TS# /Job#200170116,-382.98,0,1,3300-301, /Batch # /Timesheet #,-22.98
+2,,1,6,Normal /TS# /Job#200170116,15000.00,0,2,3103-301, /Batch # /Timesheet #,0.00
+2,,1,7,SOCSO /TS# /Job#200170116,69.05,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210723,17912.59
+1,,1,300034801,IN500997,1,AP-MONTH=06,20210524,0,20210723,1,1,GST,3,3.44,2021,06
+2,,1,1,Admin Fee /TS# /Job#200170590,80.00,0,1,3103-301, /Batch # /Timesheet #,4.80
+2,,1,2,MSP Fee /TS# /Job#200170590,-22.68,0,1,3300-301, /Batch # /Timesheet #,-1.36
+2,,1,3,Training allowance /TS# /Job#200170590,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210723,1060.76
+1,,1,300034801,IN500998,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,3.44,2021,06
+2,,1,1,Admin Fee /TS# /Job#200170590,80.00,0,1,3103-301, /Batch # /Timesheet #,4.80
+2,,1,2,MSP Fee /TS# /Job#200170590,-22.68,0,1,3300-301, /Batch # /Timesheet #,-1.36
+2,,1,3,Training allowance /TS# /Job#200170590,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1060.76
+1,,1,300034801,IN500999,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,3.44,2021,06
+2,,1,1,Admin Fee /TS# /Job#200170590,80.00,0,1,3103-301, /Batch # /Timesheet #,4.80
+2,,1,2,MSP Fee /TS# /Job#200170590,-22.68,0,1,3300-301, /Batch # /Timesheet #,-1.36
+2,,1,3,Training allowance /TS# /Job#200170590,1000.00,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,1060.76
+1,,1,300034801,IN501000,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,0.00,2021,06
+2,,1,1,Reimbursement/Claim /TS# /Job#200171639,9779.35,0,2,3103-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,9779.35
+1,,1,300034801,IN501001,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,9.48,2021,06
+2,,1,1,Reimbursement/Claim /TS# /Job#200170104,157.95,0,1,3103-301, /Batch # /Timesheet #,9.48
+3,,1,1,20210807,167.43
+1,,1,300034801,IN501002,1,AP-MONTH=06,20210608,0,20210807,1,1,GST,3,0.00,2021,06
+2,,1,1,MSP Fee /TS# /Job#200170901,24.98,0,2,3300-301, /Batch # /Timesheet #,0.00
+3,,1,1,20210807,24.98

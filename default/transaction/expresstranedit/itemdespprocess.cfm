@@ -1,0 +1,21 @@
+<cfsetting showdebugoutput="no">
+
+
+<cfoutput>
+<cfquery name="updateitemdesp" datasource="#dts#">
+update ictran set 
+<cfif isdefined('form.itemdetailitemno')>
+itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdetailitemno#">,
+</cfif>
+desp=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdesp#">,
+despa=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdesp2#">,
+comment=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemcomment#">,
+gltradac=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.glt6#"> where trancode=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdesptrancodenew#">  and refno=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdesprefno#"> and type=<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemdesptran#"> 
+</cfquery>
+
+<script type="text/javascript">
+ColdFusion.Window.hide('itemdesp');
+setTimeout('refreshlist();',750);
+</script>
+
+</cfoutput>

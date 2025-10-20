@@ -1,0 +1,62 @@
+
+<cfif isdefined('url.uuid') and isdefined('url.trancode')>
+<cfset url.uuid = URLDECODE(url.uuid)>
+<cfset url.itemno = URLDECODE(url.itemno)>
+<cfquery name="updaterow" datasource="#dts#">
+DELETE FROM ictrantemp 
+WHERE 
+trancode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.trancode#">
+and uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+and itemno = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.itemno#">
+</cfquery>
+
+<cfquery name="checkitemExist" datasource="#dts#">
+select 
+itemcount 
+from ictrantemp 
+where uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+</cfquery>
+<cfif checkitemExist.recordcount gt 0>
+<cfset itemcountlist = valuelist(checkitemExist.itemcount)>
+
+<cfloop index="i" from="1" to="#listlen(itemcountlist)#">
+<cfif listgetat(itemcountlist,i) neq i>
+<cfquery name="updateIctran" datasource="#dts#">
+	update ictrantemp set 
+	itemcount='#i#',
+	trancode='#i#'
+	where 
+	uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#">
+	and itemcount='#listgetat(itemcountlist,i)#';
+</cfquery>
+</cfif>
+</cfloop>
+
+
+</cfif>
+
+
+<cfquery name="getsum" datasource="#dts#">
+SELECT SUM(amt1_bil) as sumsubtotal,count(trancode) as notran FROM ictrantemp where uuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#url.uuid#" />
+</cfquery>
+
+<cfquery name="getgsetup" datasource="#dts#">
+select * from gsetup
+</cfquery>
+<cfif getgsetup.comboard eq 'Y'>
+<cftry>
+<div style="display:none">
+<cfinvoke component="cfc.comboard" method="display" firstline="" secondlineleft="" secondlineright="(#numberformat(getsum.sumsubtotal,'.__')#)" comchannel="#getgsetup.comboardport#" returnvariable="test"/></div>
+<cfoutput>
+<input type=hidden name='displayitem3' id='displayitem3' value='#test#'>
+</cfoutput>
+<cfcatch></cfcatch></cftry>
+</cfif>
+
+<cfoutput>
+<input type="hidden" name="hidsubtotal" id="hidsubtotal" value="#numberformat(getsum.sumsubtotal,'.__')#" />
+<input type="hidden" name="hiditemcount" id="hiditemcount" value="#getsum.notran#" />
+</cfoutput>
+
+
+</cfif>

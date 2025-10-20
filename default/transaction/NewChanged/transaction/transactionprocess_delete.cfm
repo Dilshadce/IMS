@@ -1,0 +1,300 @@
+<cfif tran neq "SO" and tran neq "PO" and tran neq "QUO" and tran neq "SAM" and tran neq "RQ">
+	<cfquery name="getbatchitem" datasource="#dts#">
+		select 
+		* 
+		from ictran 
+		where type='#tran#' 
+		and refno = '#nexttranno#' 
+		and	itemno='#form.itemno#' 
+		and itemcount = '#itemcount#'
+		and batchcode<>'';
+	</cfquery>
+	
+	<cfif getbatchitem.recordcount gt 0>
+		<cfif tran eq "RC" or tran eq "OAI" or tran eq "CN">
+			<cfset obtype = "bth_qin">
+		<cfelse>
+			<cfset obtype = "bth_qut">
+		</cfif>
+		
+		<cfif location eq "">
+			<cfquery name="updateobbatch" datasource="#dts#">
+				update obbatch set 
+				#obtype#=(#obtype#-#getbatchitem.qty#) 
+				where itemno='#getbatchitem.itemno#' 
+				and batchcode='#getbatchitem.batchcode#';
+			</cfquery>
+		<cfelse>
+			<cfquery name="updatelobthob" datasource="#dts#">
+				update lobthob set 
+				#obtype#=(#obtype#-#getbatchitem.qty#) 
+				where location='#location#' 
+				and itemno='#getbatchitem.itemno#' 
+				and batchcode='#getbatchitem.batchcode#';
+			</cfquery>
+		
+			<cfquery name="updateobbatch" datasource="#dts#">
+				update obbatch set 
+				#obtype#=(#obtype#-#getbatchitem.qty#) 
+				where itemno='#getbatchitem.itemno#' 
+				and batchcode='#getbatchitem.batchcode#';
+			</cfquery>
+		</cfif>
+	</cfif>
+	
+	<cfif lcase(HUserID) neq "kellysteel2">
+		<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">
+			<cfset qname='QIN'&(readperiod+10)>
+		<cfelse>
+			<cfset qname='QOUT'&(readperiod+10)>
+		</cfif>
+		
+		<!--- <cfquery name="UpdateIcitem" datasource="#dts#">
+			update icitem set 
+			#qname#=(#qname#-#qty#) 
+			where itemno='#itemno#';
+		</cfquery> --->
+		<cfquery name="UpdateIcitem" datasource="#dts#">
+			update icitem set 
+			#qname#=(#qname#-#act_qty#) 
+			where itemno='#itemno#';
+		</cfquery>
+	</cfif>
+</cfif>		
+
+<cfquery name="checkexist" datasource="#dts#">
+	select * from igrade
+	where type='#tran#' 
+	and refno='#nexttranno#' 
+	and itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#form.itemno#"> 
+	and trancode='#itemcount#'
+</cfquery>
+
+<cfif checkexist.recordcount neq 0>
+	<cfset firstcount = 11>
+	<cfset maxcounter = 160>
+	<cfset totalrecord = (maxcounter - firstcount + 1)>
+	
+	<cfif tran neq "SO" and tran neq "PO" and tran neq "QUO" and tran neq "SAM" and tran neq "RQ">
+		<cfloop from="#firstcount#" to="#maxcounter#" index="i">
+			<cfif i eq firstcount>
+				<cfset grdvaluelist = Evaluate("checkexist.GRD#i#")>
+				<cfset bgrdlist = "bgrd"&i>
+			<cfelse>
+				<cfset grdvaluelist = grdvaluelist&","&Evaluate("checkexist.GRD#i#")>
+				<cfset bgrdlist = bgrdlist&",bgrd"&i>
+			</cfif>	
+		</cfloop>
+	
+		<cfset myArray = ListToArray(bgrdlist,",")>
+		<cfset myArray2 = ListToArray(grdvaluelist,",")>
+	
+		<!--- <cfquery name="updateitemgrd" datasource="#dts#">
+			update itemgrd
+			set
+			<cfloop from="1" to="#totalrecord#" index="i">
+				<cfif i neq totalrecord>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>#myArray2[i]#,
+				<cfelse>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>#myArray2[i]#
+				</cfif>
+			</cfloop>
+			where itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.itemno#"> 
+		</cfquery> --->
+		<cfquery name="updateitemgrd" datasource="#dts#">
+			update itemgrd
+			set
+			<cfloop from="1" to="#totalrecord#" index="i">
+				<cfif i neq totalrecord>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>
+					<cfif val(checkexist.factor2) neq 0>
+						(#myArray2[i]# * #checkexist.factor1# / #checkexist.factor2#)
+					<cfelse>
+						0
+					</cfif>,
+				<cfelse>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>
+					<cfif val(checkexist.factor2) neq 0>
+						(#myArray2[i]# * #checkexist.factor1# / #checkexist.factor2#)
+					<cfelse>
+						0
+					</cfif>
+				</cfif>
+			</cfloop>
+			where itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.itemno#"> 
+		</cfquery>
+	
+		
+		<!--- <cfquery name="updatelogrdob" datasource="#dts#">
+			update logrdob
+			set
+			<cfloop from="1" to="#totalrecord#" index="i">
+				<cfif i neq totalrecord>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>#myArray2[i]#,
+				<cfelse>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>#myArray2[i]#
+				</cfif>
+			</cfloop>
+			where itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.itemno#">
+			and location = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.location#">
+		</cfquery> --->
+		<cfquery name="updatelogrdob" datasource="#dts#">
+			update logrdob
+			set
+			<cfloop from="1" to="#totalrecord#" index="i">
+				<cfif i neq totalrecord>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>
+					<cfif val(checkexist.factor2) neq 0>
+						(#myArray2[i]# * #checkexist.factor1# / #checkexist.factor2#)
+					<cfelse>
+						0
+					</cfif>,
+				<cfelse>
+					#myArray[i]# = #myArray[i]#<cfif tran eq "OAI" or tran eq "RC" or tran eq "CN">-<cfelse>+</cfif>
+					<cfif val(checkexist.factor2) neq 0>
+						(#myArray2[i]# * #checkexist.factor1# / #checkexist.factor2#)
+					<cfelse>
+						0
+					</cfif>
+				</cfif>
+			</cfloop>
+			where itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.itemno#">
+			and location = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.location#">
+		</cfquery>
+		
+	</cfif>
+	
+	<cfquery name="delete" datasource="#dts#">
+		delete from igrade
+		where type='#tran#' 
+		and refno='#nexttranno#' 
+		and itemno = <cfqueryparam cfsqltype="cf_sql_char" value="#checkexist.itemno#"> 
+		and trancode='#itemcount#'
+	</cfquery>
+</cfif>
+
+<cfquery name="deleteserial" datasource="#dts#">
+	delete from iserial 
+	where type='#tran#' 
+	and refno='#nexttranno#' 
+	and itemno='#form.itemno#' 
+	and trancode='#itemcount#';
+</cfquery>
+
+<cfquery name="geticlink" datasource="#dts#">
+	select * from iclink 
+	where type='#tran#'
+	and refno='#nexttranno#'
+	and itemno='#form.itemno#' 
+	and trancode='#itemcount#';
+</cfquery>
+
+<cfif lcase(hcomid) eq "lkabb_i" or lcase(hcomid) eq "lkabp_i" or lcase(hcomid) eq "lkab_i" <!---or lcase(hcomid) eq "lkatlb_i"--->
+				or lcase(hcomid) eq "lkatbh_i" or lcase(hcomid) eq "svcmm_i" or lcase(hcomid) eq "svcnvn_i" or lcase(hcomid) eq "svctm_i"
+				or lcase(hcomid) eq "svcyr_i" or lcase(hcomid) eq "svcdm_i" or lcase(hcomid) eq "svcbd_i" or lcase(hcomid) eq "21bl_i"
+				or lcase(hcomid) eq "21cmw_i" or lcase(hcomid) eq "jvtpy_i" or lcase(hcomid) eq "jvsbw_i" or lcase(hcomid) eq "stbrd_i"
+				or lcase(hcomid) eq "stpylb_i" or lcase(hcomid) eq "stfsrg_i" or lcase(hcomid) eq "stfsk_i" or lcase(hcomid) eq "ftmps_i"
+				or lcase(hcomid) eq "lkabt_i" or lcase(hcomid) eq "lkatb_i" or lcase(hcomid) eq "lkatl_i" or lcase(hcomid) eq "shell_i"
+				or lcase(hcomid) eq "fttk_i" or lcase(hcomid) eq "svcnc_i" or lcase(hcomid) eq "autoserv_i">
+    <!---shell company do not run recover bill--->
+<cfelse>
+<cfif (tran eq 'RC' or tran eq 'PO' or tran eq 'SAM') and geticlink.frtype eq 'SO'>
+<cfelse>
+<cfquery name="recoverupdatedfrombill" datasource="#dts#">
+	update ictran set toship=toship+#val(geticlink.qty)#,shipped=shipped-#val(geticlink.qty)#,toinv=''
+	where type='#geticlink.frtype#'
+	and refno='#geticlink.frrefno#'
+	and itemno='#geticlink.itemno#' 
+	and trancode='#geticlink.frtrancode#';
+</cfquery>
+
+<cfquery name="recoverupdatedfrombill2" datasource="#dts#">
+	update artran set toinv='',order_cl=''
+	where type='#geticlink.frtype#'
+	and refno='#geticlink.frrefno#'
+</cfquery>
+</cfif>
+	
+<cfquery name="deleteiclink" datasource="#dts#">
+	delete from iclink 
+	where type='#tran#'
+	and refno='#nexttranno#'
+	and itemno='#form.itemno#' 
+	and trancode='#itemcount#';
+</cfquery>	
+</cfif>
+
+
+<cfif getGeneralInfo.asvoucher eq "Y">
+<cfquery name="checkvoucher" datasource="#dts#">
+SELECT voucherno FROM ictran 
+where itemno='#form.itemno#' 
+	and refno='#nexttranno#' 
+	and type='#tran#' 
+	and itemcount='#itemcount#';
+</cfquery>
+<cfif checkvoucher.voucherno neq "">
+<cfquery name="deletevoucher" datasource="#dts#">
+DELETE FROM voucher where voucherid = "#checkvoucher.voucherno#"
+</cfquery>
+</cfif>
+</cfif>
+<cfquery name="deleteitem" datasource="#dts#">
+	delete from ictran 
+	where itemno='#form.itemno#' 
+	and refno='#nexttranno#' 
+	and type='#tran#' 
+	and itemcount='#itemcount#';
+</cfquery>
+ <cfif tran eq "TR" or tran eq "ISS" or tran eq "RC" or tran eq "PR" or tran eq "DO" or tran eq "INV" or tran eq "CS" or tran eq "CN" or tran eq "DN" or tran eq "OAI" or tran eq "OAR">
+<cfquery name="getgeneral" datasource="#dts#">
+SELECT autolocbf FROM gsetup
+</cfquery>
+<cfif getgeneral.autolocbf eq "Y">
+<cfquery name="insertdelete" datasource="#dts#">
+INSERT INTO locationitempro (itemno) VALUES (<cfqueryparam cfsqltype="cf_sql_varchar" value="#form.itemno#">)
+</cfquery>
+</cfif>
+</cfif>
+
+
+<cfquery name="getLast" datasource="#dts#">
+	select 
+	itemcount 
+	from 
+	ictran 
+	where type='#tran#'
+	and refno='#nexttranno#' 
+	and custno='#form.custno#' 
+	order by itemcount;
+</cfquery>
+
+<cfinvoke method="reorder" refno="#nexttranno#" itemcountlist="#valuelist(getLast.itemcount)#"/>
+
+<!--- <cfquery name="deleteserial" datasource="#dts#">
+	delete from iserial 
+	where type='#tran#' 
+	and refno='#nexttranno#' 
+	and itemno='#form.itemno#' 
+	and trancode='#itemcount#';
+</cfquery>
+	
+<cfquery name="deleteiclink" datasource="#dts#">
+	delete from iclink 
+	where type='#tran#'
+	and refno='#nexttranno#'
+	and itemno='#form.itemno#' 
+	and trancode='#itemcount#';
+</cfquery>	 --->	
+
+<cfif wpitemtax eq "Y">
+	<cfquery name="gettax" datasource="#dts#">
+    	select sum(taxamt_bil) as tt_taxamt_bil from ictran where type='#tran#' and refno='#nexttranno#' and (void='' or void is null)
+    </cfquery>
+	<cfset gettax.tt_taxamt_bil=numberformat(val(gettax.tt_taxamt_bil),".__")>
+    <cfquery name="updatetax" datasource="#dts#">
+    	update artran set tax_bil='#val(gettax.tt_taxamt_bil)#' where type='#tran#' and refno='#nexttranno#'
+    </cfquery>
+</cfif>
+	
+<cfset status = "Item Deleted Successfully">
